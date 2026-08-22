@@ -1,26 +1,84 @@
 @import "tailwindcss";
 
+/* ─── Tailwind v4 theme — brand design tokens ─────────────────────────── */
+@theme {
+  /* Colors */
+  --color-navy:          #0B1B2B;
+  --color-navy-light:    #132338;
+  --color-ochre:         #C8922A;
+  --color-ochre-light:   #D4A84B;
+  --color-cream:         #FAF6EE;
+  --color-cream-dark:    #F0E8D6;
+  --color-text-muted:    #4A5568;
+  --color-border-light:  #E2D9C8;
+
+  /* Typography — vars reference the Next.js font loader CSS variables injected by layout.tsx */
+  --font-playfair: var(--font-playfair-var, "Playfair Display", Georgia, serif);
+  --font-dm:       var(--font-dm-var, "DM Sans", system-ui, sans-serif);
+  --font-inter:    var(--font-inter-var, "Inter", system-ui, sans-serif);
+
+  /* Base overrides */
+  --color-background: var(--color-cream);
+  --color-foreground: var(--color-navy);
+  --font-sans: var(--font-dm);
+}
+
+/* ─── CSS custom properties for components ────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FAF6EE;
+  --foreground: #0B1B2B;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── Base styles ─────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Skip to content ─────────────────────────────────────────────────── */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: #0B1B2B;
+  color: #FAF6EE;
+  font-family: var(--font-dm);
+  font-size: 0.875rem;
+  border-radius: 0 0 0.375rem 0.375rem;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* ─── Typography helpers ──────────────────────────────────────────────── */
+.font-playfair { font-family: var(--font-playfair); }
+.font-dm       { font-family: var(--font-dm); }
+.font-inter    { font-family: var(--font-inter); }
+
+/* ─── Prose styles for rich text ─────────────────────────────────────── */
+.prose-mzilikazi {
+  font-family: var(--font-inter);
+  line-height: 1.75;
+  color: var(--color-text-muted);
+}
+.prose-mzilikazi p + p {
+  margin-top: 1rem;
 }
