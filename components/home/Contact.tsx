@@ -21,7 +21,7 @@ export default function Contact() {
               Ready to plan your stay?
             </h2>
             <p className="font-inter text-[#4A5568] text-base leading-relaxed mb-8">
-              Send us an enquiry and we'll come back to you within 24 hours with availability and next steps. No commitment required.
+              Send us an enquiry and we&apos;ll come back to you within 24 hours with availability and next steps. No commitment required.
             </p>
 
             {/* What happens next */}

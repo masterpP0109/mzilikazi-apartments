@@ -1,0 +1,6 @@
+{
+  "name": "Mzilikazi Guest Lodge",
+  "description": "The Connected Victoria Falls Home Base. Comfortable self-catering accommodation, curated experiences, and local trip planning in Victoria Falls, Zimbabwe.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

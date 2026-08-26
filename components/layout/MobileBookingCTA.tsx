@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { MessageSquare, Calendar } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function MobileBookingCTA() {
@@ -9,8 +10,8 @@ export default function MobileBookingCTA() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show after scrolling past the hero (approx 80vh)
-      setIsVisible(window.scrollY > window.innerHeight * 0.8);
+      // Show after scrolling past the hero (approx 60vh)
+      setIsVisible(window.scrollY > window.innerHeight * 0.6);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -24,12 +25,22 @@ export default function MobileBookingCTA() {
       )}
       aria-hidden={!isVisible}
     >
-      <div className="bg-[#0B1B2B]/95 backdrop-blur-sm border-t border-[#132338] px-4 py-3">
+      <div className="bg-[#0B1B2B]/95 backdrop-blur-md border-t border-[#132338] px-4 py-2.5 flex items-center gap-2.5 shadow-2xl">
+        <a
+          href="https://wa.me/263770000000?text=Hello%20Mzilikazi%20Team%2C%20I%20would%20like%20to%20enquire%20about%20availability%20at%20Mzilikazi%20Guest%20Lodge."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-3 bg-[#25D366] text-[#0B1B2B] rounded-lg shrink-0 flex items-center justify-center"
+          aria-label="Chat on WhatsApp"
+        >
+          <MessageSquare size={18} />
+        </a>
         <Link
           href="/contact"
-          className="block w-full text-center py-3.5 bg-[#C8922A] text-[#0B1B2B] font-dm font-semibold text-base rounded hover:bg-[#D4A84B] transition-colors"
+          className="flex-1 text-center py-3 bg-[#C8922A] text-[#0B1B2B] font-dm font-semibold text-sm rounded-lg hover:bg-[#D4A84B] transition-colors flex items-center justify-center gap-2"
         >
-          Book Your Stay
+          <Calendar size={16} />
+          <span>Book Direct / Enquire</span>
         </Link>
       </div>
     </div>

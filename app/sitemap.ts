@@ -4,19 +4,72 @@ import { SITE_URL } from '@/lib/constants';
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  // Static routes
-  const staticRoutes: MetadataRoute.Sitemap = [
+  return [
     {
       url: SITE_URL,
       lastModified: now,
       changeFrequency: 'weekly',
-      priority: 1,
+      priority: 1.0,
     },
     {
       url: `${SITE_URL}/apartments`,
       lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.9,
+    },
+    {
+      url: `${SITE_URL}/apartments/zambezi-suite`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/apartments/family-suite`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/apartments/batoka-suite`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/corporate-stays-victoria-falls`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/family-group-accommodation-victoria-falls`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/experiences`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${SITE_URL}/experiences/chobe-day-trip`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/experiences/village-cultural-visit`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/experiences/victoria-falls-tour`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
     {
       url: `${SITE_URL}/victoria-falls`,
@@ -33,21 +86,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${SITE_URL}/contact`,
       lastModified: now,
-      changeFrequency: 'yearly',
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
   ];
-
-  // [PLACEHOLDER — add dynamic apartment slugs from Sanity once content is live]
-  // Example:
-  // const apartments = await sanityClient.fetch(APARTMENTS_QUERY);
-  // const apartmentRoutes = apartments.map(apt => ({
-  //   url: `${SITE_URL}/apartments/${apt.slug.current}`,
-  //   lastModified: now,
-  //   changeFrequency: 'weekly' as const,
-  //   priority: 0.85,
-  // }));
-  // return [...staticRoutes, ...apartmentRoutes];
-
-  return staticRoutes;
 }

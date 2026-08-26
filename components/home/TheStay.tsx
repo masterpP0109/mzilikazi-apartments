@@ -33,7 +33,7 @@ export default function TheStay() {
               A place to slow down after the adventure.
             </h2>
             <p className="font-inter text-[#4A5568] text-base leading-relaxed mb-8">
-              Victoria Falls is big, loud, and breathtaking. After a day spent on the edge of one of the world's greatest natural wonders, you deserve somewhere with real space to rest — not just a bed in a room.
+              Victoria Falls is big, loud, and breathtaking. After a day spent on the edge of one of the world&apos;s greatest natural wonders, you deserve somewhere with real space to rest — not just a bed in a room.
             </p>
             <ul className="space-y-3">
               {bullets.map((bullet) => (

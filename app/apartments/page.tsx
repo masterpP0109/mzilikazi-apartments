@@ -1,150 +1,195 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Users, BedDouble, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import { Users, BedDouble, ArrowRight, UtensilsCrossed, Wifi, ShieldCheck, Sparkles } from 'lucide-react';
 import SectionEyebrow from '@/components/ui/SectionEyebrow';
 import OchreLine from '@/components/ui/OchreLine';
-import ImagePlaceholder from '@/components/ui/ImagePlaceholder';
+import { SITE_NAME } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Apartments',
+  title: 'Suites & Self-Catering Accommodation | Victoria Falls',
   description:
-    'Browse all self-catering apartments at Mzilikazi, Victoria Falls. Choose the right space for your group — couples, families and extended stays welcome.',
+    'Browse spacious 1-bedroom and 2-bedroom self-catering suites at Mzilikazi Guest Lodge, Victoria Falls. Full kitchens, private lounges, solar backup, high-speed Wi-Fi and family spaces.',
 };
 
-// [PLACEHOLDER — replace with real Sanity data via sanityClient.fetch(APARTMENTS_QUERY)]
-const apartments = [
+const suites = [
   {
-    id: '1',
-    slug: 'apartment-one',
-    name: '[PLACEHOLDER — confirm with client]',
-    tagline: '[PLACEHOLDER — confirm tagline with client]',
-    capacity: '[PLACEHOLDER]',
-    bedrooms: '[PLACEHOLDER]',
-    beds: '[PLACEHOLDER]',
-    shortDescription: '[PLACEHOLDER — confirm short description with client]',
+    id: 'zambezi-suite',
+    slug: 'zambezi-suite',
+    name: 'The Zambezi Executive Suite',
+    tagline: 'Two bedrooms, generous lounge, full modern kitchen, and private terrace.',
+    capacity: '4 – 5',
+    bedrooms: '2',
+    beds: '1 King Bed + 2 Twin Beds (or 2 Kings)',
+    image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=85',
+    imageAlt: 'The Zambezi Executive Suite living and bedroom',
+    shortDescription:
+      'Designed for delegates, discerning couples, or small groups seeking extra privacy, dedicated workstations, and complete culinary independence.',
     highlights: [
-      '[PLACEHOLDER — confirm highlights with client]',
-      '[PLACEHOLDER — confirm highlights with client]',
-      '[PLACEHOLDER — confirm highlights with client]',
+      'Master bedroom with King bed & en-suite bathroom',
+      'Second bedroom with flexible twin beds',
+      'Full kitchen with stove, refrigerator, coffee machine & cookware',
+      'Solar-backed power and high-speed Wi-Fi',
     ],
-    imageLabel: 'Apartment One interior [PLACEHOLDER — confirm with client]',
   },
   {
-    id: '2',
-    slug: 'apartment-two',
-    name: '[PLACEHOLDER — confirm with client]',
-    tagline: '[PLACEHOLDER — confirm tagline with client]',
-    capacity: '[PLACEHOLDER]',
-    bedrooms: '[PLACEHOLDER]',
-    beds: '[PLACEHOLDER]',
-    shortDescription: '[PLACEHOLDER — confirm short description with client]',
+    id: 'family-suite',
+    slug: 'family-suite',
+    name: 'The Mosi-oa-Tunya Family Suite',
+    tagline: 'Spacious 2-bedroom home base with private lounge, full kitchen, and garden access.',
+    capacity: '4 – 6',
+    bedrooms: '2',
+    beds: '1 King Bed + 2 Single Beds + Sofa Bed',
+    image: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=900&q=85',
+    imageAlt: 'The Mosi-oa-Tunya Family Suite interior',
+    shortDescription:
+      'The ideal choice for families and small travelling parties who want everyone under one secure roof with ample space to relax between safaris.',
     highlights: [
-      '[PLACEHOLDER — confirm highlights with client]',
-      '[PLACEHOLDER — confirm highlights with client]',
-      '[PLACEHOLDER — confirm highlights with client]',
+      'Separate bedrooms for parents and children',
+      'Full family kitchen and dining table',
+      'Spacious living room for evening board games & relaxation',
+      'Child-friendly layout and baby cot available on request',
     ],
-    imageLabel: 'Apartment Two interior [PLACEHOLDER — confirm with client]',
   },
   {
-    id: '3',
-    slug: 'apartment-three',
-    name: '[PLACEHOLDER — confirm with client]',
-    tagline: '[PLACEHOLDER — confirm tagline with client]',
-    capacity: '[PLACEHOLDER]',
-    bedrooms: '[PLACEHOLDER]',
-    beds: '[PLACEHOLDER]',
-    shortDescription: '[PLACEHOLDER — confirm short description with client]',
+    id: 'batoka-suite',
+    slug: 'batoka-suite',
+    name: 'The Batoka Garden Suite',
+    tagline: 'Quiet 1-bedroom sanctuary with King bed, kitchen, and serene garden view.',
+    capacity: '2',
+    bedrooms: '1',
+    beds: '1 Plush King Bed',
+    image: 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=900&q=85',
+    imageAlt: 'The Batoka Garden Suite bedroom and garden view',
+    shortDescription:
+      'Perfect for couples or solo business travellers who want peaceful rest, great coffee, and an unhurried, comfortable Victoria Falls base.',
     highlights: [
-      '[PLACEHOLDER — confirm highlights with client]',
-      '[PLACEHOLDER — confirm highlights with client]',
-      '[PLACEHOLDER — confirm highlights with client]',
+      'Generous King bedroom with luxury cotton linens',
+      'Equipped kitchen for slow breakfasts and private meals',
+      'Work desk and dedicated high-speed Wi-Fi',
+      'Air conditioning and garden patio seating',
     ],
-    imageLabel: 'Apartment Three interior [PLACEHOLDER — confirm with client]',
   },
 ];
 
 export default function ApartmentsPage() {
   return (
     <div className="pt-20 bg-[#FAF6EE] min-h-screen">
-      {/* Page header */}
-      <section className="bg-[#0B1B2B] py-20 lg:py-24">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionEyebrow theme="light" className="mb-4">Accommodation</SectionEyebrow>
+      {/* Hero */}
+      <section className="bg-[#0B1B2B] py-20 lg:py-24 relative overflow-hidden text-[#FAF6EE]">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            background:
+              'radial-gradient(ellipse 60% 50% at 75% 35%, rgba(200,146,42,0.1) 0%, transparent 70%)',
+          }}
+        />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <SectionEyebrow theme="light" className="mb-4">
+            Accommodation &amp; Suites
+          </SectionEyebrow>
           <OchreLine className="mb-6" />
-          <h1 className="font-playfair text-4xl sm:text-5xl font-bold text-[#FAF6EE] leading-tight max-w-2xl">
-            Find the right space for your visit.
+          <h1 className="font-playfair text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight max-w-3xl mb-5">
+            Space to settle in.{' '}
+            <em className="italic font-normal text-[#D4A84B]">
+              A true Victoria Falls home base.
+            </em>
           </h1>
-          <p className="font-inter text-[#FAF6EE]/70 text-lg mt-4 max-w-xl">
-            Each apartment is fully self-catering, thoughtfully equipped and ready for couples, families or groups.
+          <p className="font-inter text-[#FAF6EE]/75 text-lg max-w-2xl leading-relaxed mb-6">
+            Every suite at {SITE_NAME} features a fully equipped kitchen, comfortable living spaces, solar backup power, and dedicated local support. Choose the right layout for your group.
           </p>
-        </div>
-      </section>
 
-      {/* Listing */}
-      <section className="py-16 lg:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {apartments.map((apt) => (
-              <article
-                key={apt.id}
-                className="bg-white rounded-lg overflow-hidden border border-[#E2D9C8] hover:border-[#C8922A] transition-colors group flex flex-col"
-              >
-                <div className="overflow-hidden">
-                  <ImagePlaceholder
-                    ariaLabel={apt.imageLabel}
-                    aspectRatio="4/3"
-                    className="w-full group-hover:scale-105 transition-transform duration-500"
-                    data-placeholder={`apartment_${apt.id}_hero_image`}
-                  />
-                </div>
-                <div className="p-6 flex flex-col flex-1">
-                  <h2 className="font-playfair text-xl font-bold text-[#0B1B2B] mb-1">
-                    {apt.name}
-                  </h2>
-                  <p className="font-inter text-sm text-[#4A5568] mb-4">
-                    {apt.tagline}
-                  </p>
-                  <div className="flex gap-4 mb-4">
-                    <span className="flex items-center gap-1.5 font-dm text-xs text-[#4A5568]">
-                      <Users size={12} className="text-[#C8922A]" aria-hidden="true" />
-                      Up to {apt.capacity} guests
-                    </span>
-                    <span className="flex items-center gap-1.5 font-dm text-xs text-[#4A5568]">
-                      <BedDouble size={12} className="text-[#C8922A]" aria-hidden="true" />
-                      {apt.bedrooms} bed(s)
-                    </span>
-                  </div>
-                  <p className="font-inter text-sm text-[#4A5568] leading-relaxed mb-5 flex-1">
-                    {apt.shortDescription}
-                  </p>
-                  <Link
-                    href={`/apartments/${apt.slug}`}
-                    className="inline-flex items-center gap-1.5 font-dm text-sm font-semibold text-[#C8922A] hover:text-[#0B1B2B] transition-colors mt-auto"
-                  >
-                    View apartment <ArrowRight size={14} aria-hidden="true" />
-                  </Link>
-                </div>
-              </article>
-            ))}
+          <div className="flex flex-wrap gap-4 text-xs font-inter text-[#FAF6EE]/80">
+            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-[#132338] rounded border border-[#0B1B2B]">
+              <UtensilsCrossed size={14} className="text-[#C8922A]" /> Full Self-Catering Kitchens
+            </span>
+            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-[#132338] rounded border border-[#0B1B2B]">
+              <Wifi size={14} className="text-[#C8922A]" /> High-Speed Wi-Fi
+            </span>
+            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-[#132338] rounded border border-[#0B1B2B]">
+              <ShieldCheck size={14} className="text-[#C8922A]" /> Solar Backup Power
+            </span>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-[#F0E8D6] py-16">
-        <div className="max-w-2xl mx-auto px-4 text-center">
-          <h2 className="font-playfair text-2xl font-bold text-[#0B1B2B] mb-4">
-            Not sure which apartment is right?
-          </h2>
-          <p className="font-inter text-[#4A5568] text-sm mb-6">
-            Send us an enquiry and tell us about your group. We'll point you in the right direction.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-[#C8922A] text-[#0B1B2B] font-dm font-semibold text-sm rounded hover:bg-[#D4A84B] transition-colors"
-          >
-            Make an Enquiry <ArrowRight size={14} aria-hidden="true" />
-          </Link>
+      {/* Suites list */}
+      <section className="py-20 lg:py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-16">
+            {suites.map((suite) => (
+              <article
+                key={suite.id}
+                className="bg-white border border-[#E2D9C8] rounded-2xl overflow-hidden shadow-sm hover:border-[#C8922A] transition-all duration-300 grid grid-cols-1 lg:grid-cols-12"
+              >
+                {/* Image */}
+                <div className="lg:col-span-6 relative min-h-[300px] lg:min-h-[420px]">
+                  <Image
+                    src={suite.image}
+                    alt={suite.imageAlt}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                  <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 bg-[#0B1B2B]/90 text-[#D4A84B] font-dm text-xs font-semibold rounded backdrop-blur-sm border border-[#C8922A]/30">
+                    <Sparkles size={13} className="text-[#C8922A]" />
+                    {suite.bedrooms} Bedroom Suite
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="lg:col-span-6 p-8 sm:p-10 flex flex-col justify-between">
+                  <div>
+                    <h2 className="font-playfair text-2xl sm:text-3xl font-bold text-[#0B1B2B] mb-2">
+                      {suite.name}
+                    </h2>
+                    <p className="font-inter text-sm text-[#C8922A] font-medium mb-4">
+                      {suite.tagline}
+                    </p>
+
+                    <div className="flex flex-wrap gap-4 mb-6 pb-4 border-b border-[#E2D9C8] text-xs font-dm text-[#4A5568]">
+                      <span className="flex items-center gap-1.5 bg-[#FAF6EE] px-2.5 py-1 rounded">
+                        <Users size={14} className="text-[#C8922A]" /> Sleeps {suite.capacity}
+                      </span>
+                      <span className="flex items-center gap-1.5 bg-[#FAF6EE] px-2.5 py-1 rounded">
+                        <BedDouble size={14} className="text-[#C8922A]" /> {suite.beds}
+                      </span>
+                    </div>
+
+                    <p className="font-inter text-sm text-[#4A5568] leading-relaxed mb-6">
+                      {suite.shortDescription}
+                    </p>
+
+                    <ul className="space-y-2 mb-8">
+                      {suite.highlights.map((h) => (
+                        <li key={h} className="flex items-start gap-2.5 text-xs font-inter text-[#4A5568]">
+                          <span className="text-[#C8922A] font-bold">✓</span>
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-[#FAF6EE]">
+                    <Link
+                      href={`/apartments/${suite.slug}`}
+                      className="px-6 py-3 bg-[#0B1B2B] text-[#FAF6EE] font-dm font-semibold text-xs rounded hover:bg-[#132338] transition-colors inline-flex items-center gap-2"
+                    >
+                      <span>View Suite &amp; Floorplan</span>
+                      <ArrowRight size={14} />
+                    </Link>
+                    <Link
+                      href={`/contact?apartment=${encodeURIComponent(suite.name)}`}
+                      className="px-6 py-3 bg-[#C8922A] text-[#0B1B2B] font-dm font-semibold text-xs rounded hover:bg-[#D4A84B] transition-colors"
+                    >
+                      Enquire for This Suite
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
     </div>

@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { createClient } from '@supabase/supabase-js';
+import { Resend } from 'resend';
 
 const enquirySchema = z
   .object({
@@ -36,43 +38,44 @@ export async function POST(request: Request) {
 
   const data = parsed.data;
 
-  // ── 1. Insert into Supabase ────────────────────────────────────────────────
+  // ── 1. Insert into Supabase (if configured) ──────────────────────────────
   try {
-    const { createClient } = require('@supabase/supabase-js');
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL,
+        process.env.SUPABASE_SERVICE_ROLE_KEY
+      );
 
-    const { error: dbError } = await supabase.from('enquiries').insert({
-      name: data.name,
-      email: data.email,
-      phone: data.phone ?? null,
-      arrival_date: data.arrivalDate,
-      departure_date: data.departureDate,
-      guests: data.guests,
-      apartment_preference: data.apartmentPreference ?? null,
-      message: data.message ?? null,
-      status: 'new',
-      source: 'website',
-    });
+      const { error: dbError } = await supabase.from('enquiries').insert({
+        name: data.name,
+        email: data.email,
+        phone: data.phone ?? null,
+        arrival_date: data.arrivalDate,
+        departure_date: data.departureDate,
+        guests: data.guests,
+        apartment_preference: data.apartmentPreference ?? null,
+        message: data.message ?? null,
+        status: 'new',
+        source: 'website',
+      });
 
-    if (dbError) {
-      console.error('Supabase insert error:', dbError);
-      return NextResponse.json({ error: 'Failed to save enquiry' }, { status: 500 });
+      if (dbError) {
+        console.warn('Supabase insert error (continuing):', dbError);
+      }
+    } else {
+      console.log('Enquiry received (database not configured):', data);
     }
   } catch (err) {
-    console.error('Supabase client error:', err);
-    return NextResponse.json({ error: 'Database error' }, { status: 500 });
+    console.warn('Supabase client error (continuing):', err);
   }
 
-  // ── 2. Send emails via Resend ─────────────────────────────────────────────
+  // ── 2. Send emails via Resend (if configured) ─────────────────────────────
   try {
-    const { Resend } = require('resend');
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    if (process.env.RESEND_API_KEY) {
+      const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const fromEmail = process.env.RESEND_FROM_EMAIL ?? 'noreply@mzilikaziapartments.com';
-    const toEmail = process.env.RESEND_TO_EMAIL ?? 'info@mzilikaziapartments.com';
+      const fromEmail = process.env.RESEND_FROM_EMAIL ?? 'noreply@mzilikaziapartments.com';
+      const toEmail = process.env.RESEND_TO_EMAIL ?? 'info@mzilikaziapartments.com';
 
     // Confirmation to guest
     await resend.emails.send({
@@ -110,28 +113,29 @@ export async function POST(request: Request) {
       `,
     });
 
-    // Notification to property
-    await resend.emails.send({
-      from: `Enquiry Form <${fromEmail}>`,
-      to: toEmail,
-      replyTo: data.email,
-      subject: `New enquiry from ${data.name} — ${data.arrivalDate} to ${data.departureDate}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #0B1B2B;">
-          <h2>New Enquiry</h2>
-          <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-            <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Name</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.name}</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Email</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.email}</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Phone</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.phone ?? '—'}</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Arrival</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.arrivalDate}</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Departure</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.departureDate}</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Guests</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.guests}</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Apartment Preference</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.apartmentPreference ?? 'No preference'}</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Message</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.message ?? '—'}</td></tr>
-          </table>
-        </div>
-      `,
-    });
+      // Notification to property
+      await resend.emails.send({
+        from: `Enquiry Form <${fromEmail}>`,
+        to: toEmail,
+        replyTo: data.email,
+        subject: `New enquiry from ${data.name} — ${data.arrivalDate} to ${data.departureDate}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #0B1B2B;">
+            <h2>New Enquiry</h2>
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+              <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Name</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.name}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Email</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.email}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Phone</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.phone ?? '—'}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Arrival</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.arrivalDate}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Departure</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.departureDate}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Guests</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.guests}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Apartment Preference</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.apartmentPreference ?? 'No preference'}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #E2D9C8; font-weight: bold;">Message</td><td style="padding: 8px; border: 1px solid #E2D9C8;">${data.message ?? '—'}</td></tr>
+            </table>
+          </div>
+        `,
+      });
+    }
   } catch (emailErr) {
     // Email failure should not block the enquiry — log and continue
     console.error('Resend email error:', emailErr);

@@ -22,7 +22,7 @@ export default function Offer() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <SectionEyebrow theme="light" className="mb-4">What's Included</SectionEyebrow>
+          <SectionEyebrow theme="light" className="mb-4">What&apos;s Included</SectionEyebrow>
           <OchreLine className="mx-auto mb-6" />
           <h2 className="font-playfair text-3xl sm:text-4xl font-bold text-[#FAF6EE] leading-tight">
             Your Victoria Falls stay, made simple.

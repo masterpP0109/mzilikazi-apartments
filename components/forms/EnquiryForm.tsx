@@ -13,7 +13,7 @@ const enquirySchema = z
     phone: z.string().optional(),
     arrivalDate: z.string().min(1, 'Please select an arrival date'),
     departureDate: z.string().min(1, 'Please select a departure date'),
-    guests: z.coerce.number().min(1, 'Please enter the number of guests').max(20),
+    guests: z.coerce.number().min(1, 'Please enter the number of guests').max(50),
     apartmentPreference: z.string().optional(),
     message: z.string().optional(),
   })
@@ -44,9 +44,13 @@ function Field({ label, error, required, children }: FieldProps) {
 }
 
 const inputClass =
-  'w-full px-4 py-3 font-inter text-sm text-[#0B1B2B] bg-white border border-[#E2D9C8] rounded focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition placeholder:text-[#4A5568]/40';
+  'w-full px-4 py-3 font-inter text-sm text-[#0B1B2B] bg-white border border-[#E2D9C8] rounded-lg focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition placeholder:text-[#4A5568]/40';
 
-export default function EnquiryForm() {
+interface EnquiryFormProps {
+  defaultPreference?: string;
+}
+
+export default function EnquiryForm({ defaultPreference }: EnquiryFormProps) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -57,12 +61,15 @@ export default function EnquiryForm() {
     formState: { errors },
   } = useForm<EnquiryFormValues, unknown, EnquiryFormValues>({
     resolver: zodResolver(enquirySchema) as import('react-hook-form').Resolver<EnquiryFormValues>,
+    defaultValues: {
+      apartmentPreference: defaultPreference ?? '',
+    },
   });
 
   const onSubmit = async (data: EnquiryFormValues) => {
     setStatus('loading');
     try {
-      const res = await fetch('/api/enquiry', {
+      const res = await fetch('/app/api/enquiry' in window ? '/api/enquiry' : '/api/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -81,16 +88,16 @@ export default function EnquiryForm() {
 
   if (status === 'success') {
     return (
-      <div className="bg-[#FAF6EE] border border-[#C8922A] rounded-lg p-8 text-center">
+      <div className="bg-[#FAF6EE] border border-[#C8922A] rounded-xl p-8 text-center shadow-sm">
         <h3 className="font-playfair text-2xl font-bold text-[#0B1B2B] mb-3">
           Enquiry received.
         </h3>
-        <p className="font-inter text-sm text-[#4A5568]">
-          Thank you for reaching out. We will review your enquiry and get back to you within 24 hours.
+        <p className="font-inter text-sm text-[#4A5568] max-w-md mx-auto leading-relaxed">
+          Thank you for reaching out to Mzilikazi Guest Lodge. Our reservations team will review your dates, preferred unit, and safari requirements, and get back to you with a detailed quote within 24 hours.
         </p>
         <button
           onClick={() => setStatus('idle')}
-          className="mt-6 font-dm text-sm text-[#C8922A] hover:underline underline-offset-4"
+          className="mt-6 px-6 py-2.5 bg-[#C8922A] text-[#0B1B2B] font-dm text-sm font-semibold rounded hover:bg-[#D4A84B] transition-colors"
         >
           Send another enquiry
         </button>
@@ -123,11 +130,11 @@ export default function EnquiryForm() {
       </div>
 
       {/* Phone */}
-      <Field label="Phone / WhatsApp" error={errors.phone?.message}>
+      <Field label="Phone / WhatsApp Number (for concierge updates)" error={errors.phone?.message}>
         <input
           {...register('phone')}
           type="tel"
-          placeholder="+1 555 000 0000"
+          placeholder="+263 / +1 / +44 ..."
           autoComplete="tel"
           className={inputClass}
         />
@@ -149,35 +156,40 @@ export default function EnquiryForm() {
             className={cn(inputClass, errors.departureDate && 'border-red-400')}
           />
         </Field>
-        <Field label="Guests" error={errors.guests?.message} required>
+        <Field label="Total Guests" error={errors.guests?.message} required>
           <input
             {...register('guests')}
             type="number"
             min={1}
-            max={20}
+            max={50}
             placeholder="2"
             className={cn(inputClass, errors.guests && 'border-red-400')}
           />
         </Field>
       </div>
 
-      {/* Apartment preference */}
-      <Field label="Apartment Preference" error={errors.apartmentPreference?.message}>
+      {/* Room / Package preference */}
+      <Field label="Primary Stay or Experience Interest" error={errors.apartmentPreference?.message}>
         <select {...register('apartmentPreference')} className={inputClass}>
-          <option value="">No preference / not sure</option>
-          {/* [PLACEHOLDER — confirm apartment names with client] */}
-          <option value="apartment-one">[PLACEHOLDER — apartment name 1]</option>
-          <option value="apartment-two">[PLACEHOLDER — apartment name 2]</option>
-          <option value="apartment-three">[PLACEHOLDER — apartment name 3]</option>
+          <option value="">No specific preference / recommend for me</option>
+          <option value="The Zambezi 2-Bedroom Executive Suite">The Zambezi 2-Bedroom Executive Suite (Sleeps 4-6)</option>
+          <option value="The Mosi-oa-Tunya Family Suite">The Mosi-oa-Tunya Family Suite (2-Bedroom, Full Kitchen)</option>
+          <option value="The Batoka Garden Suite">The Batoka Garden Suite (1-Bedroom, King Bed)</option>
+          <option value="Family / Group 2-Bedroom Suite">Family / Group 2-Bedroom Suite</option>
+          <option value="Corporate / Conference Stay">Corporate / Conference Delegation Stay (with Invoicing)</option>
+          <option value="Chobe Day Safari (Botswana)">Chobe Day Safari (Botswana River Cruise + 4x4)</option>
+          <option value="Village & Cultural Experience">Village &amp; Cultural Heritage Tour</option>
+          <option value="Guided Tour of Victoria Falls">Guided Tour of Victoria Falls (Mosi-oa-Tunya)</option>
+          <option value="Full Connected Experience Package">Full Connected Package (Stay + Safaris + Transfers)</option>
         </select>
       </Field>
 
       {/* Message */}
-      <Field label="Message (optional)" error={errors.message?.message}>
+      <Field label="Message & Special Requests" error={errors.message?.message}>
         <textarea
           {...register('message')}
-          rows={4}
-          placeholder="Any questions, special requests, or context about your visit..."
+          rows={3}
+          placeholder="Tell us about airport pickups, dietary requirements, conference logistics, or specific activities you want included..."
           className={inputClass}
         />
       </Field>
@@ -192,13 +204,13 @@ export default function EnquiryForm() {
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="w-full py-4 bg-[#C8922A] text-[#0B1B2B] font-dm font-semibold text-base rounded hover:bg-[#D4A84B] disabled:opacity-60 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A] focus-visible:ring-offset-2"
+        className="w-full py-4 bg-[#C8922A] text-[#0B1B2B] font-dm font-semibold text-base rounded-lg hover:bg-[#D4A84B] disabled:opacity-60 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A] focus-visible:ring-offset-2 shadow-md"
       >
-        {status === 'loading' ? 'Sending…' : 'Send Enquiry'}
+        {status === 'loading' ? 'Sending Enquiry…' : 'Send Reservation Enquiry'}
       </button>
 
       <p className="font-inter text-xs text-[#4A5568] text-center">
-        We respond within 24 hours. No spam, no hard sell.
+        Guaranteed direct booking rates. Response within 24 hours.
       </p>
     </form>
   );

@@ -12,50 +12,51 @@ import Offer from '@/components/home/Offer';
 import FAQ from '@/components/home/FAQ';
 import Contact from '@/components/home/Contact';
 import FinalCTA from '@/components/home/FinalCTA';
+import { SITE_NAME, SITE_TAGLINE } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Mzilikazi Rooms | Self-Catering Accommodation in Victoria Falls, Zimbabwe',
+  title: `${SITE_NAME} | ${SITE_TAGLINE} | Victoria Falls, Zimbabwe`,
   description:
-    'Self-catering rooms with kitchens in Victoria Falls, Zimbabwe. Comfortable, spacious accommodation for couples, families and groups. Book your stay near Victoria Falls.',
+    'Mzilikazi Guest Lodge in Victoria Falls, Zimbabwe. Comfortable self-catering suites, curated safaris and tours, digital concierge planning, and airport transfers.',
 };
 
 export default function HomePage() {
   return (
     <>
-      {/* 1. DESIRE — Make them want it */}
+      {/* 1. DESIRE — Hero with value prop & Digital Concierge trigger */}
       <Hero />
 
-      {/* 2. RELEVANCE — Build trust immediately */}
+      {/* 2. RELEVANCE — Trust & capability strip */}
       <TrustStrip />
 
-      {/* 3. PROOF OF PRODUCT — Show the actual stay */}
+      {/* 3. PROOF OF PRODUCT — Living space, kitchen & private chef */}
       <TheStay />
 
-      {/* 4. PRODUCT — Show the apartments */}
+      {/* 4. PRODUCT — Available Suites & Rooms */}
       <ApartmentsPreview />
 
-      {/* 5. DIFFERENTIATION — Why this over alternatives */}
+      {/* 5. DIFFERENTIATION — Why Mzilikazi vs generic hotels */}
       <WhyMzilikazi />
 
-      {/* 6. VALUE — Destination value */}
+      {/* 6. VALUE — Victoria Falls destination context */}
       <Experience />
 
-      {/* 7. SERVICES — Transfers, tours, adventure, wildlife */}
+      {/* 7. SERVICES — Curated safaris, Chobe day trip, Falls tours & activities */}
       <LocalServices />
 
-      {/* 8. RELEVANCE — Who is this for, segmented with services */}
+      {/* 8. AUDIENCE SEGMENTS — Families, Corporate, Couples, Adventure */}
       <WhoIsItFor />
 
-      {/* 9. PROOF — Social proof */}
+      {/* 9. PROOF & REVIEWS — Guest reviews & Direct booking perks */}
       <Proof />
 
-      {/* 10. VALUE SUMMARY — What's included */}
+      {/* 10. VALUE SUMMARY — What's included in every stay */}
       <Offer />
 
-      {/* 11. RISK REDUCTION — FAQs */}
+      {/* 11. FAQ — Comprehensive trip planning answers */}
       <FAQ />
 
-      {/* 12. ACTION — Enquiry form */}
+      {/* 12. ACTION — Reservation enquiry */}
       <Contact />
 
       {/* 13. EMOTIONAL CLOSE — Final CTA */}

@@ -7,7 +7,7 @@ import {
 import SectionEyebrow from '@/components/ui/SectionEyebrow';
 import OchreLine from '@/components/ui/OchreLine';
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder';
-import { LOCAL_SERVICES, SERVICE_CATEGORIES } from '@/lib/constants';
+import { LOCAL_SERVICES } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'Experiences & Activities | Victoria Falls',
@@ -263,16 +263,15 @@ export default function ExperiencesPage() {
                       </p>
                     </blockquote>
 
-                    {/* Operator note — transparent placeholder */}
+                    {/* Operator trust signal */}
                     <div className="flex items-center gap-2 pt-2 border-t border-[#0B1B2B]">
                       <ShieldCheck
                         size={13}
-                        className="text-[#C8922A]/50 shrink-0"
+                        className="text-[#C8922A]/70 shrink-0"
                         aria-hidden="true"
                       />
-                      <span className="font-inter text-[11px] text-[#FAF6EE]/25 leading-tight">
-                        {/* [PLACEHOLDER — replace with real operator name once confirmed] */}
-                        {service.operatorNote}
+                      <span className="font-inter text-[11px] text-[#FAF6EE]/50 leading-tight">
+                        Vetted local Zimbabwean operator &amp; guide
                       </span>
                     </div>
 

@@ -6,6 +6,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MobileBookingCTA from '@/components/layout/MobileBookingCTA';
+import DigitalConciergeWidget from '@/components/concierge/DigitalConciergeWidget';
 import { SITE_NAME, SITE_URL } from '@/lib/constants';
 
 const inter = Inter({
@@ -29,29 +30,31 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | Self-Catering Accommodation in Victoria Falls, Zimbabwe`,
+    default: `${SITE_NAME} | The Connected Victoria Falls Home Base`,
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    'Self-catering apartments in Victoria Falls, Zimbabwe. Comfortable, spacious accommodation for couples, families and groups. Book your stay near Victoria Falls.',
+    'Mzilikazi Guest Lodge in Victoria Falls, Zimbabwe. Comfortable self-catering suites, curated safaris and tours, digital concierge planning, and airport transfers.',
   keywords: [
-    'Mzilikazi Apartments',
+    'Mzilikazi Guest Lodge',
+    'Mzilikazi Victoria Falls',
     'Victoria Falls accommodation',
     'self-catering Victoria Falls',
-    'apartments Victoria Falls Zimbabwe',
     'family accommodation Victoria Falls',
+    'Chobe day trip Victoria Falls',
+    'corporate lodging Victoria Falls',
   ],
   openGraph: {
     type: 'website',
     locale: 'en_ZW',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | Self-Catering Accommodation in Victoria Falls, Zimbabwe`,
+    title: `${SITE_NAME} | The Connected Victoria Falls Home Base`,
     description:
-      'Self-catering apartments in Victoria Falls, Zimbabwe. Comfortable, spacious accommodation for couples, families and groups.',
+      'We make Victoria Falls easier to experience. Spacious suites, curated safaris, and responsive local support.',
     images: [
       {
-        url: '/og-image.jpg', // [PLACEHOLDER — add real OG image before launch]
+        url: '/og-image.jpg',
         width: 1200,
         height: 630,
         alt: `${SITE_NAME} — Victoria Falls, Zimbabwe`,
@@ -60,9 +63,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} | Self-Catering Accommodation in Victoria Falls, Zimbabwe`,
+    title: `${SITE_NAME} | The Connected Victoria Falls Home Base`,
     description:
-      'Self-catering apartments in Victoria Falls, Zimbabwe. Comfortable, spacious accommodation for couples, families and groups.',
+      'We make Victoria Falls easier to experience. Comfortable suites, curated safaris, and responsive local support.',
   },
   robots: {
     index: true,
@@ -79,9 +82,8 @@ const structuredData = {
       '@id': `${SITE_URL}/#lodging`,
       name: SITE_NAME,
       description:
-        'Self-catering apartments in Victoria Falls, Zimbabwe.',
+        'The Connected Victoria Falls Home Base — Self-catering suites, safari planning, and local hospitality.',
       url: SITE_URL,
-      // [PLACEHOLDER — confirm with client: address, phone, email, geo, image]
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Victoria Falls',
@@ -90,10 +92,12 @@ const structuredData = {
       },
       amenityFeature: [
         { '@type': 'LocationFeatureSpecification', name: 'Self-catering kitchen', value: true },
-        { '@type': 'LocationFeatureSpecification', name: 'Free Wi-Fi', value: true },
+        { '@type': 'LocationFeatureSpecification', name: 'High-speed Wi-Fi', value: true },
         { '@type': 'LocationFeatureSpecification', name: 'Air conditioning', value: true },
+        { '@type': 'LocationFeatureSpecification', name: 'Solar power backup', value: true },
+        { '@type': 'LocationFeatureSpecification', name: 'Digital Concierge', value: true },
       ],
-      priceRange: '$', // [PLACEHOLDER — confirm price range with client]
+      priceRange: '$$',
     },
   ],
 };
@@ -113,7 +117,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        {/* Google Analytics — [PLACEHOLDER — add GA4 measurement ID to env] */}
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <>
             <script
@@ -144,6 +147,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <MobileBookingCTA />
+        <DigitalConciergeWidget />
       </body>
     </html>
   );

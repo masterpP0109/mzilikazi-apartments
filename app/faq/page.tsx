@@ -23,7 +23,7 @@ export default function FAQPage() {
             Common questions answered.
           </h1>
           <p className="font-inter text-[#FAF6EE]/70 text-lg">
-            Everything you need to know before booking. Can't find what you're looking for? Send us a message.
+            Everything you need to know before booking. Can&apos;t find what you&apos;re looking for? Send us a message.
           </p>
         </div>
       </section>

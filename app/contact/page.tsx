@@ -18,10 +18,10 @@ export default function ContactPage() {
           <SectionEyebrow theme="light" className="mb-4">Get in Touch</SectionEyebrow>
           <OchreLine className="mb-6" />
           <h1 className="font-playfair text-4xl sm:text-5xl font-bold text-[#FAF6EE] leading-tight mb-4">
-            Let's plan your stay.
+            Let&apos;s plan your stay.
           </h1>
           <p className="font-inter text-[#FAF6EE]/70 text-lg">
-            Send us an enquiry and we'll respond within 24 hours with availability and next steps.
+            Send us an enquiry and we&apos;ll respond within 24 hours with availability and next steps.
           </p>
         </div>
       </section>
