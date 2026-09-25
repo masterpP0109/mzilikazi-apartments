@@ -1,5 +1,10 @@
 import type { NavLink } from "@/types";
 export const SITE_NAME = "Mzilikazi Guest Lodge";
+export const SITE_LOGO = {
+  src: "/mzilikazi%20imgs/mzilikazi-logo.webp",
+  width: 400,
+  height: 300,
+};
 export const SITE_TAGLINE =
   "Come for the Falls. Stay somewhere worth coming home to.";
 export const BRAND_PROMISE = "Victoria Falls outside. Home when you return.";

@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MobileBookingCTA from "@/components/layout/MobileBookingCTA";
-import { SITE_NAME, SITE_URL, SITE_TAGLINE } from "@/lib/constants";
+import { SITE_NAME, SITE_URL, SITE_TAGLINE, SITE_LOGO } from "@/lib/constants";
 const newsreader = Newsreader({
   subsets: ["latin"],
   weight: ["400"],
@@ -35,6 +35,7 @@ export const metadata: Metadata = {
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
+  logo: new URL(SITE_LOGO.src, SITE_URL).href,
   name: SITE_NAME,
   url: SITE_URL,
   address: {

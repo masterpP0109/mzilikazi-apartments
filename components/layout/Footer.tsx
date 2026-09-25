@@ -7,6 +7,7 @@ import {
   whatsappUrl,
 } from "@/lib/constants";
 import DigitalConciergeWidget from "@/components/concierge/DigitalConciergeWidget";
+import BrandLogo from "@/components/ui/BrandLogo";
 export default function Footer() {
   const whatsapp = whatsappUrl();
   return (
@@ -14,7 +15,10 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div>
-            <p className="brand-name">{SITE_NAME}</p>
+            <Link href="/" className="footer-brand">
+              <BrandLogo footer />
+              <span className="brand-name">{SITE_NAME}</span>
+            </Link>
             <p className="form-note" style={{ marginTop: 24 }}>
               Victoria Falls · Zimbabwe
               <br />

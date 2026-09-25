@@ -69,7 +69,7 @@ No stock imagery remains in public components. No property image is available lo
 
 Client media is needed for hero, each apartment gallery, story, photographic pause, destination and experiences. Typed media slots distinguish property/destination/development media, require verification and alt text, support crop positioning, and use Next Image with explicit aspect ratios and sizes. Noncritical images lazy-load; only an eventual hero is preloaded.
 
-Missing logo and OG image references were removed. These must be supplied before photo-led visual acceptance.
+The client subsequently supplied a logo in `public/mzilikazi imgs/`. It now appears in the responsive header and footer, and in business structured data, using Next Image and shared `SITE_LOGO` configuration. The social-share image and genuine property photography are still required.
 
 ## Accessibility
 
