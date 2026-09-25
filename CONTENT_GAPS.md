@@ -2,24 +2,42 @@
 
 This file documents every piece of content that requires client confirmation before the site can go live. No placeholder data should be published to production.
 
-All placeholders in code are marked with `[PLACEHOLDER — confirm with client]` and wrapped in `data-placeholder` attributes where applicable.
+Unconfirmed public facts are now null or empty arrays in `lib/property.ts`. Accommodation records remain unpublished until `confirmed` is true and a verified name is supplied. No development labels or temporary property photos should render publicly.
+
+## Hospitality refactor — September 2026
+
+- Current centrally configured identity remains **Mzilikazi Guest Lodge**; final trading-name approval is still needed. Change `SITE_NAME` in `lib/constants.ts` once confirmed.
+- Six current/legacy accommodation URLs remain available for enquiries. Their unconfirmed names, capacities, amenities, rates, galleries and policies are hidden; unpublished detail pages are noindex and omitted from the sitemap.
+- Add verified unit data to `lib/property.ts`; the homepage, index, details and enquiry suggestions share this configuration. Existing Sanity schemas and queries are preserved, but were not connected to the original public pages and are not automatically promoted as verified data.
+- Supply genuine, licensed property photos for hero, apartment galleries, editorial story and photographic pause. Set image kind, verified flag, useful alt text and crop position. All previous Unsplash property, office, kitchen and lifestyle stand-ins have been removed. No stock images remain in public components.
+- Destination/experience media also remain empty pending accurate, licensed assets. Do not label generic wildlife imagery as Chobe or unrelated waterfalls as Victoria Falls.
+- Supply the actual logo and social-share image if available. Broken `/logo.png` and `/og-image.jpg` references were removed; the existing centrally configured name is displayed as text, without inventing a new logo.
+- Contact values must be client-confirmed before setting `NEXT_PUBLIC_CONTACT_EMAIL`, `NEXT_PUBLIC_CONTACT_PHONE` and `NEXT_PUBLIC_CONTACT_WHATSAPP` (international format). Missing values hide their actions.
+- Set `NEXT_PUBLIC_SITE_URL` to the actual canonical production domain. Default now matches the supplied Vercel website.
+- Configure Supabase enquiry storage and/or **all three** Resend settings: `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `RESEND_TO_EMAIL`. The API now returns a retryable error if neither channel accepts the enquiry; it does not claim success or log guest details as a substitute for delivery.
+- Verified testimonials, policy terms, service arrangements, operator relationships, invoicing, transfers, private chef services and response-time commitments are still required before making those claims.
+- Browser QA at 320, 360, 375, 390, 414, 430, 768, 1024, 1280 and 1440+ pixels remains a manual release check because no connected browser was available in this session.
 
 ---
 
 ## 🔴 CRITICAL — Must confirm before launch
 
 ### Property Identity
+
 - [ ] **Full legal name** of the business / trading name
 - [ ] **Physical address** (for footer, structured data, Google Maps)
 - [ ] **Founding year** (if referenced anywhere)
 
 ### Contact Details
+
 - [ ] **Email address** (enquiries + booking confirmations)
 - [ ] **WhatsApp number** (with country code, for direct contact link)
 - [ ] **Phone number** (if applicable)
 
 ### Apartment Information
+
 For **each apartment**:
+
 - [ ] Official apartment name
 - [ ] Tagline / short descriptor
 - [ ] Guest profile (who it's for)
@@ -35,6 +53,7 @@ For **each apartment**:
 - [ ] All gallery images (properly licensed / owned)
 
 ### Booking Policies
+
 - [ ] Check-in time
 - [ ] Check-out time
 - [ ] Cancellation / refund policy
@@ -46,12 +65,14 @@ For **each apartment**:
 ## 🟡 IMPORTANT — Needed soon after launch
 
 ### Location
+
 - [ ] Walking / driving distance to Victoria Falls entrance gate
 - [ ] Estimated travel time to the Falls
 - [ ] Nearest airport and distance/travel time
 - [ ] Parking availability and details (free / paid, on-site / street)
 
 ### Reviews & Social Proof
+
 - [ ] All three homepage testimonials (verified, real guest reviews only)
 - [ ] Guest names and origins (with consent)
 - [ ] Review platforms used (Google, Booking.com, Airbnb, direct, etc.)
@@ -59,6 +80,7 @@ For **each apartment**:
 - [ ] Dates of stays referenced in testimonials
 
 ### Media
+
 - [ ] Hero background image (aerial / Falls / property exterior)
 - [ ] All apartment interior gallery images (3+ per unit)
 - [ ] TheStay interior feature image
@@ -70,6 +92,7 @@ For **each apartment**:
 ## 🟢 NICE TO HAVE — Can be added after launch
 
 ### Property Details
+
 - [ ] Air conditioning confirmation (all units?)
 - [ ] Security features (gated, guards, cameras, safe etc.)
 - [ ] Housekeeping schedule (daily, every X days, on request?)
@@ -77,6 +100,7 @@ For **each apartment**:
 - [ ] Whether early check-in / late check-out is offered and on what terms
 
 ### Experience & Activities
+
 - [ ] Specific distances to activity providers (bungee, rafting etc.)
 - [ ] Whether Mzilikazi **directly arranges** vs **recommends** each service — this affects the trust copy on `/experiences` and `/victoria-falls`
 - [ ] Confirmed availability of **private chef hire** and whether Mzilikazi arranges it directly or refers a local contact
@@ -95,6 +119,7 @@ For **each apartment**:
 - [ ] Photography for each service tile (8 service images needed for `/experiences` page)
 
 ### Technical / SEO
+
 - [ ] Google Analytics 4 Measurement ID
 - [ ] Sanity project ID and dataset
 - [ ] Supabase project URL and keys
@@ -108,9 +133,9 @@ For **each apartment**:
 
 1. Share this file with the client
 2. Complete the 🔴 CRITICAL section before any public launch
-3. Replace all `[PLACEHOLDER — confirm with client]` strings in the codebase
+3. Populate verified configuration fields and publish only confirmed records; never replace missing facts with invented values
 4. Never publish fabricated testimonials, distances, prices, or ratings
 
 ---
 
-*Last updated: Initial build — all placeholders pending client confirmation.*
+_Last updated: September 2026 hospitality refactor — outstanding client facts remain unpublished._
