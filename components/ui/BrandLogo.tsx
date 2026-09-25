@@ -9,6 +9,8 @@ export default function BrandLogo({ footer = false }: { footer?: boolean }) {
       width={SITE_LOGO.width}
       height={SITE_LOGO.height}
       alt=""
+      loading="eager"
+      unoptimized
       className={footer ? "brand-logo brand-logo-footer" : "brand-logo"}
       sizes={footer ? "120px" : "(max-width: 389px) 56px, 72px"}
     />
