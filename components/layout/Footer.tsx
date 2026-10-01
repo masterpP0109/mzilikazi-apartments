@@ -42,6 +42,9 @@ export default function Footer() {
             <Link href="/corporate-stays-victoria-falls">
               Work &amp; longer stays
             </Link>
+            <Link href="/plan#itineraries">Itineraries</Link>
+            <Link href="/victoria-falls/getting-here">Getting here</Link>
+            <Link href="/faq">Before you arrive</Link>
             {CONTACT_EMAIL && <a href={`mailto:${CONTACT_EMAIL}`}>Email us</a>}
             {CONTACT_PHONE && <a href={`tel:${CONTACT_PHONE}`}>Call us</a>}
             {whatsapp && <a href={whatsapp}>WhatsApp</a>}

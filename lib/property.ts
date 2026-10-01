@@ -15,6 +15,21 @@ export interface Accommodation {
   about: string | null;
   guests: number | null;
   bedrooms: number | null;
+  bathrooms: number | null;
+  facilities: {
+    kitchen: boolean | null;
+    lounge: boolean | null;
+    wifi: boolean | null;
+    airConditioning: boolean | null;
+    parking: boolean | null;
+    outdoor: string | null;
+  };
+  included: string[];
+  walkthrough: {
+    title: string;
+    description: string | null;
+    media: PropertyMedia | null;
+  }[];
   sleeping: string[];
   amenities: string[];
   kitchen: string[];
@@ -32,6 +47,23 @@ const pending = (slug: string, alias: string): Accommodation => ({
   about: null,
   guests: null,
   bedrooms: null,
+  bathrooms: null,
+  facilities: {
+    kitchen: null,
+    lounge: null,
+    wifi: null,
+    airConditioning: null,
+    parking: null,
+    outdoor: null,
+  },
+  included: [],
+  walkthrough: [
+    "Living Area",
+    "Kitchen",
+    "Bedrooms",
+    "Bathrooms",
+    "Outdoor Area",
+  ].map((title) => ({ title, description: null, media: null })),
   sleeping: [],
   amenities: [],
   kitchen: [],
@@ -70,6 +102,11 @@ export const reviews: {
   quote: string;
   name: string;
   source?: string;
+  travellerType?: string;
+  origin?: string;
+  stayLength?: string;
+  apartmentSlug?: string;
+  image?: PropertyMedia | null;
 }[] = [];
 export const confirmedServices: {
   title: string;
@@ -85,6 +122,10 @@ export const experiences = [
       "Make room for the rainforest, the viewpoints and the sound of the water.",
     detail:
       "A visit to the Falls can be the starting point for your time here. Share your interests and ask about guiding options, access and current conditions before you make plans.",
+    duration: null as string | null,
+    travellerTypes: [] as string[],
+    categories: ["Iconic", "Family"],
+    practicalNote: "Ask about current access, guiding options and conditions.",
     enabled: true,
     confirmed: false,
     providerConfirmed: false,
@@ -98,6 +139,11 @@ export const experiences = [
       "Consider a wildlife day in Botswana as part of your Victoria Falls visit.",
     detail:
       "If Chobe is on your wish list, mention it in your enquiry. Ask for current operator options, border requirements, timings and inclusions before committing to a trip.",
+    duration: null as string | null,
+    travellerTypes: [] as string[],
+    categories: ["Wildlife"],
+    practicalNote:
+      "Confirm operator arrangements, border requirements and the day’s timings.",
     enabled: true,
     confirmed: false,
     providerConfirmed: false,
@@ -111,9 +157,40 @@ export const experiences = [
       "Leave space to learn about the people and places around Victoria Falls.",
     detail:
       "Ask about respectful ways to explore local culture. Any visit should be arranged with the agreement of the host community, with clear information about what is included.",
+    duration: null as string | null,
+    travellerTypes: [] as string[],
+    categories: ["Culture"],
+    practicalNote:
+      "Ask how the visit is agreed with the host community and what is included.",
     enabled: true,
     confirmed: false,
     providerConfirmed: false,
     media: null as PropertyMedia | null,
   },
 ];
+
+export const propertyLocation: {
+  address: string | null;
+  mapEmbedUrl: string | null;
+  mapUrl: string | null;
+  nearby: { name: string; travelTime: string | null; note: string | null }[];
+} = {
+  address: null,
+  mapEmbedUrl: null,
+  mapUrl: null,
+  nearby: [
+    "Victoria Falls Rainforest",
+    "Town Centre",
+    "Victoria Falls Airport",
+    "Supermarket",
+    "Restaurants",
+    "Activity pickup areas",
+  ].map((name) => ({ name, travelTime: null, note: null })),
+};
+export const localTeam: {
+  name: string;
+  role: string;
+  bio: string;
+  media: PropertyMedia | null;
+  verified: boolean;
+}[] = [];

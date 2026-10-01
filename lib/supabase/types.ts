@@ -1,7 +1,7 @@
 // Database types matching the Supabase schema
 
-export type EnquiryStatus = 'new' | 'responded' | 'booked' | 'closed';
-export type BookingStatus = 'pending' | 'confirmed' | 'cancelled' | 'completed';
+export type EnquiryStatus = "new" | "responded" | "booked" | "closed";
+export type BookingStatus = "pending" | "confirmed" | "cancelled" | "completed";
 
 export interface Enquiry {
   id: string;
@@ -9,8 +9,8 @@ export interface Enquiry {
   name: string;
   email: string;
   phone?: string;
-  arrival_date: string;
-  departure_date: string;
+  arrival_date: string | null;
+  departure_date: string | null;
   guests: number;
   message?: string;
   apartment_preference?: string;

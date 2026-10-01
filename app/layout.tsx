@@ -1,3 +1,4 @@
+import TripProvider from "@/components/trip/TripProvider";
 import type { Metadata } from "next";
 import { Newsreader, Manrope } from "next/font/google";
 import "./globals.css";
@@ -76,12 +77,14 @@ export default function RootLayout({
         <a href="#main-content" className="skip-to-content">
           Skip to content
         </a>
-        <Header />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer />
-        <MobileBookingCTA />
+        <TripProvider>
+          <Header />
+          <main id="main-content" tabIndex={-1}>
+            {children}
+          </main>
+          <Footer />
+          <MobileBookingCTA />
+        </TripProvider>
       </body>
     </html>
   );

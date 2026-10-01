@@ -1,15 +1,17 @@
 "use client";
 import { useRef, useState, useId } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { enquirySchema, type EnquiryValues } from "@/lib/enquiry";
 import { SITE_NAME } from "@/lib/constants";
 import { publishedAccommodations } from "@/lib/property";
 interface Props {
+  allowFlexibleDates?: boolean;
   defaultPreference?: string;
   initialValues?: Partial<EnquiryValues>;
 }
 export default function EnquiryForm({
+  allowFlexibleDates = false,
   defaultPreference,
   initialValues,
 }: Props) {
@@ -24,20 +26,27 @@ export default function EnquiryForm({
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<EnquiryValues>({
     resolver: zodResolver(enquirySchema),
     defaultValues: {
+      dateMode: "known",
       guests: 2,
       apartmentPreference: defaultPreference ?? "",
       ...initialValues,
     },
   });
+  const dateMode = useWatch({ control, name: "dateMode" }) ?? "known";
   const submit = async (data: EnquiryValues) => {
     if (lock.current) return;
     lock.current = true;
     setStatus("loading");
     setError("");
     try {
+      if ((data.dateMode ?? "known") !== "known") {
+        data.arrivalDate = "";
+        data.departureDate = "";
+      }
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -142,30 +151,42 @@ export default function EnquiryForm({
           autoComplete="tel"
         />,
       )}
-      <div className="field-row">
-        {field(
-          "arrivalDate",
-          "Arrival",
-          <input
-            {...register("arrivalDate")}
-            {...attrs("arrivalDate")}
-            type="date"
-            required
-          />,
-          true,
+      {allowFlexibleDates &&
+        field(
+          "dateMode",
+          "Your dates",
+          <select {...register("dateMode")} {...attrs("dateMode")}>
+            <option value="known">Known dates</option>
+            <option value="flexible">Flexible dates</option>
+            <option value="deciding">Still deciding</option>
+          </select>,
         )}
-        {field(
-          "departureDate",
-          "Departure",
-          <input
-            {...register("departureDate")}
-            {...attrs("departureDate")}
-            type="date"
-            required
-          />,
-          true,
-        )}
-      </div>
+      {dateMode === "known" && (
+        <div className="field-row">
+          {field(
+            "arrivalDate",
+            "Arrival",
+            <input
+              {...register("arrivalDate")}
+              {...attrs("arrivalDate")}
+              type="date"
+              required
+            />,
+            true,
+          )}
+          {field(
+            "departureDate",
+            "Departure",
+            <input
+              {...register("departureDate")}
+              {...attrs("departureDate")}
+              type="date"
+              required
+            />,
+            true,
+          )}
+        </div>
+      )}
       {field(
         "guests",
         "Guests",

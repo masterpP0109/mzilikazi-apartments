@@ -10,7 +10,7 @@ export const metadata = pageMetadata(
 export default function FAQPage() {
   return (
     <>
-      <PageIntro eyebrow="Good to know" title="A few questions, answered." />
+      <PageIntro eyebrow="Good to know" title="Before you arrive." />
       <FAQ />
       <FinalCTA />
     </>

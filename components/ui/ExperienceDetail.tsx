@@ -1,3 +1,4 @@
+import { AddToTrip } from "@/components/trip/TripProvider";
 import { experiences } from "@/lib/property";
 import {
   PageIntro,
@@ -24,6 +25,8 @@ export default function ExperienceDetail({ slug }: { slug: string }) {
             </div>
             <div>
               <p>{e.detail}</p>
+              {e.duration && <p>Duration: {e.duration}</p>}
+              <p className="form-note">{e.practicalNote}</p>
               <p className="form-note" style={{ marginTop: 24 }}>
                 Discuss current options and arrangements before booking. Sending
                 an enquiry does not reserve an activity.
@@ -34,6 +37,7 @@ export default function ExperienceDetail({ slug }: { slug: string }) {
                 >
                   Ask about this experience →
                 </Button>
+                <AddToTrip kind="experience" id={e.slug} />
                 <TextLink href="/experiences">All experiences</TextLink>
               </div>
             </div>

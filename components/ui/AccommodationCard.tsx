@@ -1,3 +1,4 @@
+import { AddToTrip } from "@/components/trip/TripProvider";
 import { ImageFrame, TextLink } from "./Editorial";
 import { isPublicMedia, type Accommodation } from "@/lib/property";
 export function AccommodationFacts({
@@ -14,7 +15,14 @@ export function AccommodationFacts({
           {a.bedrooms} {a.bedrooms === 1 ? "bedroom" : "bedrooms"}
         </span>
       )}
-      {a.kitchen.length > 0 && <span>Kitchen</span>}
+      {a.bathrooms != null && <span>{a.bathrooms} bathrooms</span>}
+      {(a.kitchen.length > 0 || a.facilities.kitchen === true) && (
+        <span>Kitchen</span>
+      )}
+      {a.facilities.lounge === true && <span>Lounge</span>}
+      {a.facilities.wifi === true && <span>Wi-Fi</span>}
+      {a.facilities.airConditioning === true && <span>Air conditioning</span>}
+      {a.facilities.outdoor && <span>{a.facilities.outdoor}</span>}
     </div>
   );
 }
@@ -35,7 +43,16 @@ export function AccommodationCard({
       <h3>{a.name}</h3>
       {a.description && <p>{a.description}</p>}
       <AccommodationFacts apartment={a} />
-      <TextLink href={`/apartments/${a.slug}`}>View apartment</TextLink>
+      {a.idealFor.length > 0 && (
+        <p className="form-note">Best for: {a.idealFor.join(", ")}</p>
+      )}
+      {a.rate && <p>{a.rate}</p>}
+      <div className="actions">
+        <TextLink href={`/apartments/${a.slug}`}>
+          Explore This Apartment
+        </TextLink>
+        <AddToTrip kind="accommodation" id={a.slug} />
+      </div>
     </article>
   );
 }
@@ -54,7 +71,7 @@ export function AccommodationFallback() {
           options and current rates for your stay.
         </p>
         <div className="actions">
-          <TextLink href="/contact">Find your space</TextLink>
+          <TextLink href="/plan">Help Me Choose</TextLink>
         </div>
       </div>
     </div>

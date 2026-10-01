@@ -23,6 +23,16 @@ export async function POST(request: Request) {
       { status: 422 },
     );
   const data = parsed.data;
+  if ((data.dateMode ?? "known") !== "known") {
+    data.arrivalDate = undefined;
+    data.departureDate = undefined;
+  }
+  const dateSummary =
+    (data.dateMode ?? "known") === "known"
+      ? `${data.arrivalDate} to ${data.departureDate}`
+      : data.dateMode === "flexible"
+        ? "with flexible dates"
+        : "with dates still to discuss";
   let delivered = false;
   if (
     process.env.NEXT_PUBLIC_SUPABASE_URL &&
@@ -33,20 +43,26 @@ export async function POST(request: Request) {
         process.env.NEXT_PUBLIC_SUPABASE_URL,
         process.env.SUPABASE_SERVICE_ROLE_KEY,
       );
-      const { error } = await db
-        .from("enquiries")
-        .insert({
-          name: data.name,
-          email: data.email,
-          phone: data.phone || null,
-          arrival_date: data.arrivalDate,
-          departure_date: data.departureDate,
-          guests: data.guests,
-          apartment_preference: data.apartmentPreference || null,
-          message: data.message || null,
-          status: "new",
-          source: "website",
-        });
+      const { error } = await db.from("enquiries").insert({
+        name: data.name,
+        email: data.email,
+        phone: data.phone || null,
+        arrival_date: data.arrivalDate || null,
+        departure_date: data.departureDate || null,
+        guests: data.guests,
+        apartment_preference: data.apartmentPreference || null,
+        message:
+          [
+            data.dateMode && data.dateMode !== "known"
+              ? "Dates: " + data.dateMode
+              : "",
+            data.message,
+          ]
+            .filter(Boolean)
+            .join("\n") || null,
+        status: "new",
+        source: "website",
+      });
       delivered = !error;
       if (error) console.error("Enquiry storage failed");
     } catch {
@@ -65,8 +81,8 @@ export async function POST(request: Request) {
         from,
         to: process.env.RESEND_TO_EMAIL,
         replyTo: data.email,
-        subject: `New accommodation enquiry — ${data.arrivalDate}`,
-        text: `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone ?? ""}\nArrival: ${data.arrivalDate}\nDeparture: ${data.departureDate}\nGuests: ${data.guests}\nPreference: ${data.apartmentPreference ?? ""}\nMessage: ${data.message ?? ""}`,
+        subject: `New accommodation enquiry — ${data.arrivalDate || data.dateMode || "dates to discuss"}`,
+        text: `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone ?? ""}\nArrival: ${data.arrivalDate}\nDeparture: ${data.departureDate || "to discuss"}\nGuests: ${data.guests}\nPreference: ${data.apartmentPreference ?? ""}\nMessage: ${data.message ?? ""}`,
       });
       if (!notification.error) delivered = true;
       else console.error("Enquiry notification failed");
@@ -79,7 +95,7 @@ export async function POST(request: Request) {
           from,
           to: data.email,
           subject: `Your enquiry — ${SITE_NAME}`,
-          text: `Thank you for contacting ${SITE_NAME}. We have received your enquiry for ${data.arrivalDate} to ${data.departureDate}, for ${data.guests} guests. Availability and booking confirmation will follow separately.`,
+          text: `Thank you for contacting ${SITE_NAME}. We have received your enquiry ${dateSummary}, for ${data.guests} guests. Availability and booking confirmation will follow separately.`,
         });
       } catch {
         console.error("Guest acknowledgement unavailable");

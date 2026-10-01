@@ -24,6 +24,12 @@ export default function ApartmentsPreview() {
         ) : (
           <AccommodationFallback />
         )}
+        <div className="actions">
+          <TextLink href="/plan">
+            Not sure which one fits your group? Help Me Choose
+          </TextLink>
+          <TextLink href="/apartments#compare">Compare apartments</TextLink>
+        </div>
       </Container>
     </section>
   );

@@ -29,11 +29,11 @@ export function whatsappUrl(message = "") {
     : null;
 }
 export const NAV_LINKS: NavLink[] = [
-  { label: "Accommodation", href: "/apartments" },
-  { label: "Experiences", href: "/experiences" },
+  { label: "Stay", href: "/apartments" },
+  { label: "Experience", href: "/experiences" },
   { label: "Victoria Falls", href: "/victoria-falls" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Contact", href: "/contact" },
+  { label: "Plan", href: "/plan" },
+  { label: "Our Story", href: "/our-story" },
 ];
 export const FAQ_ITEMS = [
   {

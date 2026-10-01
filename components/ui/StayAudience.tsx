@@ -1,4 +1,4 @@
-import { PageIntro, Container, Eyebrow } from "./Editorial";
+import { PageIntro, Container, Eyebrow, TextLink } from "./Editorial";
 import EnquiryForm from "@/components/forms/EnquiryForm";
 export default function StayAudience({ kind }: { kind: "family" | "work" }) {
   const family = kind === "family";
@@ -31,6 +31,18 @@ export default function StayAudience({ kind }: { kind: "family" | "work" }) {
                   ? "Share the number of adults and children, your preferred sleeping arrangements and any practical requirements. Ask for the available layouts and facilities for your dates."
                   : "Include your dates, number of guests and any workspace, connectivity or invoicing requirements. Ask for confirmation of the facilities and arrangements you need before booking."}
               </p>
+              <div className="actions">
+                <TextLink
+                  href={
+                    family ? "/plan?traveller=Family" : "/plan?traveller=Work"
+                  }
+                >
+                  Plan the days around your stay
+                </TextLink>
+                <TextLink href="/apartments#compare">
+                  Compare accommodation
+                </TextLink>
+              </div>
             </div>
             <EnquiryForm
               defaultPreference={

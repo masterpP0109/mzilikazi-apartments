@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container, Eyebrow, ImageFrame } from "@/components/ui/Editorial";
 import AvailabilityPanel from "@/components/forms/AvailabilityPanel";
 import { propertyMedia, isPublicMedia } from "@/lib/property";
@@ -17,9 +18,16 @@ export default function Hero() {
             </h1>
             <p className="hero-copy">
               A comfortable base. A little independence.
-              <br />
-              Victoria Falls, at your own pace.
+              <br />A self-catering stay, with room to plan the days around it.
             </p>
+            <div className="actions">
+              <Link className="button button-primary" href="/apartments">
+                Explore the Stay
+              </Link>
+              <Link className="text-link" href="/plan">
+                Plan My Victoria Falls Trip →
+              </Link>
+            </div>
           </div>
           <ImageFrame media={propertyMedia.hero} ratio="hero" priority />
         </div>

@@ -1,3 +1,4 @@
+import ApartmentComparison from "@/components/ui/ApartmentComparison";
 import { Container, PageIntro } from "@/components/ui/Editorial";
 import { publishedAccommodations } from "@/lib/property";
 import {
@@ -34,6 +35,7 @@ export default function ApartmentsPage() {
           ) : (
             <AccommodationFallback />
           )}
+          <ApartmentComparison />
         </Container>
       </section>
       <FinalCTA />

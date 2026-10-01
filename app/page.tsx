@@ -1,3 +1,11 @@
+import WhoIsItFor from "@/components/home/WhoIsItFor";
+import LifeAtMzilikazi from "@/components/home/LifeAtMzilikazi";
+import PlanningGuide from "@/components/home/PlanningGuide";
+import Itineraries from "@/components/trip/Itineraries";
+import DayBuilder from "@/components/trip/DayBuilder";
+import Location from "@/components/home/Location";
+import LocalTeam from "@/components/home/LocalTeam";
+import FAQ from "@/components/home/FAQ";
 import Hero from "@/components/home/Hero";
 import TrustStrip from "@/components/home/TrustStrip";
 import ApartmentsPreview from "@/components/home/ApartmentsPreview";
@@ -20,8 +28,10 @@ export default function HomePage() {
     <>
       <Hero />
       <TrustStrip />
-      <ApartmentsPreview />
+      <WhoIsItFor />
       <TheStay />
+      <LifeAtMzilikazi />
+      <ApartmentsPreview />
       {isPublicMedia(propertyMedia.pause) && (
         <section className="section photo-break">
           <Container>
@@ -31,8 +41,14 @@ export default function HomePage() {
         </section>
       )}
       <Experience />
+      <DayBuilder />
+      <Itineraries />
+      <PlanningGuide />
+      <Location />
       <LocalServices />
+      <LocalTeam />
       <Proof />
+      <FAQ compact />
       <FinalCTA />
     </>
   );

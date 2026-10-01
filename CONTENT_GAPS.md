@@ -139,3 +139,13 @@ For **each apartment**:
 ---
 
 _Last updated: September 2026 hospitality refactor — outstanding client facts remain unpublished._
+
+## October 2026 customer journey
+
+- Populate apartment bathrooms, facilities, inclusions and walkthrough media in lib/property.ts; pending apartments remain unpublished.
+- Supply traveller-card and morning/day/evening photography in lib/planning.ts. Verified media only.
+- Populate propertyLocation with a confirmed address, Google Maps embed/link and measured nearby journey times.
+- Populate verified localTeam and expanded review context (traveller type, origin, stay length, apartment and source).
+- Replace nullable practicalAnswers with confirmed answers; unanswered topics invite a question.
+- Review editable day ideas, itineraries and guide content; they are suggestions, not promised packages.
+- Apply migration 002 to support flexible-date enquiries when using Supabase storage.

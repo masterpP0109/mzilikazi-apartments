@@ -906,3 +906,356 @@ dialog::backdrop {
     padding-bottom: calc(80px + env(safe-area-inset-bottom));
   }
 }
+
+/* Customer journey extensions use the existing editorial tokens. */
+.journey-grid {
+  display: grid;
+  gap: 32px;
+  margin-top: 40px;
+}
+.journey-card {
+  min-width: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+.journey-card h3,
+.moments-grid h3 {
+  margin-block: 20px 12px;
+}
+.journey-card p + p {
+  margin-top: 16px;
+}
+.journey-card .text-link {
+  margin-top: 16px;
+}
+.journey-card > .text-link {
+  display: flex;
+  width: fit-content;
+}
+.guide-links {
+  display: grid;
+  gap: 12px;
+  margin-top: 32px;
+}
+.guide-links .text-link {
+  border-bottom: 1px solid var(--line);
+  padding-block: 12px;
+}
+.guide-category {
+  margin-top: 48px;
+}
+.guide-category h3 {
+  margin-bottom: 24px;
+}
+.guide-article {
+  max-width: var(--reading);
+  margin-inline: auto;
+}
+.guide-article section + section {
+  margin-top: 40px;
+}
+.guide-article h2 {
+  font-size: var(--h3);
+  margin-bottom: 24px;
+}
+.guide-article p + p {
+  margin-top: 20px;
+}
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-block: 32px;
+}
+.filter-options .button {
+  padding-inline: 16px;
+}
+.filter-options [aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--surface);
+  border-color: var(--ink);
+}
+.day-timeline {
+  list-style: none;
+  padding: 0;
+  max-width: 720px;
+  margin-block: 32px;
+}
+.day-timeline li {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 24px;
+  border-top: 1px solid var(--line);
+  padding-block: 20px;
+}
+.day-timeline li span {
+  color: var(--muted);
+  font-size: 14px;
+}
+.itinerary-summary {
+  list-style: none;
+  padding: 0;
+  margin-block: 24px;
+}
+.itinerary-summary li {
+  border-top: 1px solid var(--line);
+  padding-block: 12px;
+  font-size: 14px;
+}
+.itinerary-summary span {
+  color: var(--muted);
+  margin-right: 12px;
+}
+.itinerary-detail {
+  list-style: none;
+  padding: 0;
+  max-width: var(--reading);
+}
+.itinerary-detail li {
+  border-top: 1px solid var(--line);
+  padding-block: 32px;
+}
+.itinerary-detail h2 {
+  font-size: var(--h3);
+  margin-bottom: 20px;
+}
+.planner-page {
+  max-width: 760px;
+}
+.planner-flow {
+  min-width: 0;
+}
+.planner-flow h2 {
+  font-size: var(--h3);
+  margin-bottom: 24px;
+}
+.planner-flow h3 {
+  margin-bottom: 16px;
+}
+.planner-flow progress {
+  width: 100%;
+  height: 4px;
+  accent-color: var(--brand);
+  margin-bottom: 24px;
+}
+.planner-flow fieldset {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+}
+.planner-flow legend {
+  font-family: var(--font-newsreader);
+  font-size: var(--h3);
+  margin-bottom: 20px;
+}
+.choice-grid {
+  display: grid;
+  gap: 12px;
+}
+.choice {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 52px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-input);
+}
+.choice:has(input:checked) {
+  border-color: var(--brand);
+  background: var(--surface-secondary);
+}
+.choice input {
+  width: 20px;
+  height: 20px;
+  min-height: 20px;
+  flex-shrink: 0;
+  accent-color: var(--brand);
+}
+.planner-result {
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+.planner-result h4 {
+  margin-bottom: 12px;
+}
+.planner-result > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+.trip-list {
+  list-style: none;
+  padding: 0;
+  margin-block: 16px;
+}
+.trip-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  padding-block: 12px;
+}
+.trip-list li a {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.trip-group + .trip-group {
+  margin-top: 32px;
+}
+.trip-profile {
+  margin-top: 32px;
+}
+.trip-profile > div {
+  margin-block: 16px;
+}
+.trip-profile dt {
+  font-weight: 600;
+  font-size: 13px;
+}
+.trip-profile dd {
+  margin: 4px 0 0;
+}
+.my-trip-button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.comparison-section {
+  margin-top: 64px;
+  border-top: 1px solid var(--line);
+  padding-top: 40px;
+}
+.comparison-section h2 {
+  margin-bottom: 24px;
+}
+.comparison-grid {
+  display: grid;
+  gap: 24px;
+  margin-top: 32px;
+}
+.comparison-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  padding: 24px;
+  min-width: 0;
+}
+.comparison-card h3 {
+  margin-bottom: 24px;
+}
+.comparison-fact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  padding-block: 12px;
+  font-size: 14px;
+}
+.comparison-fact dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.walkthrough {
+  margin-top: 32px;
+}
+.walkthrough h3 {
+  margin-block: 20px 12px;
+}
+.policy-row dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.location-map {
+  width: 100%;
+  height: 320px;
+  border: 0;
+  border-radius: var(--radius-panel);
+  margin-top: 24px;
+}
+.nearby-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 24px;
+}
+.nearby-list li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  border-bottom: 1px solid var(--line);
+  padding-block: 12px;
+}
+.nearby-list li span:last-child {
+  color: var(--muted);
+  font-size: 13px;
+}
+.related-heading {
+  margin-top: 40px;
+}
+@media (min-width: 640px) {
+  .journey-grid,
+  .guide-links,
+  .choice-grid,
+  .comparison-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .moments-grid,
+  .itinerary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 639px) {
+  .header-inner {
+    gap: 8px;
+  }
+  .my-trip-button {
+    font-size: 12px;
+    gap: 4px;
+  }
+  .brand-lockup .brand-name {
+    max-width: 120px;
+    font-size: 18px;
+  }
+  .brand-lockup .brand-name small {
+    font-size: 7px;
+  }
+  .brand-logo:not(.brand-logo-footer) {
+    width: 48px;
+    height: 36px;
+  }
+  .brand-lockup {
+    gap: 6px;
+  }
+}
+@media (max-width: 359px) {
+  .brand-lockup .brand-name {
+    max-width: 98px;
+    font-size: 16px;
+  }
+  .brand-logo:not(.brand-logo-footer) {
+    width: 40px;
+    height: 30px;
+  }
+  .day-timeline li {
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 16px;
+  }
+}
+
+.planner-flow progress {
+  appearance: none;
+  border: 0;
+  background: var(--line);
+  color: var(--brand);
+}
+.planner-flow progress::-webkit-progress-bar {
+  background: var(--line);
+}
+.planner-flow progress::-webkit-progress-value {
+  background: var(--brand);
+}
+.planner-flow progress::-moz-progress-bar {
+  background: var(--brand);
+}

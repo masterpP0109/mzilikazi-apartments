@@ -1,43 +1,34 @@
 "use client";
 import { useState, useEffect, useRef, useId } from "react";
-import { X } from "lucide-react";
-import EnquiryForm from "@/components/forms/EnquiryForm";
-import { FAQ_ITEMS, whatsappUrl, SITE_NAME } from "@/lib/constants";
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
-  initialSegment?: string;
-}
+import TripPlanner from "@/components/trip/TripPlanner";
+import { FAQ_ITEMS } from "@/lib/constants";
+import Link from "next/link";
 export default function DigitalConciergeModal({
   isOpen,
   onClose,
   initialSegment,
-}: Props) {
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  initialSegment?: string;
+}) {
   const dialog = useRef<HTMLDialogElement>(null);
   const titleId = useId();
-  const [tab, setTab] = useState<"planner" | "questions">("planner");
-  const [step, setStep] = useState(1);
-  const [kind, setKind] = useState(initialSegment ?? "");
-  const [interests, setInterests] = useState<string[]>([]);
-  const [notes, setNotes] = useState("");
-  const [invoice, setInvoice] = useState(false);
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [tab, setTab] = useState("planner");
   useEffect(() => {
     const el = dialog.current;
-    if (isOpen) {
-      el?.showModal();
-      const previous = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        el?.close();
-        document.body.style.overflow = previous;
-      };
+    if (!isOpen) {
+      el?.close();
+      return;
     }
-    el?.close();
+    el?.showModal();
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      el?.close();
+      document.body.style.overflow = previous;
+    };
   }, [isOpen]);
-  const message = `Travel plans: ${kind}\nInterests: ${interests.join(", ")}\nInvoice requested: ${invoice ? "Yes" : "No"}\n${notes}`;
-  const whatsapp = whatsappUrl(`Hello ${SITE_NAME},\n${message}`);
   return (
     <dialog
       ref={dialog}
@@ -55,7 +46,7 @@ export default function DigitalConciergeModal({
           onClick={onClose}
           aria-label="Close trip planner"
         >
-          <X />
+          ✕
         </button>
       </div>
       <div className="planner-tabs">
@@ -72,8 +63,10 @@ export default function DigitalConciergeModal({
           Questions
         </button>
       </div>
-      {tab === "questions" ? (
-        <div>
+      {tab === "planner" ? (
+        <TripPlanner initialSegment={initialSegment} />
+      ) : (
+        <>
           <div className="faq-list">
             {FAQ_ITEMS.map((f) => (
               <details key={f.question}>
@@ -82,131 +75,12 @@ export default function DigitalConciergeModal({
               </details>
             ))}
           </div>
-          <form
-            className="enquiry-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              setAnswer(
-                "Add this question to your enquiry so the team can respond about your specific visit.",
-              );
-            }}
-          >
-            <label className="field">
-              Your question
-              <input
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                required
-              />
-            </label>
-            <button className="button button-secondary">Ask a question</button>
-            {answer && (
-              <>
-                <p role="status">{answer}</p>
-                <button
-                  type="button"
-                  className="text-link"
-                  onClick={() => {
-                    setNotes(question);
-                    setTab("planner");
-                    setStep(2);
-                  }}
-                >
-                  Add to my enquiry →
-                </button>
-              </>
-            )}
-          </form>
-        </div>
-      ) : step === 1 ? (
-        <form
-          className="enquiry-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            setStep(2);
-          }}
-        >
-          <p>
-            Collect your ideas, then send them with your dates. These are
-            preferences to discuss, not reserved services.
-          </p>
-          <label className="field">
-            Who is travelling?
-            <select value={kind} onChange={(e) => setKind(e.target.value)}>
-              <option value="">Choose if you wish</option>
-              {[
-                "Couple",
-                "Family",
-                "Friends or group",
-                "Work or conference",
-                "Solo",
-              ].map((v) => (
-                <option key={v}>{v}</option>
-              ))}
-            </select>
-          </label>
-          <fieldset>
-            <legend className="field-label">What interests you?</legend>
-            <div className="planner-options">
-              {[
-                "The Falls",
-                "Wildlife",
-                "Culture",
-                "Adventure",
-                "Transfer information",
-              ].map((v) => (
-                <label key={v}>
-                  <input
-                    type="checkbox"
-                    checked={interests.includes(v)}
-                    onChange={() =>
-                      setInterests(
-                        interests.includes(v)
-                          ? interests.filter((i) => i !== v)
-                          : [...interests, v],
-                      )
-                    }
-                  />
-                  {v}
-                </label>
-              ))}
-              <label>
-                <input
-                  type="checkbox"
-                  checked={invoice}
-                  onChange={(e) => setInvoice(e.target.checked)}
-                />
-                Ask about invoicing
-              </label>
-            </div>
-          </fieldset>
-          <label className="field">
-            Anything else?
-            <textarea
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              maxLength={4000}
-            />
-          </label>
-          <button className="button button-primary">
-            Add dates & contact details →
-          </button>
-          {whatsapp && (
-            <a className="text-link" href={whatsapp}>
-              Share ideas on WhatsApp →
-            </a>
-          )}
-        </form>
-      ) : (
-        <>
-          <button className="text-link" onClick={() => setStep(1)}>
-            ← Edit your plan
-          </button>
-          <EnquiryForm
-            key={message}
-            defaultPreference={kind}
-            initialValues={{ message }}
-          />
+          <Link className="text-link" href="/faq" onClick={onClose}>
+            Before you arrive →
+          </Link>
+          <Link className="text-link" href="/contact" onClick={onClose}>
+            Ask us a question →
+          </Link>
         </>
       )}
     </dialog>

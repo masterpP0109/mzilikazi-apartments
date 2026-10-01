@@ -53,6 +53,29 @@ test("all existing public routes render without unsupported public content", asy
     "/experiences/village-cultural-visit",
     "/victoria-falls",
     "/faq",
+    "/plan",
+    "/our-story",
+    "/plan/itineraries/two-nights",
+    "/plan/itineraries/three-nights",
+    "/plan/itineraries/five-nights",
+    ...[
+      "first-time",
+      "when-to-visit",
+      "how-many-days",
+      "budget",
+      "getting-here",
+      "getting-around",
+      "what-to-pack",
+      "families",
+      "money",
+      "internet",
+      "weather",
+      "safety",
+      "couples",
+      "adventure",
+      "wildlife",
+      "food",
+    ].map((s) => "/victoria-falls/" + s),
     "/contact",
     "/corporate-stays-victoria-falls",
     "/family-group-accommodation-victoria-falls",
@@ -82,6 +105,8 @@ test("availability parameters prefill the enquiry", async () => {
 });
 test("unknown accommodation is a 404 and unpublished units are not indexed", async () => {
   assert.equal((await get("/apartments/not-a-real-unit")).status, 404);
+  assert.equal((await get("/victoria-falls/not-a-real-guide")).status, 404);
+  assert.equal((await get("/plan/itineraries/not-a-real-plan")).status, 404);
   const html = await (await get("/apartments/apartment-one")).text();
   assert.match(html, /noindex/);
   const sitemap = await (await get("/sitemap.xml")).text();
@@ -105,4 +130,12 @@ test("enquiry API rejects invalid submissions and never reports undelivered succ
   });
   assert.equal(res.status, 503);
   assert.equal((await res.json()).success, undefined);
+  const flexible = await submit({
+    name: "Test Guest",
+    email: "guest@example.org",
+    guests: 2,
+    dateMode: "flexible",
+    message: "June if possible",
+  });
+  assert.equal(flexible.status, 503);
 });

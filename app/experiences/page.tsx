@@ -1,6 +1,8 @@
 import { PageIntro, Container } from "@/components/ui/Editorial";
-import ExperienceCard from "@/components/ui/ExperienceCard";
-import { experiences } from "@/lib/property";
+import ExperienceExplorer from "@/components/trip/ExperienceExplorer";
+import DayBuilder from "@/components/trip/DayBuilder";
+import Itineraries from "@/components/trip/Itineraries";
+
 import { pageMetadata } from "@/lib/seo";
 import FinalCTA from "@/components/home/FinalCTA";
 export const metadata = pageMetadata(
@@ -19,13 +21,11 @@ export default function ExperiencesPage() {
       </PageIntro>
       <section className="section">
         <Container>
-          {experiences
-            .filter((e) => e.enabled)
-            .map((e, i) => (
-              <ExperienceCard key={e.slug} experience={e} index={i} />
-            ))}
+          <ExperienceExplorer />
         </Container>
       </section>
+      <DayBuilder />
+      <Itineraries />
       <FinalCTA />
     </>
   );

@@ -1,3 +1,5 @@
+import GuideDirectory from "@/components/trip/GuideDirectory";
+import Itineraries from "@/components/trip/Itineraries";
 import {
   PageIntro,
   Container,
@@ -50,6 +52,8 @@ export default function VictoriaFallsPage() {
           </div>
         </Container>
       </section>
+      <GuideDirectory />
+      <Itineraries />
       <Experience />
     </>
   );

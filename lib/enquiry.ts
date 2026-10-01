@@ -17,8 +17,9 @@ export const enquirySchema = z
       .email("Please enter a valid email address")
       .max(254),
     phone: z.string().max(60).optional(),
-    arrivalDate: date,
-    departureDate: date,
+    dateMode: z.enum(["known", "flexible", "deciding"]).optional(),
+    arrivalDate: z.union([date, z.literal("")]).optional(),
+    departureDate: z.union([date, z.literal("")]).optional(),
     guests: z
       .number()
       .int("Please enter a whole number of guests")
@@ -30,14 +31,25 @@ export const enquirySchema = z
       .max(5000, "Please keep your message under 5,000 characters.")
       .optional(),
   })
-  .refine((d) => d.departureDate > d.arrivalDate, {
-    message: "Departure must be after arrival",
-    path: ["departureDate"],
-  })
   .refine(
     (d) =>
-      d.arrivalDate >=
-      new Date(Date.now() - 86400000).toISOString().slice(0, 10),
+      (d.dateMode ?? "known") !== "known" ||
+      Boolean(
+        d.arrivalDate && d.departureDate && d.departureDate > d.arrivalDate,
+      ),
+    {
+      message: "Departure must be after arrival",
+      path: ["departureDate"],
+    },
+  )
+  .refine(
+    (d) =>
+      (d.dateMode ?? "known") !== "known" ||
+      Boolean(
+        d.arrivalDate &&
+        d.arrivalDate >=
+          new Date(Date.now() - 86400000).toISOString().slice(0, 10),
+      ),
     {
       message: "Please choose an upcoming arrival date",
       path: ["arrivalDate"],
