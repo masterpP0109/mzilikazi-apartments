@@ -84,22 +84,40 @@ accommodations[0].confirmed = true;
 accommodations[0].name = "Zambezi Suite";
 accommodations[0].description = "A comfortable two-bedroom suite with garden views.";
 accommodations[0].gallery = [];
-// User-requested demo pricing; replace with confirmed rates before publication.
-accommodations[0].rate = "Sample price: US$120 per apartment per night (demo only).";
 
 accommodations[1].confirmed = true;
 accommodations[1].name = "Family Suite";
 accommodations[1].description = "Spacious family layout with two bedrooms and a shared lounge.";
 accommodations[1].gallery = [];
-// User-requested demo pricing; replace with confirmed rates before publication.
-accommodations[1].rate = "Sample price: US$180 per apartment per night (demo only).";
 
 accommodations[2].confirmed = true;
 accommodations[2].name = "Batoka Suite";
 accommodations[2].description = "Bright suite with private outdoor space.";
 accommodations[2].gallery = [];
-// User-requested demo pricing; replace with confirmed rates before publication.
-accommodations[2].rate = "Sample price: US$140 per apartment per night (demo only).";
+// Apartment details supplied by the property owner.
+for (const apartment of accommodations) {
+  apartment.description = "A two-bedroom apartment for up to four guests, with a lounge, dining area and fully equipped kitchen.";
+  apartment.about = "Enjoy two bedrooms, en-suite bathrooms and air conditioning, with space to relax in the lounge and share meals in the dining area. A cleaner is provided, and a chef is available on request.";
+  apartment.guests = 4;
+  apartment.bedrooms = 2;
+  apartment.facilities.kitchen = true;
+  apartment.facilities.lounge = true;
+  apartment.facilities.airConditioning = true;
+  apartment.facilities.parking = true;
+  apartment.sleeping = ["Two bedrooms", "Sleeps up to four people per apartment", "En-suite bathrooms"];
+  apartment.amenities = ["Lounge", "Dining area", "Air conditioning", "En-suite bathrooms", "Washing machine", "Parking for up to four vehicles", "Chef available on request"];
+  apartment.kitchen = ["Fully equipped kitchen", "Microwave"];
+  apartment.included = ["Cleaner provided", "Air conditioning", "Fully equipped kitchen", "Washing machine"];
+  apartment.idealFor = ["Families", "Groups of up to four", "Self-catering stays"];
+  apartment.rate = "US$130 per apartment per night.";
+  apartment.policies = [
+    { label: "Parking", value: "Parking for up to four vehicles." },
+    { label: "Cleaning", value: "A cleaner is provided." },
+    { label: "Security", value: "Electric fence and dura wall." },
+    { label: "Payment", value: "Mastercard, EcoCash and cash accepted." },
+    { label: "Chef", value: "Available on request." },
+  ];
+}
 export const publishedAccommodations = accommodations.filter(
   (a) => a.confirmed && a.name,
 );

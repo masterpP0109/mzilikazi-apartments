@@ -69,7 +69,6 @@ export default async function ApartmentPage({
     "Check-out",
     "Children",
     "Parking",
-    "Smoking",
     "Parties",
     "Cleaning",
     "Security",

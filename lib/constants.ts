@@ -49,7 +49,7 @@ export const FAQ_ITEMS = [
   {
     question: "Where can I find current rates and policies?",
     answer:
-      "Request current rates, payment terms, cancellation conditions and arrival arrangements with your enquiry. Please confirm these before making a booking.",
+      "Each apartment is US$130 per night and sleeps up to four people in two bedrooms. We accept Mastercard, EcoCash and cash. Ask about payment terms, cancellation conditions and arrival arrangements when booking.",
   },
   {
     question: "Can I include questions about activities?",

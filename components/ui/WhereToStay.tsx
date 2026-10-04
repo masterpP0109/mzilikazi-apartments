@@ -7,11 +7,11 @@ export default function WhereToStay({showOptions = true}: {showOptions?: boolean
       <div className="where-to-stay-layout">
         <ImageFrame media={propertyPhotos.living} ratio="landscape" sizes="(max-width: 767px) 100vw, 45vw" />
         <div className="where-to-stay-copy"><Eyebrow>Where to stay</Eyebrow><h2 id="where-to-stay-title">A base that fits the way you travel.</h2>
-          <p>Mzilikazi offers suite and apartment accommodation in Victoria Falls. Start with the room layout and the space you want between outings.</p>
-          <p>The property photographs show bedrooms, living and dining areas, kitchens and outdoor spaces. Ask which facilities belong to your selected suite; these photographs are a glimpse of Mzilikazi rather than a room-by-room promise.</p>
+          <p>Stay in Victoria Falls for US$130 per apartment per night. Each apartment has two bedrooms and sleeps up to four people.</p>
+          <p>Each apartment includes a lounge, dining area, fully equipped kitchen with a microwave, air conditioning, a washing machine and en-suite bathrooms.</p>
           <h3>What matters for your stay?</h3>
-          <p>If you want two bedrooms and a shared lounge, start with the Family Suite. If outdoor space matters, look at the Batoka Suite. Compare the details with your group’s sleeping preferences before choosing.</p>
-          <p>Confirm beds and guest capacity, kitchen equipment, Wi-Fi, parking and any accessibility needs for the room you choose. Ask about current rates and booking terms.</p>
+          <p>A cleaner is provided, and a chef is available on request. There is parking for up to four vehicles, with an electric fence and dura wall for security.</p>
+          <p>Payments are accepted by Mastercard, EcoCash or cash. Ask about availability and booking terms for your dates.</p>
           <h3>Plan the practical parts</h3><p>Ask for the property’s exact location and the pickup point for your activities. Confirm transport to the Falls, town and airport, including return arrangements and costs.</p>
           <div className="actions"><Button href="/apartments">Explore the Stay</Button><TextLink href="/contact">Ask about accommodation</TextLink></div>
         </div>

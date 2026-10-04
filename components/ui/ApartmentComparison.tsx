@@ -6,20 +6,20 @@ export function apartmentAttributes(a: Accommodation) {
   return [
     ["Sleeps", a.guests ?? pending],
     ["Bedrooms", a.bedrooms ?? pending],
-    ["Bathrooms", a.bathrooms ?? pending],
+    ["Bathrooms", a.bathrooms ?? (a.amenities.includes("En-suite bathrooms") ? "En-suite bathrooms" : pending)],
     [
       "Kitchen",
       a.kitchen.length
-        ? "Kitchen facilities listed"
+        ? "Fully equipped kitchen with microwave"
         : flag(a.facilities.kitchen),
     ],
     ["Lounge", flag(a.facilities.lounge)],
     ["Wi-Fi", flag(a.facilities.wifi)],
     ["Air conditioning", flag(a.facilities.airConditioning)],
-    ["Parking", flag(a.facilities.parking)],
+    ["Parking", a.policies.find((p) => p.label === "Parking")?.value ?? flag(a.facilities.parking)],
     ["Outdoor space", a.facilities.outdoor ?? pending],
     ["Best suited for", a.idealFor.join(", ") || pending],
-    ["Indicative pricing", a.rate ?? pending],
+    ["Price", a.rate ?? pending],
   ];
 }
 export default function ApartmentComparison({ exclude }: { exclude?: string }) {
