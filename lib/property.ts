@@ -112,6 +112,9 @@ for (const apartment of accommodations) {
   apartment.idealFor = ["Families", "Groups of up to four", "Self-catering stays"];
   apartment.rate = "US$130 per apartment per night.";
   apartment.policies = [
+    { label: "Check-in", value: "2 PM." },
+    { label: "Check-out", value: "11 AM." },
+    { label: "Children", value: "Children are welcome when accompanied by an adult." },
     { label: "Parking", value: "Parking for up to four vehicles." },
     { label: "Cleaning", value: "A cleaner is provided." },
     { label: "Security", value: "Electric fence and dura wall." },

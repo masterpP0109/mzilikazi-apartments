@@ -18,8 +18,8 @@ export const CONTACT_PHONE = process.env.NEXT_PUBLIC_CONTACT_PHONE || null;
 export const CONTACT_WHATSAPP =
   process.env.NEXT_PUBLIC_CONTACT_WHATSAPP || null;
 export const CONTACT_ADDRESS = null;
-export const CHECK_IN_TIME = null;
-export const CHECK_OUT_TIME = null;
+export const CHECK_IN_TIME = "2 PM";
+export const CHECK_OUT_TIME = "11 AM";
 export const DISTANCE_TO_FALLS = null;
 export const FOUNDING_YEAR = null;
 export function whatsappUrl(message = "") {
@@ -44,7 +44,11 @@ export const FAQ_ITEMS = [
   {
     question: "Can I ask about a family or group stay?",
     answer:
-      "Yes. Include the number of adults and children, any sleeping-arrangement preferences and your dates so the enquiry can cover your whole group.",
+      "Yes. Children are welcome when accompanied by an adult. Each apartment sleeps up to four people. Include the number of adults and children, any sleeping-arrangement preferences and your dates so the enquiry can cover your whole group.",
+  },
+  {
+    question: "What are the check-in and check-out times?",
+    answer: "Check-in is at 2 PM and check-out is at 11 AM.",
   },
   {
     question: "Where can I find current rates and policies?",
