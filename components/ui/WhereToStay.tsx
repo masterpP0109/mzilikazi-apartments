@@ -8,7 +8,7 @@ export default function WhereToStay({showOptions = true}: {showOptions?: boolean
         <ImageFrame media={propertyPhotos.living} ratio="landscape" sizes="(max-width: 767px) 100vw, 45vw" />
         <div className="where-to-stay-copy"><Eyebrow>Where to stay</Eyebrow><h2 id="where-to-stay-title">A base that fits the way you travel.</h2>
           <p>Stay in Victoria Falls for US$130 per apartment per night. Each apartment has two bedrooms and sleeps up to four people.</p>
-          <p>Each apartment includes a lounge, dining area, fully equipped kitchen with a microwave, air conditioning, a washing machine and en-suite bathrooms.</p>
+          <p>Each apartment includes a lounge, dining area, fully equipped kitchen with a microwave, Wi-Fi, air conditioning, a washing machine and en-suite bathrooms.</p>
           <h3>What matters for your stay?</h3>
           <p>A cleaner is provided, and a chef is available on request. There is parking for up to four vehicles, with an electric fence and dura wall for security.</p>
           <p>Payments are accepted by Mastercard, EcoCash or cash. Ask about availability and booking terms for your dates.</p>

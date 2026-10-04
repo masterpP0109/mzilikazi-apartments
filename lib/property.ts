@@ -102,12 +102,13 @@ for (const apartment of accommodations) {
   apartment.bedrooms = 2;
   apartment.facilities.kitchen = true;
   apartment.facilities.lounge = true;
+  apartment.facilities.wifi = true;
   apartment.facilities.airConditioning = true;
   apartment.facilities.parking = true;
   apartment.sleeping = ["Two bedrooms", "Sleeps up to four people per apartment", "En-suite bathrooms"];
-  apartment.amenities = ["Lounge", "Dining area", "Air conditioning", "En-suite bathrooms", "Washing machine", "Parking for up to four vehicles", "Chef available on request"];
+  apartment.amenities = ["Lounge", "Dining area", "Wi-Fi", "Air conditioning", "En-suite bathrooms", "Washing machine", "Parking for up to four vehicles", "Chef available on request"];
   apartment.kitchen = ["Fully equipped kitchen", "Microwave"];
-  apartment.included = ["Cleaner provided", "Air conditioning", "Fully equipped kitchen", "Washing machine"];
+  apartment.included = ["Cleaner provided", "Wi-Fi", "Air conditioning", "Fully equipped kitchen", "Washing machine"];
   apartment.idealFor = ["Families", "Groups of up to four", "Self-catering stays"];
   apartment.rate = "US$130 per apartment per night.";
   apartment.policies = [
