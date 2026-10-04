@@ -1,5 +1,5 @@
 ﻿import type { PropertyMedia } from './property';
-import { experienceGuides, type ExperienceGuide } from './experience-guides.ts';
+import { experienceGuides, type ExperienceGuide } from './experience-guides';
 export interface Experience {
   guide: ExperienceGuide | null;
   slug: string; title: string; category: string; categories: string[];
