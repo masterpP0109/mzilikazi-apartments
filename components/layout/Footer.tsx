@@ -17,7 +17,6 @@ export default function Footer() {
           <div>
             <Link href="/" className="footer-brand">
               <BrandLogo footer />
-              <span className="brand-name">{SITE_NAME}</span>
             </Link>
             <p className="form-note" style={{ marginTop: 24 }}>
               Victoria Falls · Zimbabwe

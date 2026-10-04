@@ -1,6 +1,7 @@
-import { AddToTrip } from "@/components/trip/TripProvider";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { ImageFrame, TextLink } from "./Editorial";
-import { isPublicMedia, type Accommodation } from "@/lib/property";
+import { isPublicMedia, type Accommodation, type PropertyMedia } from "@/lib/property";
 export function AccommodationFacts({
   apartment: a,
 }: {
@@ -28,18 +29,22 @@ export function AccommodationFacts({
 }
 export function AccommodationCard({
   apartment: a,
+  propertyPreview = null,
 }: {
   apartment: Accommodation;
+  propertyPreview?: PropertyMedia | null;
 }) {
   if (!a.confirmed || !a.name) return null;
   return (
     <article className="accommodation-card">
       <ImageFrame
+        sizes="(max-width: 639px) 92vw, (max-width: 1023px) 44vw, 30vw"
         media={
           a.gallery.find((m) => isPublicMedia(m) && m.kind === "property") ??
-          null
+          propertyPreview
         }
       />
+      {a.gallery.length === 0 && isPublicMedia(propertyPreview) && <p className="property-photo-caption">A glimpse of Mzilikazi</p>}
       <h3>{a.name}</h3>
       {a.description && <p>{a.description}</p>}
       <AccommodationFacts apartment={a} />
@@ -48,10 +53,9 @@ export function AccommodationCard({
       )}
       {a.rate && <p>{a.rate}</p>}
       <div className="actions">
-        <TextLink href={`/apartments/${a.slug}`}>
-          Explore This Apartment
-        </TextLink>
-        <AddToTrip kind="accommodation" id={a.slug} />
+        <Link className="button button-primary" href={`/apartments/${a.slug}`}>
+          Explore This Apartment <ArrowRight size={17} aria-hidden="true" />
+        </Link>
       </div>
     </article>
   );

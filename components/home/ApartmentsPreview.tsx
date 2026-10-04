@@ -1,24 +1,24 @@
 import { Container, Eyebrow, TextLink } from "@/components/ui/Editorial";
-import { publishedAccommodations } from "@/lib/property";
+import { publishedAccommodations, accommodationPreviews } from "@/lib/property";
 import {
   AccommodationCard,
   AccommodationFallback,
 } from "@/components/ui/AccommodationCard";
 export default function ApartmentsPreview() {
   return (
-    <section id="apartments" className="section">
+    <section id="apartments" className="section" tabIndex={-1} aria-labelledby="choose-your-space-title">
       <Container>
         <div className="section-heading">
           <div>
             <Eyebrow>Make yourself at home</Eyebrow>
-            <h2>Choose your space.</h2>
+            <h2 id="choose-your-space-title">Choose your space.</h2>
           </div>
           <TextLink href="/apartments">Explore accommodation</TextLink>
         </div>
         {publishedAccommodations.length ? (
-          <div className="accommodation-list">
-            {publishedAccommodations.map((a) => (
-              <AccommodationCard key={a.slug} apartment={a} />
+          <div className="accommodation-list property-accommodation-list">
+            {publishedAccommodations.map((a, index) => (
+              <AccommodationCard key={a.slug} apartment={a} propertyPreview={accommodationPreviews[index % accommodationPreviews.length]} />
             ))}
           </div>
         ) : (

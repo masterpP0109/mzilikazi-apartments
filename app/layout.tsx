@@ -4,7 +4,7 @@ import { Newsreader, Manrope } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import MobileBookingCTA from "@/components/layout/MobileBookingCTA";
+import FloatingStayCTA from "@/components/layout/FloatingStayCTA";
 import { SITE_NAME, SITE_URL, SITE_TAGLINE, SITE_LOGO } from "@/lib/constants";
 const newsreader = Newsreader({
   subsets: ["latin"],
@@ -83,7 +83,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
-          <MobileBookingCTA />
+          <FloatingStayCTA />
         </TripProvider>
       </body>
     </html>

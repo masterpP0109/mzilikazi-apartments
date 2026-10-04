@@ -1,6 +1,8 @@
+import WhereToStay from "@/components/ui/WhereToStay";
+import ApartmentGallery from "@/components/ui/ApartmentGallery";
 import ApartmentComparison from "@/components/ui/ApartmentComparison";
 import { Container, PageIntro } from "@/components/ui/Editorial";
-import { publishedAccommodations } from "@/lib/property";
+import { publishedAccommodations, propertyGallery, accommodationPreviews } from "@/lib/property";
 import {
   AccommodationCard,
   AccommodationFallback,
@@ -24,20 +26,26 @@ export default function ApartmentsPage() {
           space for your visit.
         </p>
       </PageIntro>
-      <section className="section">
+      <section id="rooms" className="section" tabIndex={-1} aria-label="Accommodation options">
         <Container>
           {publishedAccommodations.length ? (
-            <div className="accommodation-list">
-              {publishedAccommodations.map((a) => (
-                <AccommodationCard key={a.slug} apartment={a} />
+            <div className="accommodation-list property-accommodation-list">
+              {publishedAccommodations.map((a, index) => (
+                <AccommodationCard key={a.slug} apartment={a} propertyPreview={accommodationPreviews[index % accommodationPreviews.length]} />
               ))}
             </div>
           ) : (
             <AccommodationFallback />
           )}
+          <section className="property-gallery" aria-labelledby="property-gallery-title">
+            <h2 id="property-gallery-title">A closer look at Mzilikazi.</h2>
+            <p>Explore the bedrooms, living spaces and apartment details. Ask us which space suits your stay.</p>
+            <ApartmentGallery images={propertyGallery} />
+          </section>
           <ApartmentComparison />
         </Container>
       </section>
+      <WhereToStay showOptions={false} />
       <FinalCTA />
     </>
   );

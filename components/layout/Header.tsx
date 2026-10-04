@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { NAV_LINKS, SITE_NAME } from "@/lib/constants";
+import { NAV_LINKS } from "@/lib/constants";
 import DigitalConciergeModal from "@/components/concierge/DigitalConciergeModal";
 import BrandLogo from "@/components/ui/BrandLogo";
 export default function Header() {
@@ -71,10 +71,6 @@ export default function Header() {
             onClick={() => setOpen(false)}
           >
             <BrandLogo />
-            <span className="brand-name">
-              {SITE_NAME}
-              <small>Victoria Falls · Zimbabwe</small>
-            </span>
           </Link>
           <nav className="desktop-nav" aria-label="Main navigation">
             {NAV_LINKS.map((l) => (

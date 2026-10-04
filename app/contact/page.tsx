@@ -1,3 +1,4 @@
+import { experiences, experienceEnquiryMessage } from "@/lib/experience-content";
 import Contact from "@/components/home/Contact";
 import { PageIntro } from "@/components/ui/Editorial";
 import { pageMetadata } from "@/lib/seo";
@@ -17,24 +18,27 @@ export default async function ContactPage({
       ? (params[k] as string).slice(0, 5000)
       : undefined;
   const guests = Number(value("guests"));
+  const experience = experiences.find(e => e.enabled && e.slug === value("experience"));
+  const isExperienceEnquiry = Boolean(experience) || value("experience") === "other";
   return (
     <>
       <PageIntro
-        eyebrow="Let’s make a plan"
-        title="Your Victoria Falls stay starts here."
+        eyebrow={isExperienceEnquiry ? "Experience enquiry" : "Let’s make a plan"}
+        title={experience ? `Ask about ${experience.title}` : isExperienceEnquiry ? "Ask about another experience" : "Your Victoria Falls stay starts here."}
       >
         <p>
-          Share your dates. Ask your questions. Find a place to come home to.
+          {isExperienceEnquiry ? "Ask about the available options, practical arrangements and what is included. Activities are confirmed separately from accommodation." : "Share your dates. Ask your questions. Find a place to come home to."}
         </p>
       </PageIntro>
       <Contact
+        experienceTitle={experience?.title ?? (isExperienceEnquiry ? "another experience" : undefined)}
         initialValues={{
           arrivalDate: value("arrival"),
           departureDate: value("departure"),
           guests:
             Number.isInteger(guests) && guests > 0 && guests <= 20 ? guests : 2,
-          apartmentPreference: value("preference") ?? value("service"),
-          message: value("message"),
+          apartmentPreference: isExperienceEnquiry ? `Experience: ${experience?.title ?? "Another activity"}` : value("preference") ?? value("service"),
+          message: value("message") ?? (experience ? experienceEnquiryMessage(experience.title) : isExperienceEnquiry ? "Hi, I’d like to ask about another activity or experience during my stay at Mzilikazi. Please help me explore the options." : undefined),
         }}
       />
     </>

@@ -1,14 +1,14 @@
 import Image from "next/image";
-import { SITE_LOGO } from "@/lib/constants";
+import { SITE_LOGO, SITE_NAME } from "@/lib/constants";
 
-/** The adjacent site name labels the brand; the symbol is decorative. */
+/** Label the logo so the home link remains accessible without visible text. */
 export default function BrandLogo({ footer = false }: { footer?: boolean }) {
   return (
     <Image
       src={SITE_LOGO.src}
       width={SITE_LOGO.width}
       height={SITE_LOGO.height}
-      alt=""
+      alt={SITE_NAME}
       loading="eager"
       unoptimized
       className={footer ? "brand-logo brand-logo-footer" : "brand-logo"}

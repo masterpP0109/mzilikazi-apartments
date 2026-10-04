@@ -1,4 +1,4 @@
-import type { PropertyMedia } from "./property";
+import { propertyPhotos, type PropertyMedia } from "./property";
 export const travellerTypes = [
   {
     id: "Family",
@@ -8,7 +8,7 @@ export const travellerTypes = [
       "Tell us about children’s ages, bedrooms and the space you need between outings.",
     cta: "Explore Family Stays",
     href: "/family-group-accommodation-victoria-falls",
-    media: null as PropertyMedia | null,
+    media: propertyPhotos.familyLiving,
   },
   {
     id: "Couple",
@@ -18,7 +18,7 @@ export const travellerTypes = [
       "Start with your sleeping preferences, a relaxed pace and the experiences you want to share.",
     cta: "Explore Couple Stays",
     href: "/plan?traveller=Couple",
-    media: null as PropertyMedia | null,
+    media: propertyPhotos.coupleBedroom,
   },
   {
     id: "Friends",
@@ -28,7 +28,7 @@ export const travellerTypes = [
       "Let us know your group size and who needs separate beds or rooms.",
     cta: "Explore Group Stays",
     href: "/family-group-accommodation-victoria-falls?traveller=Friends",
-    media: null as PropertyMedia | null,
+    media: propertyPhotos.groupDining,
   },
   {
     id: "Work",
@@ -38,14 +38,14 @@ export const travellerTypes = [
       "Ask about connectivity, longer-stay terms and your day-to-day needs before choosing.",
     cta: "Explore Longer Stays",
     href: "/corporate-stays-victoria-falls",
-    media: null as PropertyMedia | null,
+    media: propertyPhotos.longStayKitchen,
   },
 ];
 export const stayMoments = [
   {
     title: "Morning",
     copy: "Make breakfast, take your coffee slowly and decide what the day looks like.",
-    media: null as PropertyMedia | null,
+    media: propertyPhotos.kitchen,
   },
   {
     title: "Daytime",
@@ -55,7 +55,7 @@ export const stayMoments = [
   {
     title: "Evening",
     copy: "Come back to your own space. Cook, catch up and let the day settle.",
-    media: null as PropertyMedia | null,
+    media: propertyPhotos.living,
   },
 ];
 export const interests = [
@@ -73,6 +73,8 @@ export const experienceCategories = [
   "Wildlife",
   "Adventure",
   "Relaxed",
+  "Nature",
+  "Dining",
   "Culture",
   "Family",
 ];

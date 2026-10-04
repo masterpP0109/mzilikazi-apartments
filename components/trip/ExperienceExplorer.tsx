@@ -11,7 +11,7 @@ export default function ExperienceExplorer() {
   );
   return (
     <>
-      <div className="filter-options" aria-label="Filter experiences">
+      <div className="filter-options" role="group" aria-label="Filter experiences">
         {experienceCategories.map((c) => (
           <button
             key={c}
@@ -29,9 +29,9 @@ export default function ExperienceExplorer() {
           explore
         </p>
         {filtered.length ? (
-          filtered.map((e, i) => (
-            <ExperienceCard key={e.slug} experience={e} index={i} />
-          ))
+          <div className="experience-grid">{filtered.map((e) => (
+            <ExperienceCard key={e.slug} experience={e} />
+          ))}</div>
         ) : (
           <div className="empty-accommodation">
             <h2>Make room for your kind of day.</h2>

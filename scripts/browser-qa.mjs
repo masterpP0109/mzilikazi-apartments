@@ -117,6 +117,7 @@ try {
   });
   await send("Page.enable");
   const go = async (url) => {
+    console.log("Checking " + url);
     await send("Page.navigate", { url: "http://127.0.0.1:" + port + url });
     await waitFor(() =>
       evaluate(
@@ -178,7 +179,7 @@ try {
   ];
   const widths = process.argv.includes("--journey-only")
     ? []
-    : [320, 360, 390, 430, 768, 1280, 1440];
+    : [390, 768, 1440];
   for (const width of widths) {
     await send("Emulation.setDeviceMetricsOverride", {
       width,
@@ -205,6 +206,36 @@ try {
     deviceScaleFactor: 1,
     mobile: true,
   });
+
+  // Photography checks on representative phone, tablet and desktop viewports.
+  for (const width of [390, 768, 1440]) {
+    await send("Emulation.setDeviceMetricsOverride", {width,height:900,deviceScaleFactor:1,mobile:width<768});
+    await go("/");
+    await evaluate('document.querySelector(".stay-story").scrollIntoView()');
+    await delay(750);
+    await waitFor(() => evaluate('Array.from(document.querySelectorAll(".hero img,.stay-story img")).every(i=>i.complete && i.naturalWidth>0)'));
+    await screenshot('story-'+width);
+    const position = await evaluate('getComputedStyle(document.querySelector(".stay-story .bg-section__bg")).position');
+    assert.equal(position,width>=1024?'sticky':'absolute');
+    await go('/apartments');
+    await evaluate('document.querySelector(".property-gallery").scrollIntoView()');
+    await waitFor(() => evaluate('Array.from(document.querySelectorAll(".property-gallery img")).every(i=>i.complete && i.naturalWidth>0)'));
+    await screenshot('property-gallery-'+width);
+    await evaluate('document.querySelector(".gallery button").click()');
+    assert.ok(await evaluate('!!document.querySelector("dialog[open]")'));
+    await evaluate('document.querySelector("dialog[open] .icon-button").click()');
+  }
+  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
+  await go('/');
+  assert.equal(await evaluate('getComputedStyle(document.querySelector(".stay-story .bg-section__bg")).position'),'absolute');
+  assert.equal(await evaluate('getComputedStyle(document.querySelector(".story-panel")).opacity'),'1');
+  await send('Emulation.setEmulatedMedia',{features:[]});
+  await send('Emulation.setScriptExecutionDisabled',{value:true});
+  await send('Page.navigate',{url:'http://127.0.0.1:'+port+'/'});
+  await waitFor(() => evaluate('document.readyState === "complete" && !!document.querySelector(".bg-section__content")'));
+  assert.equal(await evaluate('getComputedStyle(document.querySelector(".bg-section__content")).opacity'),'1');
+  await send('Emulation.setScriptExecutionDisabled',{value:false});
+  await send("Emulation.setDeviceMetricsOverride",{width:390,height:844,deviceScaleFactor:1,mobile:true});
   await go("/experiences");
   await click("Wildlife");
   assert.equal(

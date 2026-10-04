@@ -1,3 +1,4 @@
+import MzilikaziStory from "@/components/mzilikazi-story/MzilikaziStory";
 import WhoIsItFor from "@/components/home/WhoIsItFor";
 import LifeAtMzilikazi from "@/components/home/LifeAtMzilikazi";
 import PlanningGuide from "@/components/home/PlanningGuide";
@@ -27,11 +28,10 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <TrustStrip />
-      <WhoIsItFor />
+      <MzilikaziStory />
+      <ApartmentsPreview />
       <TheStay />
       <LifeAtMzilikazi />
-      <ApartmentsPreview />
       {isPublicMedia(propertyMedia.pause) && (
         <section className="section photo-break">
           <Container>
@@ -41,12 +41,14 @@ export default function HomePage() {
         </section>
       )}
       <Experience />
+      <WhoIsItFor />
       <DayBuilder />
       <Itineraries />
       <PlanningGuide />
       <Location />
       <LocalServices />
       <LocalTeam />
+      <TrustStrip />
       <Proof />
       <FAQ compact />
       <FinalCTA />

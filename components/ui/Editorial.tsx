@@ -33,10 +33,12 @@ export function ImageFrame({
   media,
   ratio = "landscape",
   priority = false,
+  sizes = "(max-width: 767px) 100vw, (max-width: 1023px) 90vw, 65vw",
 }: {
   media: PropertyMedia | null;
   ratio?: "landscape" | "portrait" | "wide" | "square" | "hero";
   priority?: boolean;
+  sizes?: string;
 }) {
   if (!isPublicMedia(media)) return null;
   return (
@@ -45,7 +47,7 @@ export function ImageFrame({
         src={media.src}
         alt={media.alt}
         fill
-        sizes="(max-width: 767px) 100vw, (max-width: 1023px) 90vw, 65vw"
+        sizes={sizes}
         preload={priority}
         style={{ objectPosition: media.position ?? "center" }}
       />

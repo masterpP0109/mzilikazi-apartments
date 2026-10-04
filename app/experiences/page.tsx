@@ -4,6 +4,8 @@ import DayBuilder from "@/components/trip/DayBuilder";
 import Itineraries from "@/components/trip/Itineraries";
 
 import { pageMetadata } from "@/lib/seo";
+import WhereToStay from "@/components/ui/WhereToStay";
+import MoreExperiences from "@/components/ui/MoreExperiences";
 import FinalCTA from "@/components/home/FinalCTA";
 export const metadata = pageMetadata(
   "Victoria Falls experiences",
@@ -13,17 +15,16 @@ export const metadata = pageMetadata(
 export default function ExperiencesPage() {
   return (
     <>
-      <PageIntro eyebrow="Beyond your stay" title="Days worth coming for.">
-        <p>
-          A little wonder, a change of pace, a new perspective. Make room for
-          the experiences that matter to you.
-        </p>
+      <PageIntro eyebrow="Beyond your stay" title="Discover what you can experience in Victoria Falls">
+        <p>Make Mzilikazi your base, then choose the days out that suit you. Explore seven popular experiences with practical guides to timing, indicative prices, transport and what your day may involve. A host-led cultural visit is also included as a further planning idea.</p>
       </PageIntro>
       <section className="section">
         <Container>
           <ExperienceExplorer />
         </Container>
       </section>
+      <MoreExperiences />
+      <WhereToStay />
       <DayBuilder />
       <Itineraries />
       <FinalCTA />

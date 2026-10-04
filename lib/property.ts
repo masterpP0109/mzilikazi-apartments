@@ -77,20 +77,53 @@ export const accommodations: Accommodation[] = [
   pending("family-suite", "apartment-two"),
   pending("batoka-suite", "apartment-three"),
 ];
+
+// Use supplied public images as sample content so the site shows real
+// photography while editorial content is being collected.
+accommodations[0].confirmed = true;
+accommodations[0].name = "Zambezi Suite";
+accommodations[0].description = "A comfortable two-bedroom suite with garden views.";
+accommodations[0].gallery = [];
+// User-requested demo pricing; replace with confirmed rates before publication.
+accommodations[0].rate = "Sample price: US$120 per apartment per night (demo only).";
+
+accommodations[1].confirmed = true;
+accommodations[1].name = "Family Suite";
+accommodations[1].description = "Spacious family layout with two bedrooms and a shared lounge.";
+accommodations[1].gallery = [];
+// User-requested demo pricing; replace with confirmed rates before publication.
+accommodations[1].rate = "Sample price: US$180 per apartment per night (demo only).";
+
+accommodations[2].confirmed = true;
+accommodations[2].name = "Batoka Suite";
+accommodations[2].description = "Bright suite with private outdoor space.";
+accommodations[2].gallery = [];
+// User-requested demo pricing; replace with confirmed rates before publication.
+accommodations[2].rate = "Sample price: US$140 per apartment per night (demo only).";
 export const publishedAccommodations = accommodations.filter(
   (a) => a.confirmed && a.name,
 );
-export const propertyMedia: {
-  hero: PropertyMedia | null;
-  story: PropertyMedia | null;
-  pause: PropertyMedia | null;
-  destination: PropertyMedia | null;
-} = {
-  hero: null,
-  story: null,
-  pause: null,
-  destination: null,
-};
+// Supplied property photographs; individual suite assignments remain unconfirmed.
+export const propertyPhotos = {
+  roomView: { src: "/mzilikazi imgs/mzilikazi-img/bedroom/WhatsApp Image 2026-10-02 at 2.41.31 PM (2).jpeg", alt: "Bedroom with an exposed brick wall, white bedding and a window", kind: "property", verified: true },
+  loungeCorner: { src: "/mzilikazi imgs/mzilikazi-img/lounge-sitting-room/WhatsApp Image 2026-10-02 at 2.41.38 PM.jpeg", alt: "Green sofa beside the patio doors in an apartment lounge", kind: "property", verified: true },
+  exteriorView: { src: "/mzilikazi imgs/mzilikazi-img/WhatsApp Image 2026-10-02 at 2.41.43 PM.jpeg", alt: "Apartment entrance and paved courtyard beneath trees", kind: "property", verified: true },
+  familyLiving: { src: "/mzilikazi imgs/mzilikazi-img/lounge-sitting-room/WhatsApp Image 2026-10-02 at 2.41.37 PM (3).jpeg", alt: "Open-plan living area with a sofa, coffee table and dining table", kind: "property", verified: true },
+  coupleBedroom: { src: "/mzilikazi imgs/mzilikazi-img/bedroom/WhatsApp Image 2026-10-02 at 2.41.33 PM (1).jpeg", alt: "Bedroom with white bedding, green cushions and a garden-facing window", kind: "property", verified: true },
+  groupDining: { src: "/mzilikazi imgs/mzilikazi-img/lounge-sitting-room/WhatsApp Image 2026-10-02 at 2.41.36 PM (2).jpeg", alt: "Dining table beside the apartment kitchen", kind: "property", verified: true },
+  longStayKitchen: { src: "/mzilikazi imgs/mzilikazi-img/WhatsApp Image 2026-10-02 at 2.41.30 PM (1).jpeg", alt: "Kitchen counter with a dining area and brick feature wall", kind: "property", verified: true },
+  courtyard: { src: "/mzilikazi imgs/mzilikazi-img/hero/WhatsApp Image 2026-10-02 at 2.41.38 PM (1).jpeg", alt: "Covered patio beside an apartment and lawn", kind: "property", verified: true },
+  lounge: { src: "/mzilikazi imgs/mzilikazi-img/WhatsApp Image 2026-10-02 at 2.41.28 PM.jpeg", alt: "Green sofa and coffee table in an open-plan lounge", kind: "property", verified: true },
+  kitchen: { src: "/mzilikazi imgs/mzilikazi-img/tvroom/WhatsApp Image 2026-10-02 at 2.41.29 PM (3).jpeg", alt: "Kitchen, dining table and living area", kind: "property", verified: true },
+  bedroom: { src: "/mzilikazi imgs/mzilikazi-img/bedroom/WhatsApp Image 2026-10-02 at 2.41.31 PM (1).jpeg", alt: "Bedroom with white bedding and an exposed brick wall", kind: "property", verified: true },
+  bathroom: { src: "/mzilikazi imgs/mzilikazi-img/WhatsApp Image 2026-10-02 at 2.41.33 PM.jpeg", alt: "Bathroom with glass shower, basin and toilet", kind: "property", verified: true },
+  pool: { src: "/mzilikazi imgs/mzilikazi-img/WhatsApp Image 2026-10-02 at 2.41.41 PM (1).jpeg", alt: "Outdoor swimming pool framed by trees and a brick wall", kind: "property", verified: true },
+  patio: { src: "/mzilikazi imgs/mzilikazi-img/lounge-sitting-room/WhatsApp Image 2026-10-02 at 2.41.42 PM (1).jpeg", alt: "Apartment patio opening onto a lawn", kind: "property", verified: true },
+  living: { src: "/mzilikazi imgs/mzilikazi-img/tvroom/WhatsApp Image 2026-10-02 at 2.41.30 PM (2).jpeg", alt: "Living room with sofa, television and dining table", kind: "property", verified: true }
+} satisfies Record<string, PropertyMedia>;
+export const accommodationPreviews = [propertyPhotos.roomView, propertyPhotos.loungeCorner, propertyPhotos.exteriorView];
+export const propertyGallery = [propertyPhotos.bedroom, propertyPhotos.kitchen, propertyPhotos.bathroom, propertyPhotos.living, propertyPhotos.patio];
+export const propertyMedia = { hero: propertyPhotos.courtyard, story: propertyPhotos.lounge, pause: propertyPhotos.pool, destination: null as PropertyMedia | null };
 export const isPublicMedia = (
   media: PropertyMedia | null | undefined,
 ): media is PropertyMedia =>
@@ -113,61 +146,7 @@ export const confirmedServices: {
   description: string;
   confirmed: boolean;
 }[] = [];
-export const experiences = [
-  {
-    slug: "victoria-falls-tour",
-    category: "The Falls",
-    title: "Meet the Falls.",
-    description:
-      "Make room for the rainforest, the viewpoints and the sound of the water.",
-    detail:
-      "A visit to the Falls can be the starting point for your time here. Share your interests and ask about guiding options, access and current conditions before you make plans.",
-    duration: null as string | null,
-    travellerTypes: [] as string[],
-    categories: ["Iconic", "Family"],
-    practicalNote: "Ask about current access, guiding options and conditions.",
-    enabled: true,
-    confirmed: false,
-    providerConfirmed: false,
-    media: null as PropertyMedia | null,
-  },
-  {
-    slug: "chobe-day-trip",
-    category: "Wildlife",
-    title: "A day in Chobe.",
-    description:
-      "Consider a wildlife day in Botswana as part of your Victoria Falls visit.",
-    detail:
-      "If Chobe is on your wish list, mention it in your enquiry. Ask for current operator options, border requirements, timings and inclusions before committing to a trip.",
-    duration: null as string | null,
-    travellerTypes: [] as string[],
-    categories: ["Wildlife"],
-    practicalNote:
-      "Confirm operator arrangements, border requirements and the day’s timings.",
-    enabled: true,
-    confirmed: false,
-    providerConfirmed: false,
-    media: null as PropertyMedia | null,
-  },
-  {
-    slug: "village-cultural-visit",
-    category: "Culture",
-    title: "Beyond the postcard.",
-    description:
-      "Leave space to learn about the people and places around Victoria Falls.",
-    detail:
-      "Ask about respectful ways to explore local culture. Any visit should be arranged with the agreement of the host community, with clear information about what is included.",
-    duration: null as string | null,
-    travellerTypes: [] as string[],
-    categories: ["Culture"],
-    practicalNote:
-      "Ask how the visit is agreed with the host community and what is included.",
-    enabled: true,
-    confirmed: false,
-    providerConfirmed: false,
-    media: null as PropertyMedia | null,
-  },
-];
+export { experiences } from "./experience-content";
 
 export const propertyLocation: {
   address: string | null;
