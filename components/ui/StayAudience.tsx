@@ -1,5 +1,6 @@
 import { PageIntro, Container, Eyebrow, TextLink } from "./Editorial";
 import EnquiryForm from "@/components/forms/EnquiryForm";
+import { propertyPhotos } from "@/lib/property";
 export default function StayAudience({ kind }: { kind: "family" | "work" }) {
   const family = kind === "family";
   return (
@@ -11,6 +12,7 @@ export default function StayAudience({ kind }: { kind: "family" | "work" }) {
             ? "Good days, better together."
             : "A calmer base for a busy visit."
         }
+        media={family ? propertyPhotos.familyLiving : propertyPhotos.loungeCorner}
       >
         <p>
           {family

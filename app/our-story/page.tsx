@@ -2,6 +2,7 @@ import { PageIntro } from "@/components/ui/Editorial";
 import TheStay from "@/components/home/TheStay";
 import LocalTeam from "@/components/home/LocalTeam";
 import Proof from "@/components/home/Proof";
+import { propertyPhotos } from "@/lib/property";
 import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata(
   "Our story",
@@ -14,6 +15,8 @@ export default function OurStory() {
       <PageIntro
         eyebrow="Mzilikazi · Victoria Falls"
         title="A place to come back to."
+        media={propertyPhotos.exteriorEntrance}
+        mediaRatio="wide"
       >
         <p>
           Spend the day exploring, then slow down somewhere you can make

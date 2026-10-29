@@ -139,7 +139,7 @@ export const storyContent = {
     {
       "id": "first-visit",
       "heading": "If you're visiting Victoria Falls for the first time, you don't need to know everything yet.",
-      "media": "patio",
+      "media": "falls",
       "paragraphs": [
         {
           "text": "Planning a Victoria Falls trip can quickly become overwhelming.",

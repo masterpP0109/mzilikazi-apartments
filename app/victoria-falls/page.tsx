@@ -21,6 +21,7 @@ export default function VictoriaFallsPage() {
       <PageIntro
         eyebrow="Victoria Falls · Zimbabwe"
         title="Come for the wonder. Stay for a while."
+        media={propertyMedia.destination}
       >
         <p>
           There is more to a visit than a single viewpoint. Give yourself time
@@ -29,7 +30,6 @@ export default function VictoriaFallsPage() {
       </PageIntro>
       <section className="section">
         <Container>
-          <ImageFrame media={propertyMedia.destination} ratio="wide" />
           <div className="editorial-split">
             <div>
               <Eyebrow>At your own pace</Eyebrow>

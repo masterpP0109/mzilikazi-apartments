@@ -38,7 +38,7 @@ export const travellerTypes = [
       "Ask about connectivity, longer-stay terms and your day-to-day needs before choosing.",
     cta: "Explore Longer Stays",
     href: "/corporate-stays-victoria-falls",
-    media: propertyPhotos.longStayKitchen,
+    media: propertyPhotos.loungeCorner,
   },
 ];
 export const stayMoments = [
@@ -50,7 +50,7 @@ export const stayMoments = [
   {
     title: "Daytime",
     copy: "Head out for the Falls, wildlife or a wander around town. Leave room to change your mind.",
-    media: null as PropertyMedia | null,
+    media: propertyPhotos.falls,
   },
   {
     title: "Evening",

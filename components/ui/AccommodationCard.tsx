@@ -44,7 +44,12 @@ export function AccommodationCard({
           propertyPreview
         }
       />
-      {a.gallery.length === 0 && isPublicMedia(propertyPreview) && <p className="property-photo-caption">A glimpse of Mzilikazi</p>}
+      {a.gallery.length === 0 && !propertyPreview?.src.includes("placeholder") && isPublicMedia(propertyPreview) && (
+        <p className="property-photo-caption">A glimpse of Mzilikazi</p>
+      )}
+      {propertyPreview?.src.includes("placeholder") && (
+        <p className="property-photo-caption">Photography coming soon</p>
+      )}
       <h3>{a.name}</h3>
       {a.description && <p>{a.description}</p>}
       <AccommodationFacts apartment={a} />

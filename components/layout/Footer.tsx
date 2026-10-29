@@ -32,6 +32,7 @@ export default function Footer() {
                 {l.label}
               </Link>
             ))}
+            <Link href="/transfers">Airport &amp; Local Transfers</Link>
           </nav>
           <nav aria-label="Plan your stay">
             <h2>Your visit</h2>
@@ -41,9 +42,11 @@ export default function Footer() {
             <Link href="/corporate-stays-victoria-falls">
               Work &amp; longer stays
             </Link>
+            <Link href="/transfers">Transfers &amp; Shuttles</Link>
             <Link href="/plan#itineraries">Itineraries</Link>
             <Link href="/victoria-falls/getting-here">Getting here</Link>
             <Link href="/faq">Before you arrive</Link>
+            <Link href="/reviews/new">Guest Reviews</Link>
             {CONTACT_EMAIL && <a href={`mailto:${CONTACT_EMAIL}`}>Email us</a>}
             {CONTACT_PHONE && <a href={`tel:${CONTACT_PHONE}`}>Call us</a>}
             {whatsapp && <a href={whatsapp}>WhatsApp</a>}

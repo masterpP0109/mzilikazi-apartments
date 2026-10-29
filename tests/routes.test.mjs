@@ -41,6 +41,9 @@ test("all existing public routes render without unsupported public content", asy
   const routes = [
     "/",
     "/apartments",
+    "/apartments/lobengula-suite",
+    "/apartments/nkulumane-suite",
+    "/apartments/mangwana-suite",
     "/apartments/zambezi-suite",
     "/apartments/family-suite",
     "/apartments/batoka-suite",
@@ -77,6 +80,8 @@ test("all existing public routes render without unsupported public content", asy
       "food",
     ].map((s) => "/victoria-falls/" + s),
     "/contact",
+    "/transfers",
+    "/reviews/new",
     "/corporate-stays-victoria-falls",
     "/family-group-accommodation-victoria-falls",
   ];
@@ -139,3 +144,39 @@ test("enquiry API rejects invalid submissions and never reports undelivered succ
   });
   assert.equal(flexible.status, 503);
 });
+test("review API validates input and handles submissions", async () => {
+  const submitReview = (body) =>
+    fetch(`http://127.0.0.1:${port}/api/reviews`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  // Empty payload rejected
+  assert.equal((await submitReview({})).status, 422);
+
+  // Valid submission accepted
+  const res = await submitReview({
+    guestName: "Route Test Guest",
+    guestEmail: "guest@example.org",
+    guestOrigin: "London, UK",
+    apartmentStayed: "Lobengula Suite",
+    rating: 5,
+    travellerType: "Couple",
+    stayDate: "October 2026",
+    title: "Exceptional experience",
+    quote: "Wonderful peaceful stay in Victoria Falls with great facilities.",
+    consent: true,
+  });
+  assert.equal(res.status, 201);
+  const data = await res.json();
+  assert.equal(data.success, true);
+  assert.ok(data.review.id);
+
+  // GET reviews
+  const getRes = await fetch(`http://127.0.0.1:${port}/api/reviews`);
+  assert.equal(getRes.status, 200);
+  const getData = await getRes.json();
+  assert.ok(Array.isArray(getData.reviews));
+  assert.ok(getData.stats);
+});
+

@@ -1,7 +1,8 @@
 import { guideArticles, itineraries } from "@/lib/planning";
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/constants";
-import { publishedAccommodations, experiences } from "@/lib/property";
+import { publishedAccommodations } from "@/lib/property";
+import { experiences } from "@/lib/experience-content";
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "",

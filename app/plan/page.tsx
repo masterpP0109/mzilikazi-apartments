@@ -14,15 +14,24 @@ export default async function PlanPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const params = await searchParams;
+  const planHero = {
+    src: "/mzilikazi imgs/Experiences/Standard Cruise_/Standard-2-scaled.jpg",
+    alt: "Relaxed sunset river cruise navigating the Zambezi river at Victoria Falls",
+    kind: "destination" as const,
+    verified: true,
+  };
+
   return (
     <>
       <PageIntro
-        eyebrow="Make a little plan"
+        eyebrow="Make a little plan · Victoria Falls"
         title="Your people. Your pace. Your Victoria Falls trip."
+        media={planHero}
+        mediaRatio="wide"
       >
         <p>
           Start with who is coming. Save a few ideas, then tell us what you have
-          in mind.
+          in mind. We help shape your days around what matters to you.
         </p>
       </PageIntro>
       <section id="trip-planner" className="section">

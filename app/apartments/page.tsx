@@ -2,7 +2,7 @@ import WhereToStay from "@/components/ui/WhereToStay";
 import ApartmentGallery from "@/components/ui/ApartmentGallery";
 import ApartmentComparison from "@/components/ui/ApartmentComparison";
 import { Container, PageIntro } from "@/components/ui/Editorial";
-import { publishedAccommodations, propertyGallery, accommodationPreviews } from "@/lib/property";
+import { publishedAccommodations, propertyGallery, accommodationPreviews, propertyPhotos } from "@/lib/property";
 import {
   AccommodationCard,
   AccommodationFallback,
@@ -18,12 +18,14 @@ export default function ApartmentsPage() {
   return (
     <>
       <PageIntro
-        eyebrow="Stay with us"
+        eyebrow="Stay with us · Victoria Falls"
         title="A little more room to be yourself."
+        media={propertyPhotos.exteriorVeranda}
+        mediaRatio="wide"
       >
         <p>
-          Come with plans, or leave a few days open. Start by finding the right
-          space for your visit.
+          Come with plans, or leave a few days open. Settle into a comfortable,
+          self-catering apartment retreat with room to plan the days around it.
         </p>
       </PageIntro>
       <section id="rooms" className="section" tabIndex={-1} aria-label="Accommodation options">

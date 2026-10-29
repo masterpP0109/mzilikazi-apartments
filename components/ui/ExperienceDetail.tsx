@@ -1,5 +1,7 @@
+import Image from "next/image";
 import { AddToTrip } from "@/components/trip/TripProvider";
 import { experiences, experienceEnquiryHref, experienceEnquiryMessage, experiencePriceLabel, type Experience } from "@/lib/experience-content";
+import { isPublicMedia } from "@/lib/property";
 import { whatsappUrl } from "@/lib/constants";
 import { notFound } from "next/navigation";
 import { Container, ImageFrame, TextLink, Eyebrow } from "./Editorial";
@@ -42,15 +44,39 @@ export default function ExperienceDetail({ slug }: { slug: string }) {
   if (!e) notFound();
   const related = e.relatedExperienceSlugs.map(slug => experiences.find(x => x.slug === slug && x.enabled)).filter((x): x is Experience => Boolean(x));
   return <>
-    <section className="section experience-hero"><Container>
-      <TextLink href="/experiences">All Victoria Falls experiences</TextLink>
-      <div className="experience-hero-layout">
-        <div className="experience-hero-copy"><Eyebrow>Beyond your Mzilikazi stay · {e.category}</Eyebrow><h1>{e.title}</h1><p className="experience-hero-description">{e.description}</p>
-          <ExperiencePrice experience={e}/><nav className="actions" aria-label="Experience guide"><TextLink href="#experience-facts">Practical information</TextLink><TextLink href="#experience-gallery">View gallery</TextLink><TextLink href="#experience-booking">Booking assistance</TextLink></nav>
+    <section className="hero page-hero experience-hero-bg">
+      {e.media && isPublicMedia(e.media) && (
+        <div className="hero-background" aria-hidden="true">
+          <Image
+            src={e.media.src}
+            alt={e.media.alt}
+            fill
+            priority
+            sizes="100vw"
+            style={{
+              objectFit: "cover",
+              objectPosition: e.media.position ?? "center",
+            }}
+          />
         </div>
-        {e.media && <ImageFrame media={e.media} priority ratio="landscape" sizes="(max-width: 1023px) 90vw, 45vw"/>}
-      </div>
-    </Container></section>
+      )}
+      <Container>
+        <div className="hero-top has-image experience-hero-content">
+          <TextLink href="/experiences">All Victoria Falls experiences</TextLink>
+          <div className="experience-hero-copy" style={{ marginTop: 16 }}>
+            <Eyebrow>Beyond your Mzilikazi stay · {e.category}</Eyebrow>
+            <h1>{e.title}</h1>
+            <p className="experience-hero-description hero-copy">{e.description}</p>
+            <ExperiencePrice experience={e} />
+            <nav className="actions" aria-label="Experience guide" style={{ marginTop: 24 }}>
+              <TextLink href="#experience-facts">Practical information</TextLink>
+              <TextLink href="#experience-gallery">View gallery</TextLink>
+              <TextLink href="#experience-booking">Booking assistance</TextLink>
+            </nav>
+          </div>
+        </div>
+      </Container>
+    </section>
     <section className="section experience-detail"><Container>
       <div className="experience-detail-layout">
         <div className="experience-detail-copy">

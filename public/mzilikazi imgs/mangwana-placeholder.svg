@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ede7dc"/>
+      <stop offset="100%" stop-color="#e2dad0"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#d5ccc0" stroke-width="0.75" stroke-opacity="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect width="800" height="600" fill="url(#grid)"/>
+
+  <!-- Subtle border outline -->
+  <rect x="24" y="24" width="752" height="552" rx="8" fill="none" stroke="#c6c9bd" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+  <!-- Centered Icon & Information -->
+  <g transform="translate(400, 230)">
+    <!-- Architectural / Suite Emblem -->
+    <circle cx="0" cy="0" r="54" fill="#f4f0e8" stroke="#66705a" stroke-width="2"/>
+    <!-- Suite / Bed / Key Line Art -->
+    <path d="M -24 8 L -24 -8 Q -24 -18 -14 -18 L 14 -18 Q 24 -18 24 -8 L 24 8 Z" fill="none" stroke="#66705a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M -30 16 L 30 16" stroke="#66705a" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M -26 16 L -26 24 M 26 16 L 26 24" stroke="#66705a" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="-10" cy="-6" r="4" fill="#66705a"/>
+    <circle cx="10" cy="-6" r="4" fill="#66705a"/>
+
+    <!-- Suite Name -->
+    <text x="0" y="95" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="2" fill="#1c211d">
+      MANGWANA SUITE
+    </text>
+
+    <!-- Subtitle / Brand -->
+    <text x="0" y="125" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="500" letter-spacing="1.5" fill="#66705a">
+      MZILIKAZI APARTMENTS · VICTORIA FALLS
+    </text>
+
+    <!-- Badge -->
+    <g transform="translate(0, 165)">
+      <rect x="-115" y="-14" width="230" height="28" rx="14" fill="#f4f0e8" stroke="#c6c9bd" stroke-width="1"/>
+      <circle cx="-92" cy="0" r="4" fill="#c8a978"/>
+      <text x="8" y="4.5" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="600" letter-spacing="0.5" fill="#555e50">
+        PHOTOGRAPHY COMING SOON
+      </text>
+    </g>
+  </g>
+</svg>

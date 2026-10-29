@@ -17,7 +17,8 @@ import {
   type TripItem,
   type TripProfile,
 } from "@/lib/trip";
-import { publishedAccommodations, experiences } from "@/lib/property";
+import { publishedAccommodations } from "@/lib/property";
+import { experiences } from "@/lib/experience-content";
 import { itineraries, dayIdeas } from "@/lib/planning";
 import { whatsappUrl, SITE_NAME } from "@/lib/constants";
 import EnquiryForm from "@/components/forms/EnquiryForm";

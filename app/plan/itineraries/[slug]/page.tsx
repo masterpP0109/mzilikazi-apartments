@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { itineraries } from "@/lib/planning";
 import { PageIntro, Container, TextLink } from "@/components/ui/Editorial";
+import { propertyPhotos } from "@/lib/property";
 import { AddToTrip } from "@/components/trip/TripProvider";
 import { pageMetadata } from "@/lib/seo";
 export function generateStaticParams() {
@@ -30,6 +31,7 @@ export default async function ItineraryPage({
       <PageIntro
         eyebrow={i.nights + " nights · A suggested outline"}
         title={i.title}
+        media={propertyPhotos.exteriorVeranda}
       >
         <p>{i.description}</p>
       </PageIntro>

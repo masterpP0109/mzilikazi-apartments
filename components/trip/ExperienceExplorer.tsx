@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { experiences } from "@/lib/property";
+import { experiences } from "@/lib/experience-content";
 import { experienceCategories } from "@/lib/planning";
 import ExperienceCard from "@/components/ui/ExperienceCard";
 import Link from "next/link";

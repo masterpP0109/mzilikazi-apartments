@@ -22,6 +22,7 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const a = find(slug);
+  const isCanonical = a?.slug === slug;
   return a
     ? {
         ...pageMetadata(
@@ -31,7 +32,7 @@ export async function generateMetadata({
             : "Ask about accommodation options and current availability for your Victoria Falls stay.",
           `/apartments/${a.slug}`,
         ),
-        ...(!a.confirmed ? { robots: { index: false, follow: true } } : {}),
+        ...(!a.confirmed || !isCanonical ? { robots: { index: false, follow: true } } : {}),
       }
     : { title: "Accommodation not found" };
 }
@@ -128,6 +129,7 @@ export default async function ApartmentPage({
       <PageIntro
         eyebrow="Your space in Victoria Falls"
         title={publicName ?? "Let’s find your space."}
+        media={a.gallery.length > 0 ? a.gallery[0] : null}
       >
         {a.confirmed && a.description ? (
           <p>{a.description}</p>
@@ -140,7 +142,22 @@ export default async function ApartmentPage({
       </PageIntro>
       <section className="section">
         <Container>
-          {a.confirmed && <ApartmentGallery images={a.gallery} />}
+          {a.confirmed && a.gallery.length > 0 && <ApartmentGallery images={a.gallery} />}
+          {a.confirmed && a.gallery.length === 0 && (
+            <div className="apartment-placeholder-hero">
+              <ImageFrame
+                media={{
+                  src: "/mzilikazi imgs/mangwana-placeholder.webp",
+                  alt: `${a.name} — Photography coming soon`,
+                  kind: "property",
+                  verified: true,
+                }}
+                ratio="landscape"
+                sizes="(max-width: 767px) 100vw, 800px"
+              />
+              <p className="property-photo-caption">Photographs for {a.name} will be published once available.</p>
+            </div>
+          )}
           <div className="detail-layout">
             <div className="detail-content">
               <AccommodationFacts apartment={a} />

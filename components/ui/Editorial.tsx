@@ -58,17 +58,54 @@ export function PageIntro({
   eyebrow,
   title,
   children,
+  media = null,
+  mediaRatio = "wide",
+  actions,
 }: {
   eyebrow: string;
   title: string;
   children?: React.ReactNode;
+  media?: PropertyMedia | null;
+  mediaRatio?: "landscape" | "portrait" | "wide" | "square" | "hero";
+  actions?: React.ReactNode;
 }) {
+  if (isPublicMedia(media)) {
+    return (
+      <section className="hero page-hero">
+        <div className="hero-background" aria-hidden="true">
+          <Image
+            src={media.src}
+            alt={media.alt}
+            fill
+            priority
+            sizes="100vw"
+            style={{
+              objectFit: "cover",
+              objectPosition: media.position ?? "center",
+            }}
+          />
+        </div>
+        <Container>
+          <div className="hero-top has-image page-hero-content">
+            <div>
+              <Eyebrow>{eyebrow}</Eyebrow>
+              <h1>{title}</h1>
+              {children && <div className="intro-copy hero-copy">{children}</div>}
+              {actions && <div className="actions" style={{ marginTop: 24 }}>{actions}</div>}
+            </div>
+          </div>
+        </Container>
+      </section>
+    );
+  }
+
   return (
     <section className="page-intro">
       <Container>
         <Eyebrow>{eyebrow}</Eyebrow>
         <h1>{title}</h1>
         {children && <div className="intro-copy">{children}</div>}
+        {actions && <div className="actions" style={{ marginTop: 24 }}>{actions}</div>}
       </Container>
     </section>
   );

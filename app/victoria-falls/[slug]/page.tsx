@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { guideArticles } from "@/lib/planning";
 import { PageIntro, Container, TextLink } from "@/components/ui/Editorial";
+import { propertyMedia } from "@/lib/property";
 import { pageMetadata } from "@/lib/seo";
 export function generateStaticParams() {
   return guideArticles.map((a) => ({ slug: a.slug }));
@@ -29,6 +30,7 @@ export default async function GuideArticle({
       <PageIntro
         eyebrow={"Victoria Falls Guide · " + a.category}
         title={a.title}
+        media={propertyMedia.destination}
       >
         <p>{a.summary}</p>
       </PageIntro>

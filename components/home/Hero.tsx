@@ -6,11 +6,36 @@ import { Container, Eyebrow } from "@/components/ui/Editorial";
 import AvailabilityPanel from "@/components/forms/AvailabilityPanel";
 
 const heroSlides = [
-  { file: "WhatsApp Image 2026-10-02 at 2.41.38 PM (1).jpeg", label: "Covered courtyard", position: "60% center" },
-  { file: "WhatsApp Image 2026-10-02 at 2.41.28 PM.jpeg", label: "Open-plan lounge", position: "center" },
-  { file: "WhatsApp Image 2026-10-02 at 2.41.30 PM (3).jpeg", label: "Bedroom", position: "45% center" },
-  { file: "WhatsApp Image 2026-10-02 at 2.41.30 PM.jpeg", label: "Kitchen and dining space", position: "center" },
-  { file: "WhatsApp Image 2026-10-02 at 2.41.42 PM (1).jpeg", label: "Garden patio", position: "center" },
+  {
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Exterior/NS008376.JPG.jpeg",
+    label: "Stay somewhere worth coming home to — Mzilikazi house exterior and veranda",
+    position: "center",
+  },
+  {
+    src: "/mzilikazi imgs/Experiences/Flight of Angels/Heli-8-scaled.jpg",
+    label: "Come for the Falls — Magnificent aerial view of Victoria Falls",
+    position: "center",
+  },
+  {
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment1/Lounge/NS008300.JPG.jpeg",
+    label: "A comfortable base — Lobengula Suite open-plan lounge",
+    position: "center",
+  },
+  {
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment1/Kicthen/IMG_20260828_193839.jpg.jpeg",
+    label: "A self-catering stay — Fully equipped modern kitchen",
+    position: "center",
+  },
+  {
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Exterior/NS008374.JPG.jpeg",
+    label: "A little independence — Private apartment entrance and garden walkway",
+    position: "center",
+  },
+  {
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment2/BedRoom1/IMG_20260828_200419.jpg.jpeg",
+    label: "Room to plan the days around it — Peaceful bedroom retreat",
+    position: "center",
+  },
 ];
 export default function Hero() {
   const section = useRef<HTMLElement>(null);
@@ -51,8 +76,8 @@ export default function Hero() {
     <section ref={section} id="hero" className="hero" onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onFocusCapture={() => setFocused(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
       <div className="hero-background" aria-hidden="true">
         {heroSlides.map((slide, index) => visited.includes(index) && (
-          <div key={slide.file} data-slide={index} className={`hero-slide ${active === index ? "is-active" : ""}`}>
-            <Image src={"/mzilikazi imgs/mzilikazi-img/hero/" + slide.file} alt="" fill
+          <div key={slide.src} data-slide={index} className={`hero-slide ${active === index ? "is-active" : ""}`}>
+            <Image src={slide.src} alt={slide.label} fill
               preload={index === 0} loading={index === 0 ? undefined : "eager"} sizes="100vw"
               style={{ objectFit: "cover", objectPosition: slide.position }}
               onLoad={() => { if (requested === index) setActive(index); }}

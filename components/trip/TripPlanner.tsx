@@ -2,7 +2,8 @@
 import { useState, useRef } from "react";
 import { useTrip, AddToTrip } from "./TripProvider";
 import { interests, itineraries } from "@/lib/planning";
-import { publishedAccommodations, experiences } from "@/lib/property";
+import { publishedAccommodations } from "@/lib/property";
+import { experiences } from "@/lib/experience-content";
 import EnquiryForm from "@/components/forms/EnquiryForm";
 import { tripMessage } from "@/lib/trip";
 import { tripDescription } from "./TripProvider";

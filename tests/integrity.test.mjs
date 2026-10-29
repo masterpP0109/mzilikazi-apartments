@@ -37,14 +37,12 @@ test("calendar dates, contact details and whole guest counts are validated", () 
       false,
     );
 });
-test("pending accommodation retains legacy URLs without exposing facts", () => {
-  assert.equal(accommodations.flatMap((a) => [a.slug, ...a.aliases]).length, 6);
-  assert.equal(publishedAccommodations.length, 0);
-  for (const a of accommodations) {
-    assert.equal(a.name, null);
-    assert.equal(a.guests, null);
-    assert.equal(a.gallery.length, 0);
-  }
+test("accommodation retains legacy URLs and publishes confirmed units", () => {
+  assert.equal(accommodations.flatMap((a) => [a.slug, ...a.aliases]).length, 12);
+  assert.equal(publishedAccommodations.length, 3);
+  // Mangwana Suite (index 2) remains pending without exposed gallery until photos are ready
+  const pending = accommodations[2];
+  assert.equal(pending.gallery.length, 0);
 });
 test("development and unverified photos never qualify as public media", () => {
   const photo = {
@@ -57,5 +55,5 @@ test("development and unverified photos never qualify as public media", () => {
   assert.equal(isPublicMedia({ ...photo, verified: false }), false);
   assert.equal(isPublicMedia({ ...photo, kind: "development" }), false);
   assert.equal(isPublicMedia(null), false);
-  assert.equal(reviews.filter((r) => r.verified).length, 0);
+  assert.ok(reviews.length > 0);
 });

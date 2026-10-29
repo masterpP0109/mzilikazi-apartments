@@ -1,6 +1,7 @@
 import { experiences, experienceEnquiryMessage } from "@/lib/experience-content";
 import Contact from "@/components/home/Contact";
 import { PageIntro } from "@/components/ui/Editorial";
+import { propertyPhotos } from "@/lib/property";
 import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata(
   "Check availability",
@@ -25,6 +26,7 @@ export default async function ContactPage({
       <PageIntro
         eyebrow={isExperienceEnquiry ? "Experience enquiry" : "Let’s make a plan"}
         title={experience ? `Ask about ${experience.title}` : isExperienceEnquiry ? "Ask about another experience" : "Your Victoria Falls stay starts here."}
+        media={experience?.media ?? propertyPhotos.exteriorFacade}
       >
         <p>
           {isExperienceEnquiry ? "Ask about the available options, practical arrangements and what is included. Activities are confirmed separately from accommodation." : "Share your dates. Ask your questions. Find a place to come home to."}

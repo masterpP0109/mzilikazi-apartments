@@ -12,6 +12,7 @@ import TrustStrip from "@/components/home/TrustStrip";
 import ApartmentsPreview from "@/components/home/ApartmentsPreview";
 import TheStay from "@/components/home/TheStay";
 import Experience from "@/components/home/Experience";
+import TransfersSection from "@/components/home/TransfersSection";
 import LocalServices from "@/components/home/LocalServices";
 import Proof from "@/components/home/Proof";
 import FinalCTA from "@/components/home/FinalCTA";
@@ -41,6 +42,7 @@ export default function HomePage() {
         </section>
       )}
       <Experience />
+      <TransfersSection />
       <WhoIsItFor />
       <DayBuilder />
       <Itineraries />

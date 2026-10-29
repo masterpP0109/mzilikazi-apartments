@@ -13,10 +13,22 @@ export const metadata = pageMetadata(
   "/experiences",
 );
 export default function ExperiencesPage() {
+  const heroImage = {
+    src: "/mzilikazi imgs/Experiences/Flight of Angels/Heli-8-scaled.jpg",
+    alt: "Breathtaking aerial view of Victoria Falls, rainbow mist and the Zambezi gorge",
+    kind: "destination" as const,
+    verified: true,
+  };
+
   return (
     <>
-      <PageIntro eyebrow="Beyond your stay" title="Discover what you can experience in Victoria Falls">
-        <p>Make Mzilikazi your base, then choose the days out that suit you. Explore seven popular experiences with practical guides to timing, indicative prices, transport and what your day may involve. A host-led cultural visit is also included as a further planning idea.</p>
+      <PageIntro
+        eyebrow="Beyond your stay · Victoria Falls"
+        title="Discover what you can experience in Victoria Falls"
+        media={heroImage}
+        mediaRatio="wide"
+      >
+        <p>Make Mzilikazi your base, then choose the days out that suit you. Explore popular excursions with practical guides to timing, indicative prices, transport and what your day may involve.</p>
       </PageIntro>
       <section className="section">
         <Container>
