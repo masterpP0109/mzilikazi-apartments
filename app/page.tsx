@@ -41,8 +41,8 @@ export default function HomePage() {
           </Container>
         </section>
       )}
-      <Experience />
       <TransfersSection />
+      <Experience />
       <WhoIsItFor />
       <DayBuilder />
       <Itineraries />

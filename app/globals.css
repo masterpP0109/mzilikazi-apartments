@@ -1321,7 +1321,7 @@ dialog::backdrop {
 .hero-background::after {
   background: linear-gradient(90deg, rgba(6,9,7,.86), rgba(6,9,7,.55) 60%, rgba(6,9,7,.25)), linear-gradient(0deg, rgba(6,9,7,.65), transparent 55%);
 }
-.hero h1, .hero h1 em, .hero-copy, .hero .eyebrow, .hero-footnote, .hero-top .text-link { color: #fff; }
+.hero h1, .hero h1 em, .hero .hero-copy, .hero .eyebrow, .hero-footnote, .hero-top .text-link { color: #fff; }
 .hero .availability { color: var(--ink); }
 .hero-top.has-image { grid-template-columns: 1fr; }
 .hero-top.has-image h1 { max-width: 800px; }
@@ -1376,7 +1376,7 @@ dialog .image-frame img { object-fit: contain; background: #171c18; }
 @media (prefers-reduced-motion: reduce) { .hero-slide { transition: none; } }
 
 
-.property-photo-caption { margin-top: 12px; font-size: 12px; letter-spacing: .04em; }
+.property-photo-caption { margin-top: 10px; font-size: 13px; color: var(--muted); letter-spacing: .02em; line-height: 1.5; }
 .property-accommodation-list .accommodation-card h3 { margin-top: 12px; }
 @media (min-width: 640px) { .property-accommodation-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1024px) {
@@ -1641,6 +1641,13 @@ a, button, input, textarea, select { scroll-margin-bottom: calc(104px + env(safe
 .transfers-section {
   border-top: 1px solid var(--line);
 }
+.transfers-intro-copy {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.65;
+  max-width: 760px;
+  margin-bottom: 40px;
+}
 .transfers-layout {
   display: grid;
   gap: 40px;
@@ -1689,14 +1696,14 @@ a, button, input, textarea, select { scroll-margin-bottom: calc(104px + env(safe
   letter-spacing: 0.08em;
   font-weight: 700;
   padding: 4px 10px;
-  background: rgba(23, 101, 173, 0.1);
-  color: var(--brand);
+  background: rgba(23, 101, 173, 0.12);
+  color: var(--cta);
   border-radius: 999px;
 }
 .transfer-duration {
   font-size: 12px;
   color: var(--muted);
-  font-weight: 500;
+  font-weight: 600;
 }
 .transfer-card h3 {
   font-size: 20px;

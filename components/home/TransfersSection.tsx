@@ -18,7 +18,7 @@ export default function TransfersSection() {
           <TextLink href="/transfers">View all routes &amp; rates</TextLink>
         </div>
 
-        <p className="hero-copy" style={{ maxWidth: 760, marginBottom: 40 }}>
+        <p className="transfers-intro-copy">
           Arrive with complete peace of mind. Whether landing at Victoria Falls International Airport (VFA),
           heading to the rainforest gate for morning views of the Falls, or travelling to the Kazungula border
           for a Chobe day safari, our air-conditioned passenger fleet and licensed drivers take care of the journey.

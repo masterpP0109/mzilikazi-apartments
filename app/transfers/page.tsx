@@ -63,7 +63,7 @@ export default function TransfersPage() {
               <Eyebrow>Transfer Directory</Eyebrow>
               <h2 id="transfer-routes-title">Popular Routes &amp; Transfer Services</h2>
             </div>
-            <p className="hero-copy" style={{ maxWidth: 540 }}>
+            <p className="transfers-intro-copy" style={{ maxWidth: 540, marginBottom: 0 }}>
               Need a custom route or private vehicle for the day? Share your itinerary and we will arrange
               dedicated transport tailored to your schedule.
             </p>
