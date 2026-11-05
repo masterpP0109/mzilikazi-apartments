@@ -1,10 +1,23 @@
-﻿import { storyContent } from "./content";
+import type { propertyPhotos } from "@/lib/property";
+import ReadMore from "@/components/ui/ReadMore";
+import { TextLink } from "@/components/ui/Editorial";
 
 export type StoryParagraph = { readonly text: string; readonly kind: string };
+export type ChapterContent = {
+  readonly id: string;
+  readonly heading: string;
+  readonly media: keyof typeof propertyPhotos;
+  readonly paragraphs: readonly StoryParagraph[];
+  /** Optional extra detail, revealed with "Read more". */
+  readonly more?: readonly StoryParagraph[];
+  /** Optional link to an existing page for readers who want more depth. */
+  readonly link?: { readonly href: string; readonly label: string };
+};
+
 export function StoryQuote({ text, className = "" }: { text: string; className?: string }) {
   return <blockquote className={`education-quote ${className}`}><p>{text}</p></blockquote>;
 }
-export function StoryParagraphs({ paragraphs }: { paragraphs: readonly StoryParagraph[] }) {
+function renderParagraphs(paragraphs: readonly StoryParagraph[]) {
   const groups: React.ReactNode[] = [];
   for (let i = 0; i < paragraphs.length; i++) {
     const paragraph = paragraphs[i];
@@ -19,6 +32,22 @@ export function StoryParagraphs({ paragraphs }: { paragraphs: readonly StoryPara
       groups.push(<p key={paragraph.text}>{paragraph.text}</p>);
     }
   }
-  return <div className="education-prose">{groups}</div>;
+  return groups;
 }
-export type ChapterContent = (typeof storyContent.chapters)[number] | (typeof storyContent.travellers)[number] | typeof storyContent.trust;
+export function StoryParagraphs({
+  paragraphs,
+  more,
+  link,
+}: {
+  paragraphs: readonly StoryParagraph[];
+  more?: readonly StoryParagraph[];
+  link?: { readonly href: string; readonly label: string };
+}) {
+  return (
+    <div className="education-prose">
+      {renderParagraphs(paragraphs)}
+      {more && more.length > 0 && <ReadMore>{renderParagraphs(more)}</ReadMore>}
+      {link && <p className="education-more-link"><TextLink href={link.href}>{link.label}</TextLink></p>}
+    </div>
+  );
+}

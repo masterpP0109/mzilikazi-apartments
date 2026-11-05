@@ -8,7 +8,7 @@
     "start": "next start -p 3000 -H 0.0.0.0",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test --test-concurrency=1 tests/*.test.mjs",
     "audit:prod": "npm audit --omit=dev --audit-level=high"
   },
   "dependencies": {
@@ -17,12 +17,13 @@
     "@sanity/client": "^7.26.2",
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.3",
+    "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^13.1.0",
-    "lucide-react": "^1.33.0",
-    "next": "16.3.1",
-    "next-sanity": "^13.3.3",
+    "lucide-react": "^1.69.0",
+    "next": "^16.4.5",
+    "next-sanity": "^11.6.13",
     "nodemailer": "^10.3.1",
     "pg": "^8.13.1",
     "react": "19.2.8",
@@ -39,8 +40,11 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.1",
+    "eslint-config-next": "^15.5.29",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "overrides": {
+    "es-abstract": "^1.23.9"
   }
 }

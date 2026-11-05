@@ -7,6 +7,18 @@ import { setTimeout } from "node:timers/promises";
 const port = 3187;
 let server;
 before(async () => {
+  const build = spawn(process.execPath, ["node_modules/next/dist/bin/next", "build"], {
+    stdio: "inherit",
+    windowsHide: true,
+  });
+  await new Promise((resolve, reject) => {
+    build.on("exit", (code) => {
+      if (code === 0) resolve();
+      else reject(new Error(`Next.js build failed with exit code ${code}`));
+    });
+    build.on("error", reject);
+  });
+
   const env = {
     ...process.env,
     NODE_ENV: "production",
@@ -15,8 +27,6 @@ before(async () => {
     RESEND_FROM_EMAIL: "",
     RESEND_TO_EMAIL: "",
     SUPABASE_SERVICE_ROLE_KEY: "",
-    NEXT_PUBLIC_SUPABASE_URL: "",
-    NEXT_PRIVATE_TEST_MODE: "1"",
     NEXT_PUBLIC_SUPABASE_URL: "",
     NEXT_PRIVATE_TEST_MODE: "1",
   };
@@ -41,16 +51,14 @@ before(async () => {
   throw new Error("Production test server did not start");
 });
 after(() => server?.kill());
-const get = (path) => fetch(`http://127.0.0.1:${port}${path}`);
+const get = (path, init = {}) =>
+  fetch(`http://127.0.0.1:${port}${path}`, { redirect: "manual", ...init });
 test("all existing public routes render without unsupported public content", async () => {
   const routes = [
     "/",
     "/apartments",
     "/apartments/lobengula-suite",
     "/apartments/nkulumane-suite",
-    "/apartments/apartment-one",
-    "/apartments/apartment-two",
-    "/apartments/apartment-three",
     "/experiences",
     "/experiences/chobe-day-trip",
     "/experiences/victoria-falls-tour",
@@ -129,12 +137,15 @@ test("availability parameters prefill the enquiry", async () => {
   for (const value of ["2099-06-01", "2099-06-03", "Family"])
     assert.ok(html.includes(value));
 });
-test("unknown accommodation is a 404 and unpublished units are not indexed", async () => {
+test("unknown accommodation is a 404 and legacy aliases resolve to canonical pages", async () => {
   assert.equal((await get("/apartments/not-a-real-unit")).status, 404);
   assert.equal((await get("/victoria-falls/not-a-real-guide")).status, 404);
   assert.equal((await get("/plan/itineraries/not-a-real-plan")).status, 404);
-  const html = await (await get("/apartments/apartment-one")).text();
-  assert.match(html, /noindex/);
+
+  const alias = await get("/apartments/apartment-one");
+  assert.equal(alias.status, 308);
+  assert.match(alias.headers.get("location") ?? "", /\/apartments\/lobengula-suite$/);
+
   const sitemap = await (await get("/sitemap.xml")).text();
   assert.doesNotMatch(sitemap, /zambezi-suite|family-suite|batoka-suite/);
   assert.equal((await get("/robots.txt")).status, 200);

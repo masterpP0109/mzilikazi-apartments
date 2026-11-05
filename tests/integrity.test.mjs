@@ -1,5 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
+import { setTimeout } from "node:timers/promises";
 import { enquirySchema } from "../lib/enquiry.ts";
 import {
   accommodations,
@@ -12,6 +14,56 @@ import {
   buildGuestConfirmationEmail,
   parseEmailRecipients,
 } from "../lib/email.ts";
+
+const port = 3187;
+let server;
+
+test.before(async () => {
+  const build = spawn(process.execPath, ["node_modules/next/dist/bin/next", "build"], {
+    stdio: "inherit",
+    windowsHide: true,
+  });
+  await new Promise((resolve, reject) => {
+    build.on("exit", (code) => {
+      if (code === 0) resolve();
+      else reject(new Error(`Next.js build failed with exit code ${code}`));
+    });
+    build.on("error", reject);
+  });
+
+  const env = {
+    ...process.env,
+    NODE_ENV: "production",
+    DATABASE_URL: "",
+    RESEND_API_KEY: "",
+    RESEND_FROM_EMAIL: "",
+    RESEND_TO_EMAIL: "",
+    SUPABASE_SERVICE_ROLE_KEY: "",
+    NEXT_PUBLIC_SUPABASE_URL: "",
+    NEXT_PRIVATE_TEST_MODE: "1",
+  };
+  server = spawn(
+    process.execPath,
+    [
+      "node_modules/next/dist/bin/next",
+      "start",
+      "-p",
+      String(port),
+      "-H",
+      "127.0.0.1",
+    ],
+    { env, stdio: "ignore", windowsHide: true },
+  );
+
+  for (let i = 0; i < 80; i++) {
+    try {
+      if ((await fetch(`http://127.0.0.1:${port}/api/health`)).ok) break;
+    } catch {}
+    await setTimeout(250);
+  }
+});
+
+test.after(() => server?.kill());
 
 const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
 const later = new Date(Date.now() + 86400000 * 3).toISOString().slice(0, 10);

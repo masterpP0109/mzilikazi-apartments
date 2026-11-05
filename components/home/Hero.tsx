@@ -1,89 +1,30 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Container, Eyebrow } from "@/components/ui/Editorial";
 import AvailabilityPanel from "@/components/forms/AvailabilityPanel";
+import { whatsappUrl } from "@/lib/constants";
 
-const heroSlides = [
-  {
-    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Exterior/NS008376.JPG.jpeg",
-    label: "Stay somewhere worth coming home to — Mzilikazi house exterior and veranda",
-    position: "center",
-  },
-  {
-    src: "/mzilikazi imgs/Experiences/Flight of Angels/Heli-8-scaled.jpg",
-    label: "Come for the Falls — Magnificent aerial view of Victoria Falls",
-    position: "center",
-  },
-  {
-    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment1/Lounge/NS008300.JPG.jpeg",
-    label: "A comfortable base — Lobengula Suite open-plan lounge",
-    position: "center",
-  },
-  {
-    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment1/Kicthen/IMG_20260828_193839.jpg.jpeg",
-    label: "A self-catering stay — Fully equipped modern kitchen",
-    position: "center",
-  },
-  {
-    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Exterior/NS008374.JPG.jpeg",
-    label: "A little independence — Private apartment entrance and garden walkway",
-    position: "center",
-  },
-  {
-    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment2/BedRoom1/IMG_20260828_200419.jpg.jpeg",
-    label: "Room to plan the days around it — Peaceful bedroom retreat",
-    position: "center",
-  },
-];
+const HERO_IMAGE = "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment1/Lounge/NS008300.JPG.jpeg";
+
 export default function Hero() {
-  const section = useRef<HTMLElement>(null);
-  const [active, setActive] = useState(0);
-  const [requested, setRequested] = useState(0);
-  const [visited, setVisited] = useState([0]);
-  const [paused, setPaused] = useState(false);
-  const [interacting, setInteracting] = useState(false);
-  const [focused, setFocused] = useState(false);
-  const [reduced, setReduced] = useState<boolean | null>(null);
-  const [visible, setVisible] = useState(true);
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotion = () => setReduced(query.matches);
-    const updateVisibility = () => setVisible(!document.hidden);
-    updateMotion();
-    query.addEventListener("change", updateMotion);
-    document.addEventListener("visibilitychange", updateVisibility);
-    return () => {
-      query.removeEventListener("change", updateMotion);
-      document.removeEventListener("visibilitychange", updateVisibility);
-    };
-  }, []);
-  useEffect(() => {
-    if (paused || interacting || focused || reduced !== false || !visible || active !== requested) return;
-    const timer = window.setTimeout(() => {
-      const next = (active + 1) % heroSlides.length;
-      setVisited(previous => previous.includes(next) ? previous : [...previous, next]);
-      setRequested(next);
-    }, 6500);
-    return () => window.clearTimeout(timer);
-  }, [active, requested, paused, interacting, focused, reduced, visible]);
-  useEffect(() => {
-    const image = section.current?.querySelector<HTMLImageElement>(".hero-slide[data-slide=\"" + requested + "\"] img");
-    if (image?.complete && image.naturalWidth > 0) setActive(requested);
-  }, [requested]);
+  const whatsapp = whatsappUrl(
+    "Hello, I'm interested in accommodation at Mzilikazi Apartments. Could you please assist me with availability and rates?",
+  );
+
   return (
-    <section ref={section} id="hero" className="hero" onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onFocusCapture={() => setFocused(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
+    <section id="hero" className="hero">
       <div className="hero-background" aria-hidden="true">
-        {heroSlides.map((slide, index) => visited.includes(index) && (
-          <div key={slide.src} data-slide={index} className={`hero-slide ${active === index ? "is-active" : ""}`}>
-            <Image src={slide.src} alt={slide.label} fill
-              preload={index === 0} loading={index === 0 ? undefined : "eager"} sizes="100vw"
-              style={{ objectFit: "cover", objectPosition: slide.position }}
-              onLoad={() => { if (requested === index) setActive(index); }}
-              onError={() => { setRequested(active); setPaused(true); }} />
-          </div>
-        ))}
+        <div className="hero-slide is-active">
+          <Image
+            src={HERO_IMAGE}
+            alt="Mzilikazi Apartments — comfortable open-plan lounge with contemporary sofa and warm natural lighting"
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: "cover", objectPosition: "center" }}
+          />
+        </div>
       </div>
       <Container>
         <div className="hero-top has-image">
@@ -95,16 +36,16 @@ export default function Hero() {
               <em>Stay somewhere worth coming home to.</em>
             </h1>
             <p className="hero-copy">
-              Discover comfortable, fully equipped two-bedroom apartments in
-              Victoria Falls. Ideal for couples, families and friends looking
-              for space, privacy and the freedom to explore at their own pace.
+              Two-bedroom apartments in Victoria Falls designed for couples,
+              families and friends who want space, privacy and a comfortable
+              base for exploring the Falls at their own pace.
             </p>
             <ul className="hero-feature-list" aria-label="Property highlights">
               <li>Two-bedroom apartments</li>
               <li>Up to four guests per apartment</li>
               <li>Self-catering facilities</li>
-              <li>Wi-Fi</li>
-              <li>From US$130 per apartment per night, subject to verification</li>
+              <li>High-speed Wi-Fi</li>
+              <li>From US$130 per apartment per night</li>
             </ul>
             <div className="actions">
               <Link className="button button-primary" href="/apartments">
@@ -113,6 +54,11 @@ export default function Hero() {
               <Link className="button button-secondary" href="/contact">
                 Enquire About Availability
               </Link>
+              {whatsapp && (
+                <a className="button button-secondary" href={whatsapp} target="_blank" rel="noreferrer">
+                  WhatsApp us
+                </a>
+              )}
             </div>
           </div>
         </div>

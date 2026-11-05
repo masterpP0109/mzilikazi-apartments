@@ -1,9 +1,3 @@
-import MzilikaziStory from "@/components/mzilikazi-story/MzilikaziStory";
-import WhoIsItFor from "@/components/home/WhoIsItFor";
-import LifeAtMzilikazi from "@/components/home/LifeAtMzilikazi";
-import PlanningGuide from "@/components/home/PlanningGuide";
-import Itineraries from "@/components/trip/Itineraries";
-import DayBuilder from "@/components/trip/DayBuilder";
 import Location from "@/components/home/Location";
 import LocalTeam from "@/components/home/LocalTeam";
 import FAQ from "@/components/home/FAQ";
@@ -16,6 +10,7 @@ import TransfersSection from "@/components/home/TransfersSection";
 import LocalServices from "@/components/home/LocalServices";
 import Proof from "@/components/home/Proof";
 import FinalCTA from "@/components/home/FinalCTA";
+import Itineraries from "@/components/trip/Itineraries";
 import { Container, ImageFrame } from "@/components/ui/Editorial";
 import { propertyMedia, isPublicMedia } from "@/lib/property";
 import { SITE_TAGLINE } from "@/lib/constants";
@@ -29,10 +24,8 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <MzilikaziStory />
       <ApartmentsPreview />
       <TheStay />
-      <LifeAtMzilikazi />
       {isPublicMedia(propertyMedia.pause) && (
         <section className="section photo-break">
           <Container>
@@ -43,10 +36,7 @@ export default function HomePage() {
       )}
       <TransfersSection />
       <Experience />
-      <WhoIsItFor />
-      <DayBuilder />
       <Itineraries />
-      <PlanningGuide />
       <Location />
       <LocalServices />
       <LocalTeam />

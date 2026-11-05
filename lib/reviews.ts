@@ -78,9 +78,9 @@ export interface ReviewStats {
 }
 
 export const APARTMENT_OPTIONS = [
+  "Mzilikazi Suite",
   "Lobengula Suite",
   "Nkulumane Suite",
-  "Mangwana Suite",
   "Mzilikazi Guest Lodge (General)",
 ] as const;
 

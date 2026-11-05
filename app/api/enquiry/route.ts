@@ -135,29 +135,36 @@ export async function POST(request: Request) {
   }
 
   const smtpConfigured =
-    process.env.SMTP_HOST &&
-    process.env.SMTP_PORT &&
+    (process.env.SMTP_HOST || process.env.SMTP_USER) &&
     process.env.SMTP_USER &&
-    process.env.SMTP_PASSWORD &&
-    process.env.FROM_EMAIL &&
-    process.env.TO_EMAIL;
+    process.env.SMTP_PASSWORD;
+
+  const toEmail = process.env.TO_EMAIL || process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@mzilikaziapartments.com";
+  const fromEmail = process.env.FROM_EMAIL || process.env.SMTP_USER || "info@mzilikaziapartments.com";
 
   if (smtpConfigured) {
     const preference = data.apartmentPreference || "General / Undecided";
-    const smtpPort = Number(process.env.SMTP_PORT);
-    const recipients = parseEmailRecipients(process.env.TO_EMAIL);
+    const host = process.env.SMTP_HOST || "smtp.gmail.com";
+    const isGmail = host.includes("gmail");
+    const smtpPort = Number(process.env.SMTP_PORT) || (isGmail ? 465 : 587);
+    const secure = smtpPort === 465;
+    const cleanPassword = (process.env.SMTP_PASSWORD || "").replace(/\s+/g, "");
+    const recipients = parseEmailRecipients(toEmail);
 
     if (recipients.length === 0) {
       console.error("No valid SMTP recipients configured for enquiry notifications.");
     } else {
       try {
         const transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST,
+          host,
           port: smtpPort,
-          secure: smtpPort === 465,
+          secure,
           auth: {
             user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASSWORD,
+            pass: cleanPassword,
+          },
+          tls: {
+            rejectUnauthorized: false,
           },
         });
 
@@ -173,7 +180,7 @@ export async function POST(request: Request) {
         });
 
         const info = await transporter.sendMail({
-          from: `${SITE_NAME} <${process.env.FROM_EMAIL}>`,
+          from: `${SITE_NAME} <${fromEmail}>`,
           to: recipients,
           replyTo: data.email,
           subject: notificationPayload.subject,
@@ -199,24 +206,26 @@ export async function POST(request: Request) {
             dateSummary,
             guestCount: data.guests,
           });
-          await nodemailer
-            .createTransport({
-              host: process.env.SMTP_HOST,
-              port: smtpPort,
-              secure: smtpPort === 465,
-              auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASSWORD,
-              },
-            })
-            .sendMail({
-              from: `${SITE_NAME} <${process.env.FROM_EMAIL}>`,
-              to: data.email,
-              replyTo: process.env.FROM_EMAIL,
-              subject: confirmationPayload.subject,
-              text: confirmationPayload.text,
-              html: confirmationPayload.html,
-            });
+          const confirmTransporter = nodemailer.createTransport({
+            host,
+            port: smtpPort,
+            secure,
+            auth: {
+              user: process.env.SMTP_USER,
+              pass: cleanPassword,
+            },
+            tls: {
+              rejectUnauthorized: false,
+            },
+          });
+          await confirmTransporter.sendMail({
+            from: `${SITE_NAME} <${fromEmail}>`,
+            to: data.email,
+            replyTo: fromEmail,
+            subject: confirmationPayload.subject,
+            text: confirmationPayload.text,
+            html: confirmationPayload.html,
+          });
         } catch (err) {
           console.error(
             "Guest acknowledgement unavailable:",
@@ -288,25 +297,15 @@ export async function POST(request: Request) {
     }
   }
 
-  if (!delivered && stored) {
-    return NextResponse.json(
-      {
-        error:
-          "We received your enquiry but could not complete the confirmation delivery. Please try again later.",
-      },
-      { status: 503 },
-    );
+  if (stored || delivered) {
+    return NextResponse.json({ success: true, stored, delivered }, { status: 201 });
   }
 
-  if (!delivered) {
-    return NextResponse.json(
-      {
-        error:
-          "We could not deliver your enquiry at the moment. Please try again later.",
-      },
-      { status: 503 },
-    );
-  }
-
-  return NextResponse.json({ success: true }, { status: 201 });
+  return NextResponse.json(
+    {
+      error:
+        "We could not deliver your enquiry at the moment. Please try again later.",
+    },
+    { status: 503 },
+  );
 }

@@ -5,10 +5,13 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { NAV_LINKS } from "@/lib/constants";
+import { NAV_LINKS, whatsappUrl } from "@/lib/constants";
 import DigitalConciergeModal from "@/components/concierge/DigitalConciergeModal";
 import BrandLogo from "@/components/ui/BrandLogo";
 export default function Header() {
+  const whatsapp = whatsappUrl(
+    "Hello, I'm interested in accommodation at Mzilikazi Apartments. Could you please assist me with availability and rates?",
+  );
   const [open, setOpen] = useState(false),
     [planner, setPlanner] = useState(false);
   const path = usePathname();
@@ -82,6 +85,11 @@ export default function Header() {
                 {l.label}
               </Link>
             ))}
+            {whatsapp ? (
+              <a className="button button-secondary" href={whatsapp} target="_blank" rel="noreferrer">
+                WhatsApp
+              </a>
+            ) : null}
             <Link className="button button-primary" href="/contact">
               Enquire About Availability
             </Link>
@@ -113,6 +121,17 @@ export default function Header() {
               ))}
             </nav>
             <div className="actions">
+              {whatsapp ? (
+                <a
+                  href={whatsapp}
+                  className="button button-secondary"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => setOpen(false)}
+                >
+                  WhatsApp us
+                </a>
+              ) : null}
               <Link
                 href="/contact"
                 className="button button-primary"

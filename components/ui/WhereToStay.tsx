@@ -1,54 +1,49 @@
 import { Container, Eyebrow, ImageFrame, TextLink } from "./Editorial";
 import Button from "./Button";
-import { publishedAccommodations, propertyPhotos, accommodationPreviews } from "@/lib/property";
+import { propertyPhotos } from "@/lib/property";
 
-export default function WhereToStay({showOptions = true}: {showOptions?: boolean}) {
+interface WhereToStayProps {
+  showOptions?: boolean;
+}
+
+export default function WhereToStay({ showOptions = true }: WhereToStayProps = {}) {
   return (
-    <section className="section where-to-stay" aria-labelledby="where-to-stay-title">
+    <section className="section where-to-stay" id="practical-amenities" aria-labelledby="where-to-stay-title">
       <Container>
         <div className="where-to-stay-layout">
           <ImageFrame media={propertyPhotos.living} ratio="landscape" sizes="(max-width: 767px) 100vw, 45vw" />
           <div className="where-to-stay-copy">
-            <Eyebrow>Where to stay</Eyebrow>
-            <h2 id="where-to-stay-title">A base that fits the way you travel.</h2>
-            <p>Stay in Victoria Falls for US$130 per apartment per night. Each apartment has two bedrooms and sleeps up to four people.</p>
-            <p>Each apartment includes a lounge, dining area, fully equipped kitchen with a microwave, Wi-Fi, air conditioning, a washing machine and en-suite bathrooms.</p>
-            <h3>What matters for your stay?</h3>
-            <p>A cleaner is provided, and a chef is available on request. There is parking for up to four vehicles, with an electric fence and dura wall for security.</p>
-            <p>Payments are accepted by Mastercard, EcoCash or cash. Ask about availability and booking terms for your dates.</p>
-            <h3>Plan the practical parts</h3>
-            <p>Ask for the property’s exact location and the pickup point for your activities. Confirm transport to the Falls, town and airport, including return arrangements and costs.</p>
+            <Eyebrow>Practical Living · What's Included</Eyebrow>
+            <h2 id="where-to-stay-title">Everything you need to feel settled.</h2>
+            <p>
+              Each apartment is self-contained with two bedrooms, sleeping up to four guests. Whether staying for a weekend or several weeks, you enjoy private living with hotel-grade support.
+            </p>
+            
+            <ul className="amenity-grid" style={{ marginTop: 24, marginBottom: 24 }}>
+              <li><span aria-hidden="true">—</span> Fully equipped kitchen &amp; gas stovetop</li>
+              <li><span aria-hidden="true">—</span> Cleaner provided for your stay</li>
+              <li><span aria-hidden="true">—</span> Air conditioning &amp; high-speed Wi-Fi</li>
+              <li><span aria-hidden="true">—</span> En-suite bathrooms with fresh linens</li>
+              <li><span aria-hidden="true">—</span> Secure parking for up to 4 vehicles</li>
+              <li><span aria-hidden="true">—</span> Private chef available on request</li>
+            </ul>
+
             <div className="actions">
-              <Button href="/apartments">Explore the Stay</Button>
-              <TextLink href="/contact">Ask about accommodation</TextLink>
+              <Button href="/apartments#compare">Compare Apartments</Button>
+              <TextLink href="/contact">Ask a question</TextLink>
             </div>
           </div>
         </div>
-        {showOptions && (
-          <div className="stay-option-guide">
-            {publishedAccommodations.map((a, index) => {
-              const previewMedia =
-                a.gallery.find((m) => m.verified && m.kind === "property") ??
-                accommodationPreviews[index % accommodationPreviews.length];
-              return (
-                <article key={a.slug} className="stay-option-card">
-                  <ImageFrame
-                    media={previewMedia}
-                    ratio="landscape"
-                    sizes="(max-width: 639px) 92vw, (max-width: 1023px) 44vw, 30vw"
-                  />
-                  <h3>{a.name}</h3>
-                  <p>{a.description}</p>
-                  <TextLink href={"/apartments/" + a.slug}>Explore This Apartment</TextLink>
-                </article>
-              );
-            })}
-          </div>
-        )}
+
         <div className="stay-experience-connection">
-          <h3>Plan your stay around the experiences you want.</h3>
-          <p>Leave time for travel, activities and a pause back at your accommodation. Experiences are chosen and confirmed separately from a room booking.</p>
-          <TextLink href="/experiences">Explore experiences</TextLink>
+          <Eyebrow>Finding the Right Fit</Eyebrow>
+          <h3>Choosing between our apartments</h3>
+          <p>
+            All three apartments offer two bedrooms, self-catering kitchens and air conditioning. Choose <strong>Mzilikazi Suite</strong> for its open breakfast bar and bathtub; <strong>Lobengula Suite</strong> for its dining area and walk-in shower; or <strong>Nkulumane Suite</strong> for a peaceful garden-facing retreat.
+          </p>
+          <div className="actions" style={{ marginTop: 20 }}>
+            <TextLink href="/apartments">Explore all accommodations →</TextLink>
+          </div>
         </div>
       </Container>
     </section>

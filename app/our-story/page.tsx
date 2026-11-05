@@ -19,8 +19,14 @@ export default function OurStory() {
         mediaRatio="wide"
       >
         <p>
-          Spend the day exploring, then slow down somewhere you can make
-          yourself at home.
+          Mzilikazi Apartments was created for travellers who want a practical,
+          comfortable base in Victoria Falls, with enough space to rest, cook,
+          and plan the days around the Falls at their own pace.
+        </p>
+        <p>
+          The name reflects the local heritage of the region, while the stay itself
+          is shaped around warm, easy hospitality, genuinely useful local knowledge,
+          and a home-like rhythm that feels personal rather than formal.
         </p>
       </PageIntro>
       <TheStay />

@@ -11,10 +11,13 @@ export default function ApartmentsPreview() {
         <div className="section-heading">
           <div>
             <Eyebrow>Make yourself at home</Eyebrow>
-            <h2 id="choose-your-space-title">Choose your space.</h2>
+            <h2 id="choose-your-space-title">Choose your apartment.</h2>
           </div>
           <TextLink href="/apartments">Explore accommodation</TextLink>
         </div>
+        <p className="form-note" style={{ marginTop: -8, marginBottom: 18 }}>
+          Two bedrooms, up to four guests and practical self-catering comforts.
+        </p>
         {publishedAccommodations.length ? (
           <div className="accommodation-list property-accommodation-list">
             {publishedAccommodations.map((a, index) => (

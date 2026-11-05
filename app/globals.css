@@ -592,6 +592,82 @@ textarea[aria-invalid="true"] {
   padding-block: 32px;
   max-width: 570px;
 }
+.proof-section {
+  background: var(--surface);
+}
+.proof-header {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.proof-header .eyebrow {
+  margin-bottom: 0;
+}
+.proof-header p {
+  margin: 0;
+  max-width: 540px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+.proof-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 100%;
+  padding: 28px 28px 24px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  box-shadow: none;
+  margin: 0;
+}
+.proof-quote {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-size: clamp(1.35rem, 2.2vw, 2.05rem);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  max-width: 32ch;
+}
+.proof-meta {
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.proof-meta cite {
+  display: block;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--ink);
+}
+.proof-meta p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.proof-actions {
+  margin-top: 28px;
+}
+@media (max-width: 767px) {
+  .proof-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .proof-card {
+    padding: 22px 20px 18px;
+  }
+  .proof-quote {
+    max-width: none;
+  }
+}
 .accommodation-list {
   display: grid;
   gap: 48px;
@@ -1463,6 +1539,20 @@ dialog .image-frame img { object-fit: contain; background: #171c18; }
 }
 @media (prefers-reduced-motion: reduce) { .education-image { position: static; } }
 
+/* Progressive disclosure ("Read more / Show less") and shortened-copy balance. */
+.read-more-panel { margin-top: 20px; }
+.read-more-panel[hidden] { display: none; }
+.read-more-panel[hidden="until-found"] { display: block; }
+.read-more-toggle { background: none; border: 0; padding: 0; color: inherit; font-family: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+.read-more-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.education-more-link { margin-top: 20px; }
+@media (min-width: 768px) {
+  .education-traveller, .education-chapter .education-split { align-items: center; }
+}
+@media (min-width: 1024px) {
+  .education-traveller { padding-block: 56px; }
+}
+
 /* A rooms shortcut with one reserved bottom zone, clear of menus and forms. */
 html { scroll-padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
 body:has(.floating-stay) { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
@@ -1489,6 +1579,7 @@ a, button, input, textarea, select { scroll-margin-bottom: calc(104px + env(safe
 .experience-card h2, .experience-card h3 { font-size: clamp(26px, 3vw, 34px); margin: 8px 0 16px; }
 .experience-card-copy > p:not(.eyebrow) { color: var(--muted); }
 .experience-card-copy .actions { margin-top: auto; padding-top: 24px; gap: 16px 24px; }
+.experience-actions { justify-content: center; }
 .experience-fallback { aspect-ratio: 3/2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; background: var(--brand); color: var(--white); }
 .experience-detail-layout { display: grid; gap: 40px; margin-top: 48px; }
 .experience-detail-copy { min-width: 0; }

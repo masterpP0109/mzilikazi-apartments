@@ -19,6 +19,12 @@ declare module 'lucide-react' {
   }
   export type LucideIcon = React.FC<LucideProps>;
   export const ArrowRight: LucideIcon;
+  export const ArrowLeft: LucideIcon;
+  export const Star: LucideIcon;
+  export const CheckCircle: LucideIcon;
+  export const AlertCircle: LucideIcon;
+  export const Compass: LucideIcon;
+  export const Images: LucideIcon;
   export const Check: LucideIcon;
   export const X: LucideIcon;
   export const ChevronDown: LucideIcon;
@@ -39,3 +45,24 @@ declare module 'lucide-react' {
   const icons: Record<string, LucideIcon>;
   export default icons;
 }
+
+declare module '@vercel/analytics/next' {
+  import * as React from 'react';
+  export interface AnalyticsProps {
+    beforeSend?: (event: any) => any;
+    debug?: boolean;
+    mode?: 'auto' | 'development' | 'production';
+  }
+  export function Analytics(props?: AnalyticsProps): React.JSX.Element;
+}
+
+declare module '@vercel/analytics/react' {
+  import * as React from 'react';
+  export interface AnalyticsProps {
+    beforeSend?: (event: any) => any;
+    debug?: boolean;
+    mode?: 'auto' | 'development' | 'production';
+  }
+  export function Analytics(props?: AnalyticsProps): React.JSX.Element;
+}
+

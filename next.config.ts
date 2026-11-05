@@ -1,3 +1,4 @@
+import path from 'path';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
@@ -17,6 +18,18 @@ const nextConfig: NextConfig = {
         hostname: 'images.unsplash.com',
       },
     ],
+  },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'lucide-react': path.resolve(__dirname, 'components/ui/Icons.tsx'),
+    };
+    return config;
+  },
+  turbopack: {
+    resolveAlias: {
+      'lucide-react': './components/ui/Icons.tsx',
+    },
   },
   // Silence Supabase/Resend/PG bundling warnings
   serverExternalPackages: ['@supabase/supabase-js', 'pg'],

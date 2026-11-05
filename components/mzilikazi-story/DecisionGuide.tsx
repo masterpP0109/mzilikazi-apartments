@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { Container, Eyebrow, TextLink } from "@/components/ui/Editorial";
 import { storyContent } from "./content";
 import { StoryQuote } from "./StoryText";
@@ -18,8 +18,7 @@ export default function DecisionGuide() {
           </li>)}
         </ol>
         <div className="education-reading education-decision-close">
-          <p>Keep those questions with you as you explore the rest of the site.</p>
-          <p>We&apos;ve designed the next sections to help you answer them.</p>
+          <p>Keep these questions in mind as you explore. The next sections are designed to help you answer them.</p>
           <StoryQuote text="You don't have to decide yet." />
         </div>
         <div className="actions education-actions">
