@@ -95,15 +95,23 @@ export default function Hero() {
               <em>Stay somewhere worth coming home to.</em>
             </h1>
             <p className="hero-copy">
-              A comfortable base. A little independence.
-              <br />A self-catering stay, with room to plan the days around it.
+              Discover comfortable, fully equipped two-bedroom apartments in
+              Victoria Falls. Ideal for couples, families and friends looking
+              for space, privacy and the freedom to explore at their own pace.
             </p>
+            <ul className="hero-feature-list" aria-label="Property highlights">
+              <li>Two-bedroom apartments</li>
+              <li>Up to four guests per apartment</li>
+              <li>Self-catering facilities</li>
+              <li>Wi-Fi</li>
+              <li>From US$130 per apartment per night, subject to verification</li>
+            </ul>
             <div className="actions">
               <Link className="button button-primary" href="/apartments">
-                Explore the Stay
+                View Apartments
               </Link>
-              <Link className="text-link" href="/plan">
-                Plan My Victoria Falls Trip →
+              <Link className="button button-secondary" href="/contact">
+                Enquire About Availability
               </Link>
             </div>
           </div>

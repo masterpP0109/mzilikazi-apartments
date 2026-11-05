@@ -54,7 +54,7 @@ export default function AvailabilityPanel({
         <input type="hidden" name="preference" value={preference} />
       )}
       <button className="button button-primary" type="submit">
-        Check availability <span aria-hidden="true">→</span>
+        Enquire About Availability <span aria-hidden="true">→</span>
       </button>
       <p className="form-note">
         Send an enquiry for current rates and availability.

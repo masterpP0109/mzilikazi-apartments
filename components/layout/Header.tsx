@@ -83,7 +83,7 @@ export default function Header() {
               </Link>
             ))}
             <Link className="button button-primary" href="/contact">
-              Check availability
+              Enquire About Availability
             </Link>
           </nav>
           <MyTripButton />
@@ -118,7 +118,7 @@ export default function Header() {
                 className="button button-primary"
                 onClick={() => setOpen(false)}
               >
-                Check availability
+                Enquire About Availability
               </Link>
               <button
                 className="text-link"

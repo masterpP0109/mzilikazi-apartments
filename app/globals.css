@@ -449,6 +449,27 @@ summary {
   color: var(--muted);
   max-width: 420px;
 }
+.hero-feature-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin: 28px 0 0;
+  padding: 0;
+  color: var(--surface);
+  font-size: 14px;
+  font-weight: 600;
+}
+.hero-feature-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 999px;
+  background: rgba(9, 12, 10, 0.18);
+  backdrop-filter: blur(2px);
+}
 .hero-footnote {
   display: flex;
   justify-content: space-between;

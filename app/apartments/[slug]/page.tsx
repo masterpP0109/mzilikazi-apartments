@@ -244,7 +244,7 @@ export default async function ApartmentPage({
                 </div>
               )}
             </div>
-            <aside className="detail-sidebar" aria-label="Check availability">
+            <aside className="detail-sidebar" aria-label="Enquire about availability">
               <AvailabilityPanel preference={publicName ?? undefined} />
             </aside>
           </div>
@@ -262,7 +262,7 @@ export default async function ApartmentPage({
                 "/contact?preference=" + encodeURIComponent(publicName ?? "")
               }
             >
-              Check Availability
+              Enquire About Availability
             </TextLink>
             <TextLink href="/plan">Plan the days around it</TextLink>
           </div>

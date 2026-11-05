@@ -4,7 +4,7 @@ import { PageIntro } from "@/components/ui/Editorial";
 import { propertyPhotos } from "@/lib/property";
 import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata(
-  "Check availability",
+  "Enquire about your stay",
   "Enquire about dates, accommodation and current rates for your Victoria Falls stay.",
   "/contact",
 );

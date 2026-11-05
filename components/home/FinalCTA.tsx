@@ -8,7 +8,7 @@ export default function FinalCTA() {
         <h2>Victoria Falls is waiting.</h2>
         <p>Let’s start with your dates. The rest can follow.</p>
         <div className="actions">
-          <Button href="/contact">Check availability →</Button>
+          <Button href="/contact">Enquire About Availability →</Button>
           <TextLink href="/contact#enquiry">Ask a question</TextLink>
         </div>
       </Container>

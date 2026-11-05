@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mzilikazi-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=postgresql://neondb_owner:npg_Y4qrpEjPw0Zg@ep-muddy-unit-bd3l8nsw-pooler.c-8.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - NEXT_PUBLIC_SITE_URL=https://mzilikaziapartments.com
+      - NEXT_PUBLIC_CONTACT_EMAIL=info@mzilikaziapartments.com
+    env_file:
+      - .env.local
+

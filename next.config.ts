@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
   images: {
     remotePatterns: [
       {
@@ -17,8 +18,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Silence Supabase/Resend bundling warnings
-  serverExternalPackages: ['@supabase/supabase-js'],
+  // Silence Supabase/Resend/PG bundling warnings
+  serverExternalPackages: ['@supabase/supabase-js', 'pg'],
 };
 
 export default nextConfig;

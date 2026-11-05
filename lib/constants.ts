@@ -11,9 +11,10 @@ export const BRAND_PROMISE = "Victoria Falls outside. Home when you return.";
 export const BRAND_SUBTITLE =
   "A comfortable base for your Victoria Falls stay.";
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://mzilikazi-apartments.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://mzilikaziapartments.com";
 // Only supply these environment variables once client-confirmed.
-export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || null;
+export const CONTACT_EMAIL =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@mzilikaziapartments.com";
 export const CONTACT_PHONE = process.env.NEXT_PUBLIC_CONTACT_PHONE || null;
 export const CONTACT_WHATSAPP =
   process.env.NEXT_PUBLIC_CONTACT_WHATSAPP || null;
@@ -37,7 +38,7 @@ export const NAV_LINKS: NavLink[] = [
 ];
 export const FAQ_ITEMS = [
   {
-    question: "How do I check availability?",
+    question: "How do I enquire about availability?",
     answer:
       "Send your arrival and departure dates, guest count and any preferences using the enquiry form. Availability and rates need to be confirmed before you book.",
   },

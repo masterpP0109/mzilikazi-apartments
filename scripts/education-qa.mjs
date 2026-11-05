@@ -186,7 +186,7 @@ try {
   assert.equal(await evaluate('getComputedStyle(document.querySelector(".education-photo-statement .story-panel")).animationName'),'none');
   await evaluate('document.querySelector(".education-actions a").focus()');
   await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Tab',code:'Tab',windowsVirtualKeyCode:9});
-  assert.equal(await evaluate('document.activeElement.textContent'),'Check Availability');
+  assert.equal(await evaluate('document.activeElement.textContent'),'Enquire About Availability');
   await send('Emulation.setScriptExecutionDisabled',{value:true});
   const previousOrigin=await evaluate('performance.timeOrigin');
   await send('Page.navigate',{url:'http://127.0.0.1:'+port+'/'});
