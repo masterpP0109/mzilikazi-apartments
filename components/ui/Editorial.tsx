@@ -71,7 +71,7 @@ export function PageIntro({
 }) {
   if (isPublicMedia(media)) {
     return (
-      <section className="hero page-hero">
+      <section className={`hero page-hero${mediaRatio ? ` ratio-${mediaRatio}` : ""}`}>
         <div className="hero-background" aria-hidden="true">
           <Image
             src={media.src}

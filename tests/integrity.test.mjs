@@ -7,6 +7,11 @@ import {
   isPublicMedia,
   reviews,
 } from "../lib/property.ts";
+import {
+  buildGuestNotificationEmail,
+  buildGuestConfirmationEmail,
+  parseEmailRecipients,
+} from "../lib/email.ts";
 
 const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
 const later = new Date(Date.now() + 86400000 * 3).toISOString().slice(0, 10);
@@ -38,7 +43,7 @@ test("calendar dates, contact details and whole guest counts are validated", () 
     );
 });
 test("accommodation retains legacy URLs and publishes confirmed units", () => {
-  assert.equal(accommodations.flatMap((a) => [a.slug, ...a.aliases]).length, 12);
+  assert.equal(accommodations.flatMap((a) => [a.slug, ...a.aliases]).length, 14);
   assert.equal(publishedAccommodations.length, 3);
   // Mangwana Suite (index 2) remains pending without exposed gallery until photos are ready
   const pending = accommodations[2];
@@ -56,4 +61,48 @@ test("development and unverified photos never qualify as public media", () => {
   assert.equal(isPublicMedia({ ...photo, kind: "development" }), false);
   assert.equal(isPublicMedia(null), false);
   assert.ok(reviews.length > 0);
+});
+
+test("enquiry emails include explicit subjects for provider compatibility", () => {
+  const notification = buildGuestNotificationEmail({
+    siteName: "Mzilikazi Apartments",
+    apartmentPreference: "Mzilikazi Suite",
+    dateSummary: "2026-11-10 to 2026-11-12",
+    guestName: "Test Guest",
+    guestEmail: "guest@example.org",
+    guestPhone: "+263 77 123 4567",
+    guestCount: 2,
+    message: "Early check-in please.",
+  });
+  assert.match(notification.subject, /enquiry/i);
+  assert.ok(notification.text.includes("New Accommodation Enquiry"));
+
+  const acknowledgement = buildGuestConfirmationEmail({
+    siteName: "Mzilikazi Apartments",
+    guestName: "Test Guest",
+    preference: "Mzilikazi Suite",
+    dateSummary: "2026-11-10 to 2026-11-12",
+    guestCount: 2,
+  });
+  assert.match(acknowledgement.subject, /received your enquiry/i);
+  assert.ok(acknowledgement.text.includes("Thank you"));
+});
+
+test("recipient parsing ignores blanks and garbage entries in SMTP lists", () => {
+  const recipients = parseEmailRecipients(
+    "info@mzilikaziapartments.com, , lets test the emails and the enqury now , info@other.com",
+  );
+
+  assert.deepEqual(recipients, [
+    "info@mzilikaziapartments.com",
+    "info@other.com",
+  ]);
+});
+
+test("health endpoint exposes safe liveness status", async () => {
+  const response = await fetch("http://127.0.0.1:3187/api/health");
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.status, "ok");
+  assert.equal(body.service, "mzilikazi-apartments");
 });

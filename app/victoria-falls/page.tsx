@@ -5,7 +5,6 @@ import {
   Container,
   Eyebrow,
   TextLink,
-  ImageFrame,
 } from "@/components/ui/Editorial";
 import { propertyMedia } from "@/lib/property";
 import Experience from "@/components/home/Experience";

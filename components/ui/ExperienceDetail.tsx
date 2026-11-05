@@ -4,7 +4,7 @@ import { experiences, experienceEnquiryHref, experienceEnquiryMessage, experienc
 import { isPublicMedia } from "@/lib/property";
 import { whatsappUrl } from "@/lib/constants";
 import { notFound } from "next/navigation";
-import { Container, ImageFrame, TextLink, Eyebrow } from "./Editorial";
+import { Container, TextLink, Eyebrow } from "./Editorial";
 import Button from "./Button";
 import ExperiencePrice from "./ExperiencePrice";
 import ExperienceGallery from "./ExperienceGallery";

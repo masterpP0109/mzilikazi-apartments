@@ -73,8 +73,8 @@ const pending = (slug: string, aliases: string[]): Accommodation => ({
   gallery: [],
 });
 export const accommodations: Accommodation[] = [
-  pending("mzilikazi-suite", ["mzilikazi", "apartment-two", "apartment-2"]),
-  pending("lobengula-suite", ["zambezi-suite", "apartment-one", "apartment-1"]),
+  pending("mzilikazi-suite", ["mzilikazi", "apartment-two", "apartment-2", "family-suite"]),
+  pending("lobengula-suite", ["zambezi-suite", "batoka-suite", "apartment-one", "apartment-1"]),
   pending("nkulumane-suite", ["mangwana-suite", "apartment-three", "apartment-3"]),
 ];
 

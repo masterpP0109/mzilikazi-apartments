@@ -1,14 +1,18 @@
-// Neon Postgres client for Mzilikazi Apartments
-let poolInstance: any = null;
+type DatabasePool = {
+  query: (text: string, params?: unknown[]) => Promise<{ rows: unknown[] }>;
+};
 
-export async function getDbPool(): Promise<any | null> {
+// Neon Postgres client for Mzilikazi Apartments
+let poolInstance: DatabasePool | null = null;
+
+export async function getDbPool(): Promise<DatabasePool | null> {
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) return null;
 
   if (!poolInstance) {
     try {
       // Dynamic import so lack of local pg installation doesn't break build
-      const { Pool } = await import("pg");
+      const { Pool } = (await import("pg")) as typeof import("pg");
       poolInstance = new Pool({
         connectionString,
         ssl: {
@@ -26,9 +30,9 @@ export async function getDbPool(): Promise<any | null> {
   return poolInstance;
 }
 
-export async function query<T = any>(
+export async function query<T = unknown>(
   text: string,
-  params?: any[]
+  params?: unknown[],
 ): Promise<T[]> {
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) {

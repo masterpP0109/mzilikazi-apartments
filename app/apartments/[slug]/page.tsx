@@ -5,7 +5,7 @@ import ApartmentComparison, {
 import { AddToTrip } from "@/components/trip/TripProvider";
 import Location from "@/components/home/Location";
 import Proof from "@/components/home/Proof";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { accommodations, isPublicMedia } from "@/lib/property";
 import { Container, PageIntro, TextLink } from "@/components/ui/Editorial";
 import { AccommodationFacts } from "@/components/ui/AccommodationCard";
@@ -63,6 +63,9 @@ export default async function ApartmentPage({
   const { slug } = await params;
   const a = find(slug);
   if (!a) notFound();
+  if (a.slug !== slug && a.aliases.includes(slug)) {
+    permanentRedirect(`/apartments/${a.slug}`);
+  }
   const whatsapp = whatsappUrl();
   const publicName = a.confirmed ? a.name : null;
   const policyLabels = [

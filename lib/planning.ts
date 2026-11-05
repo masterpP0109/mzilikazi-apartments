@@ -1,4 +1,4 @@
-import { propertyPhotos, type PropertyMedia } from "./property";
+import { propertyPhotos } from "./property";
 export const travellerTypes = [
   {
     id: "Family",

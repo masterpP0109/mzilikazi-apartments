@@ -1,9 +1,19 @@
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 import { enquirySchema } from "@/lib/enquiry";
 import { SITE_NAME } from "@/lib/constants";
 import { query, ensureTablesExist } from "@/lib/db";
+import {
+  buildGuestNotificationEmail,
+  buildGuestConfirmationEmail,
+  parseEmailRecipients,
+} from "@/lib/email";
+
+const externalDeliveryDisabled =
+  process.env.NEXT_PRIVATE_TEST_MODE === "1" || process.env.NODE_ENV === "test";
+
 export async function POST(request: Request) {
   let body: unknown;
   try {
@@ -14,8 +24,9 @@ export async function POST(request: Request) {
       { status: 400 },
     );
   }
+
   const parsed = enquirySchema.safeParse(body);
-  if (!parsed.success)
+  if (!parsed.success) {
     return NextResponse.json(
       {
         error: "Please check your dates and contact details.",
@@ -23,20 +34,35 @@ export async function POST(request: Request) {
       },
       { status: 422 },
     );
+  }
+
   const data = parsed.data;
   if ((data.dateMode ?? "known") !== "known") {
     data.arrivalDate = undefined;
     data.departureDate = undefined;
   }
+
   const dateSummary =
     (data.dateMode ?? "known") === "known"
       ? `${data.arrivalDate} to ${data.departureDate}`
       : data.dateMode === "flexible"
         ? "with flexible dates"
         : "with dates still to discuss";
-  let delivered = false;
 
-  // 1. Neon Postgres storage
+  if (externalDeliveryDisabled) {
+    console.info("Enquiry delivery disabled for local test isolation.");
+    return NextResponse.json(
+      {
+        error:
+          "We could not deliver your enquiry at the moment. Please try again later.",
+      },
+      { status: 503 },
+    );
+  }
+
+  let delivered = false;
+  let stored = false;
+
   if (process.env.DATABASE_URL) {
     try {
       await ensureTablesExist();
@@ -64,15 +90,14 @@ export async function POST(request: Request) {
           messageText,
           "new",
           "website",
-        ]
+        ],
       );
-      delivered = true;
+      stored = true;
     } catch (err) {
       console.error("Neon DB storage failed:", err);
     }
   }
 
-  // 2. Supabase storage fallback (if configured)
   if (
     process.env.NEXT_PUBLIC_SUPABASE_URL &&
     process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -102,13 +127,105 @@ export async function POST(request: Request) {
         status: "new",
         source: "website",
       });
-      delivered = !error;
+      stored = !error;
       if (error) console.error("Enquiry storage failed");
-    } catch {
-      console.error("Enquiry storage unavailable");
+    } catch (err) {
+      console.error("Enquiry storage unavailable:", err);
     }
   }
-  if (
+
+  const smtpConfigured =
+    process.env.SMTP_HOST &&
+    process.env.SMTP_PORT &&
+    process.env.SMTP_USER &&
+    process.env.SMTP_PASSWORD &&
+    process.env.FROM_EMAIL &&
+    process.env.TO_EMAIL;
+
+  if (smtpConfigured) {
+    const preference = data.apartmentPreference || "General / Undecided";
+    const smtpPort = Number(process.env.SMTP_PORT);
+    const recipients = parseEmailRecipients(process.env.TO_EMAIL);
+
+    if (recipients.length === 0) {
+      console.error("No valid SMTP recipients configured for enquiry notifications.");
+    } else {
+      try {
+        const transporter = nodemailer.createTransport({
+          host: process.env.SMTP_HOST,
+          port: smtpPort,
+          secure: smtpPort === 465,
+          auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASSWORD,
+          },
+        });
+
+        const notificationPayload = buildGuestNotificationEmail({
+          siteName: SITE_NAME,
+          apartmentPreference: preference,
+          dateSummary,
+          guestName: data.name,
+          guestEmail: data.email,
+          guestPhone: data.phone,
+          guestCount: data.guests,
+          message: data.message,
+        });
+
+        const info = await transporter.sendMail({
+          from: `${SITE_NAME} <${process.env.FROM_EMAIL}>`,
+          to: recipients,
+          replyTo: data.email,
+          subject: notificationPayload.subject,
+          text: notificationPayload.text,
+          html: notificationPayload.html,
+        });
+
+        if (info?.messageId) delivered = true;
+        else console.error("SMTP enquiry notification failed");
+      } catch (err) {
+        console.error(
+          "SMTP enquiry email unavailable:",
+          err instanceof Error ? err.message : "unknown error",
+        );
+      }
+
+      if (delivered) {
+        try {
+          const confirmationPayload = buildGuestConfirmationEmail({
+            siteName: SITE_NAME,
+            guestName: data.name,
+            preference,
+            dateSummary,
+            guestCount: data.guests,
+          });
+          await nodemailer
+            .createTransport({
+              host: process.env.SMTP_HOST,
+              port: smtpPort,
+              secure: smtpPort === 465,
+              auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASSWORD,
+              },
+            })
+            .sendMail({
+              from: `${SITE_NAME} <${process.env.FROM_EMAIL}>`,
+              to: data.email,
+              replyTo: process.env.FROM_EMAIL,
+              subject: confirmationPayload.subject,
+              text: confirmationPayload.text,
+              html: confirmationPayload.html,
+            });
+        } catch (err) {
+          console.error(
+            "Guest acknowledgement unavailable:",
+            err instanceof Error ? err.message : "unknown error",
+          );
+        }
+      }
+    }
+  } else if (
     process.env.RESEND_API_KEY &&
     process.env.RESEND_FROM_EMAIL &&
     process.env.RESEND_TO_EMAIL
@@ -118,106 +235,70 @@ export async function POST(request: Request) {
     const preference = data.apartmentPreference || "General / Undecided";
 
     try {
+      const notificationPayload = buildGuestNotificationEmail({
+        siteName: SITE_NAME,
+        apartmentPreference: preference,
+        dateSummary,
+        guestName: data.name,
+        guestEmail: data.email,
+        guestPhone: data.phone,
+        guestCount: data.guests,
+        message: data.message,
+      });
       const notification = await resend.emails.send({
         from,
         to: process.env.RESEND_TO_EMAIL,
         replyTo: data.email,
-        text: `New Accommodation Enquiry — ${SITE_NAME}\n\nGuest: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone ?? "Not provided"}\nDates: ${dateSummary}\nGuests: ${data.guests}\nApartment Preference: ${preference}\n\nMessage / Notes:\n${data.message ?? "No additional message"}\n`,
-        html: `
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; color: #1a1a1a; line-height: 1.6;">
-            <h2 style="color: #92542B; margin-bottom: 8px;">New Accommodation Enquiry</h2>
-            <p style="font-size: 16px; margin-top: 0;">You have received a new enquiry via the <strong>${SITE_NAME}</strong> website.</p>
-
-            <div style="background-color: #f7f5f0; border-radius: 8px; padding: 18px; margin: 20px 0;">
-              <table style="width: 100%; border-collapse: collapse;">
-                <tr>
-                  <td style="padding: 6px 0; color: #666; width: 140px;"><strong>Apartment:</strong></td>
-                  <td style="padding: 6px 0; font-weight: 600; color: #111;">${preference}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 6px 0; color: #666;"><strong>Dates:</strong></td>
-                  <td style="padding: 6px 0;">${dateSummary}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 6px 0; color: #666;"><strong>Guests:</strong></td>
-                  <td style="padding: 6px 0;">${data.guests}</td>
-                </tr>
-              </table>
-            </div>
-
-            <h3 style="color: #333; margin-top: 24px; border-bottom: 1px solid #eee; padding-bottom: 8px;">Guest Information</h3>
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-              <tr>
-                <td style="padding: 6px 0; color: #666; width: 140px;"><strong>Name:</strong></td>
-                <td style="padding: 6px 0;">${data.name}</td>
-              </tr>
-              <tr>
-                <td style="padding: 6px 0; color: #666;"><strong>Email:</strong></td>
-                <td style="padding: 6px 0;"><a href="mailto:${data.email}" style="color: #92542B;">${data.email}</a></td>
-              </tr>
-              <tr>
-                <td style="padding: 6px 0; color: #666;"><strong>Phone / WhatsApp:</strong></td>
-                <td style="padding: 6px 0;">${data.phone ? `<a href="https://wa.me/${data.phone.replace(/[^0-9]/g, '')}">${data.phone}</a>` : "Not provided"}</td>
-              </tr>
-            </table>
-
-            ${
-              data.message
-                ? `
-              <div style="background: #fff; border: 1px solid #e0ded9; border-radius: 6px; padding: 14px; margin-top: 14px;">
-                <p style="margin: 0 0 6px 0; color: #666; font-size: 13px;"><strong>Special Requests / Message:</strong></p>
-                <p style="margin: 0; white-space: pre-wrap;">${data.message}</p>
-              </div>`
-                : ""
-            }
-
-            <div style="margin-top: 30px;">
-              <a href="mailto:${data.email}?subject=Regarding your enquiry at Mzilikazi Apartments" style="background-color: #92542B; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: 500;">
-                Reply Directly to Guest
-              </a>
-            </div>
-          </div>
-        `,
+        subject: notificationPayload.subject,
+        text: notificationPayload.text,
+        html: notificationPayload.html,
       });
-      if (!notification.error) delivered = true;
-      else console.error("Enquiry notification failed", notification.error);
+      if (notification?.data?.id) delivered = true;
+      else console.error("Enquiry notification failed");
     } catch (err) {
-      console.error("Enquiry email unavailable:", err);
+      console.error(
+        "Enquiry email unavailable:",
+        err instanceof Error ? err.message : "unknown error",
+      );
     }
 
     if (delivered) {
       try {
+        const confirmationPayload = buildGuestConfirmationEmail({
+          siteName: SITE_NAME,
+          guestName: data.name,
+          preference,
+          dateSummary,
+          guestCount: data.guests,
+        });
         await resend.emails.send({
           from,
           to: data.email,
-          subject: `We've received your enquiry — ${SITE_NAME}`,
-          text: `Hello ${data.name},\n\nThank you for reaching out to ${SITE_NAME}. We have received your enquiry for ${preference} (${dateSummary}, ${data.guests} guests).\n\nOur team in Victoria Falls will review availability and get back to you shortly with rates and arrangements.\n\nWarm regards,\n${SITE_NAME}`,
-          html: `
-            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; color: #1a1a1a; line-height: 1.6;">
-              <h2 style="color: #92542B;">Thank you, ${data.name}.</h2>
-              <p>We have received your enquiry for <strong>${preference}</strong> in Victoria Falls.</p>
-
-              <div style="background-color: #f7f5f0; border-radius: 8px; padding: 16px; margin: 20px 0;">
-                <p style="margin: 4px 0;"><strong>Stay dates:</strong> ${dateSummary}</p>
-                <p style="margin: 4px 0;"><strong>Guests:</strong> ${data.guests}</p>
-              </div>
-
-              <p>Our reservations team will confirm availability and reply to you with rates and details shortly.</p>
-
-              <p style="margin-top: 28px; color: #555;">
-                Warm regards,<br />
-                <strong>${SITE_NAME} Team</strong><br />
-                Victoria Falls, Zimbabwe
-              </p>
-            </div>
-          `,
+          replyTo: process.env.RESEND_FROM_EMAIL,
+          subject: confirmationPayload.subject,
+          text: confirmationPayload.text,
+          html: confirmationPayload.html,
         });
       } catch (err) {
-        console.error("Guest acknowledgement unavailable:", err);
+        console.error(
+          "Guest acknowledgement unavailable:",
+          err instanceof Error ? err.message : "unknown error",
+        );
       }
     }
   }
-  if (!delivered)
+
+  if (!delivered && stored) {
+    return NextResponse.json(
+      {
+        error:
+          "We received your enquiry but could not complete the confirmation delivery. Please try again later.",
+      },
+      { status: 503 },
+    );
+  }
+
+  if (!delivered) {
     return NextResponse.json(
       {
         error:
@@ -225,5 +306,7 @@ export async function POST(request: Request) {
       },
       { status: 503 },
     );
+  }
+
   return NextResponse.json({ success: true }, { status: 201 });
 }

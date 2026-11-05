@@ -9,11 +9,16 @@ let server;
 before(async () => {
   const env = {
     ...process.env,
+    NODE_ENV: "production",
+    DATABASE_URL: "",
     RESEND_API_KEY: "",
     RESEND_FROM_EMAIL: "",
     RESEND_TO_EMAIL: "",
     SUPABASE_SERVICE_ROLE_KEY: "",
     NEXT_PUBLIC_SUPABASE_URL: "",
+    NEXT_PRIVATE_TEST_MODE: "1"",
+    NEXT_PUBLIC_SUPABASE_URL: "",
+    NEXT_PRIVATE_TEST_MODE: "1",
   };
   server = spawn(
     process.execPath,
@@ -43,10 +48,6 @@ test("all existing public routes render without unsupported public content", asy
     "/apartments",
     "/apartments/lobengula-suite",
     "/apartments/nkulumane-suite",
-    "/apartments/mangwana-suite",
-    "/apartments/zambezi-suite",
-    "/apartments/family-suite",
-    "/apartments/batoka-suite",
     "/apartments/apartment-one",
     "/apartments/apartment-two",
     "/apartments/apartment-three",
@@ -98,6 +99,26 @@ test("all existing public routes render without unsupported public content", asy
     assert.match(html, /rel="canonical"/, path);
     assert.doesNotMatch(html, /og-image\.jpg|src="\/logo\.png"/, path);
   }
+});
+test("legacy apartment aliases redirect to canonical paths", async () => {
+  const family = await get("/apartments/family-suite");
+  assert.equal(family.status, 308);
+  assert.match(family.headers.get("location") ?? "", /\/apartments\/mzilikazi-suite$/);
+});
+
+test("legacy apartment aliases redirect to canonical paths", async () => {
+  const family = await get("/apartments/family-suite");
+  assert.equal(family.status, 308);
+  assert.match(family.headers.get("location") ?? "", /\/apartments\/mzilikazi-suite$/);
+});
+
+test("health endpoint is live and safe for smoke checks", async () => {
+  const res = await get("/api/health");
+  assert.equal(res.status, 200);
+  const payload = await res.json();
+  assert.equal(payload.status, "ok");
+  assert.equal(payload.service, "mzilikazi-apartments");
+  assert.ok(payload.timestamp);
 });
 test("availability parameters prefill the enquiry", async () => {
   const html = await (
