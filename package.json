@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
-    "@neondatabase/serverless": "^0.10.4",
+    "@neondatabase/serverless": "^1.2.0",
     "@sanity/client": "^7.26.2",
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.3",
