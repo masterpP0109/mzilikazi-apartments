@@ -12,8 +12,14 @@ export function Container({
 }) {
   return <div className={`container ${className}`}>{children}</div>;
 }
-export function Eyebrow({ children }: { children: React.ReactNode }) {
-  return <p className="eyebrow">{children}</p>;
+export function Eyebrow({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <p className={`eyebrow ${className}`.trim()}>{children}</p>;
 }
 export function TextLink({
   href,

@@ -15,7 +15,7 @@ export default function Hero() {
   return (
     <section id="hero" className="hero">
       <div className="hero-background" aria-hidden="true">
-        <div className="hero-slide is-active">
+        <div className="hero-slide is-active hero-image-zoom">
           <Image
             src={HERO_IMAGE}
             alt="Mzilikazi Apartments — comfortable open-plan lounge with contemporary sofa and warm natural lighting"
@@ -27,27 +27,27 @@ export default function Hero() {
         </div>
       </div>
       <Container>
-        <div className="hero-top has-image">
+        <div className="hero-top has-image hero-content-entrance">
           <div>
-            <Eyebrow>Victoria Falls · Zimbabwe</Eyebrow>
-            <h1>
+            <Eyebrow className="hero-eyebrow-entrance">Victoria Falls · Zimbabwe</Eyebrow>
+            <h1 className="hero-heading-entrance">
               Come for the Falls.
               <br />
               <em>Stay somewhere worth coming home to.</em>
             </h1>
-            <p className="hero-copy">
+            <p className="hero-copy hero-copy-entrance">
               Two-bedroom apartments in Victoria Falls designed for couples,
               families and friends who want space, privacy and a comfortable
               base for exploring the Falls at their own pace.
             </p>
-            <ul className="hero-feature-list" aria-label="Property highlights">
+            <ul className="hero-feature-list hero-features-entrance" aria-label="Property highlights">
               <li>Two-bedroom apartments</li>
               <li>Up to four guests per apartment</li>
               <li>Self-catering facilities</li>
               <li>High-speed Wi-Fi</li>
               <li>From US$130 per apartment per night</li>
             </ul>
-            <div className="actions">
+            <div className="actions hero-actions-entrance">
               <Link className="button button-primary" href="/apartments">
                 View Apartments
               </Link>

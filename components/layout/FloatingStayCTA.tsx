@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -8,6 +8,10 @@ export default function FloatingStayCTA() {
   const path = usePathname();
   const [hidden, setHidden] = useState(false);
   useEffect(() => {
+    if (path === "/contact") {
+      setHidden(true);
+      return;
+    }
     let roomsVisible = false;
     const visibleEnquiries = new Set<Element>();
     const update = () => setHidden(roomsVisible || visibleEnquiries.size > 0 || Boolean(
@@ -44,9 +48,20 @@ export default function FloatingStayCTA() {
   }, [path]);
   return (
     <aside className="floating-stay" aria-label="Accommodation shortcut" hidden={hidden}>
-      <Link href="/apartments" className="button button-primary">
-        Explore the Stay <ArrowRight size={18} aria-hidden="true" />
-      </Link>
+      <div className="floating-stay-inner">
+        <div className="floating-stay-details">
+          <span className="floating-stay-rate">From US$130 <small>/ night</small></span>
+          <span className="floating-stay-caption">2-Bedroom Suites</span>
+        </div>
+        <div className="floating-stay-actions">
+          <Link href="/apartments" className="button button-secondary floating-suites-btn">
+            Suites
+          </Link>
+          <Link href="/contact" className="button button-primary floating-cta-btn">
+            Check Availability <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+        </div>
+      </div>
     </aside>
   );
 }

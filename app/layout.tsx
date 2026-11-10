@@ -30,8 +30,29 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: SITE_NAME,
     description: SITE_TAGLINE,
+    images: [{
+      url: new URL(SITE_LOGO.src, SITE_URL).href,
+      width: SITE_LOGO.width,
+      height: SITE_LOGO.height,
+      alt: SITE_NAME,
+    }],
   },
-  twitter: { card: "summary", title: SITE_NAME, description: SITE_TAGLINE },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_TAGLINE,
+    images: [{
+      url: new URL(SITE_LOGO.src, SITE_URL).href,
+      width: SITE_LOGO.width,
+      height: SITE_LOGO.height,
+      alt: SITE_NAME,
+    }],
+  },
+  icons: {
+    icon: SITE_LOGO.src,
+    shortcut: SITE_LOGO.src,
+    apple: SITE_LOGO.src,
+  },
   robots: { index: true, follow: true },
 };
 const structuredData = {

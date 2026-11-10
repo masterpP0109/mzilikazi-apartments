@@ -1,5 +1,6 @@
 import { reviews } from "@/lib/property";
 import { Container, Eyebrow, TextLink } from "@/components/ui/Editorial";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function Proof({ apartmentSlug }: { apartmentSlug?: string }) {
   const verified = reviews.filter(
@@ -15,27 +16,31 @@ export default function Proof({ apartmentSlug }: { apartmentSlug?: string }) {
   return (
     <section className="section stone proof-section">
       <Container>
-        <div className="proof-header">
-          <Eyebrow>From our guests</Eyebrow>
-          <p>
-            A few words from people who've made Mzilikazi part of their Victoria
-            Falls stay.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="proof-header">
+            <Eyebrow>From our guests</Eyebrow>
+            <p>
+              A few words from people who've made Mzilikazi part of their Victoria
+              Falls stay.
+            </p>
+          </div>
+        </ScrollReveal>
 
-        <div className="proof-grid">
+        <div className="proof-grid mobile-snap-row">
           {verified.map((r, i) => (
-            <blockquote key={r.name + i} className="proof-card">
-              <p className="proof-quote">“{r.quote}”</p>
-              <div className="proof-meta">
-                <cite>{r.name}</cite>
-                <p>
-                  {[r.travellerType, r.origin, r.stayLength]
-                    .filter(Boolean)
-                    .join(" · ")}
-                </p>
-              </div>
-            </blockquote>
+            <ScrollReveal key={r.name + i} delayMs={i * 100} className="snap-card-wrap">
+              <blockquote className="proof-card">
+                <p className="proof-quote">“{r.quote}”</p>
+                <div className="proof-meta">
+                  <cite>{r.name}</cite>
+                  <p>
+                    {[r.travellerType, r.origin, r.stayLength]
+                      .filter(Boolean)
+                      .join(" · ")}
+                  </p>
+                </div>
+              </blockquote>
+            </ScrollReveal>
           ))}
         </div>
 
