@@ -48,18 +48,16 @@ export default function TransfersSection() {
           </ScrollReveal>
 
           <div className="transfers-routes-column">
-            <div className="transfers-routes-list mobile-snap-row">
-              {categories.map((route, index) => (
-                <ScrollReveal key={route.id} delayMs={index * 100} className="snap-card-wrap">
-                  <article className="transfer-card">
-                    <div className="transfer-card-header">
-                      <span className="transfer-badge">{route.badge}</span>
-                      <span className="transfer-duration">{route.duration}</span>
-                    </div>
-                    <h3>{route.title}</h3>
-                    <p>{route.description.split(".")[0]}.</p>
-                  </article>
-                </ScrollReveal>
+            <div className="transfers-routes-list">
+              {categories.map((route) => (
+                <article key={route.id} className="transfer-card">
+                  <div className="transfer-card-header">
+                    <span className="transfer-badge">{route.badge}</span>
+                    <span className="transfer-duration">{route.duration}</span>
+                  </div>
+                  <h3>{route.title}</h3>
+                  <p>{route.description.split(".")[0]}.</p>
+                </article>
               ))}
             </div>
 

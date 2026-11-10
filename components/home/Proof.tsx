@@ -26,21 +26,19 @@ export default function Proof({ apartmentSlug }: { apartmentSlug?: string }) {
           </div>
         </ScrollReveal>
 
-        <div className="proof-grid mobile-snap-row">
+        <div className="proof-grid">
           {verified.map((r, i) => (
-            <ScrollReveal key={r.name + i} delayMs={i * 100} className="snap-card-wrap">
-              <blockquote className="proof-card">
-                <p className="proof-quote">“{r.quote}”</p>
-                <div className="proof-meta">
-                  <cite>{r.name}</cite>
-                  <p>
-                    {[r.travellerType, r.origin, r.stayLength]
-                      .filter(Boolean)
-                      .join(" · ")}
-                  </p>
-                </div>
-              </blockquote>
-            </ScrollReveal>
+            <blockquote key={r.name + i} className="proof-card">
+              <p className="proof-quote">“{r.quote}”</p>
+              <div className="proof-meta">
+                <cite>{r.name}</cite>
+                <p>
+                  {[r.travellerType, r.origin, r.stayLength]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </p>
+              </div>
+            </blockquote>
           ))}
         </div>
 

@@ -43,39 +43,37 @@ export default function Itineraries() {
           </p>
         </ScrollReveal>
 
-        <div className="journey-grid itinerary-grid mobile-snap-row">
-          {itineraries.map((i, index) => (
-            <ScrollReveal key={i.id} delayMs={index * 120} className="snap-card-wrap">
-              <article className="journey-card">
-                {itineraryImages[i.id] && (
-                  <ImageFrame
-                    media={itineraryImages[i.id]}
-                    ratio="landscape"
-                    sizes="(max-width: 639px) 92vw, (max-width: 1023px) 44vw, 30vw"
-                  />
-                )}
-                <div style={{ marginTop: 12 }}>
-                  <p className="eyebrow">{i.nights} Nights</p>
-                  <h3>{i.title}</h3>
-                  <p>{i.description}</p>
-                  <ol className="itinerary-summary">
-                    {i.days.map((d, n) => (
-                      <li key={d.title}>
-                        <span>Day {n + 1}</span> {d.title}
-                      </li>
-                    ))}
-                  </ol>
-                  <div style={{ marginTop: 16 }}>
-                    <TextLink href={"/plan/itineraries/" + i.id}>
-                      View Itinerary
-                    </TextLink>
-                  </div>
-                  <div style={{ marginTop: 8 }}>
-                    <AddToTrip kind="itinerary" id={i.id} />
-                  </div>
+        <div className="journey-grid itinerary-grid">
+          {itineraries.map((i) => (
+            <article className="journey-card" key={i.id}>
+              {itineraryImages[i.id] && (
+                <ImageFrame
+                  media={itineraryImages[i.id]}
+                  ratio="landscape"
+                  sizes="(max-width: 639px) 100vw, (max-width: 1023px) 44vw, 30vw"
+                />
+              )}
+              <div style={{ marginTop: 12 }}>
+                <p className="eyebrow">{i.nights} Nights</p>
+                <h3>{i.title}</h3>
+                <p>{i.description}</p>
+                <ol className="itinerary-summary">
+                  {i.days.map((d, n) => (
+                    <li key={d.title}>
+                      <span>Day {n + 1}</span> {d.title}
+                    </li>
+                  ))}
+                </ol>
+                <div style={{ marginTop: 16 }}>
+                  <TextLink href={"/plan/itineraries/" + i.id}>
+                    View Itinerary
+                  </TextLink>
                 </div>
-              </article>
-            </ScrollReveal>
+                <div style={{ marginTop: 8 }}>
+                  <AddToTrip kind="itinerary" id={i.id} />
+                </div>
+              </div>
+            </article>
           ))}
         </div>
 

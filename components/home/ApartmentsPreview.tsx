@@ -24,11 +24,13 @@ export default function ApartmentsPreview() {
         </ScrollReveal>
 
         {publishedAccommodations.length ? (
-          <div className="accommodation-list property-accommodation-list mobile-snap-row">
+          <div className="accommodation-list property-accommodation-list">
             {publishedAccommodations.map((a, index) => (
-              <ScrollReveal key={a.slug} delayMs={index * 120} className="snap-card-wrap">
-                <AccommodationCard apartment={a} propertyPreview={accommodationPreviews[index % accommodationPreviews.length]} />
-              </ScrollReveal>
+              <AccommodationCard
+                key={a.slug}
+                apartment={a}
+                propertyPreview={accommodationPreviews[index % accommodationPreviews.length]}
+              />
             ))}
           </div>
         ) : (

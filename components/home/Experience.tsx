@@ -19,11 +19,9 @@ export default function Experience() {
           </div>
         </ScrollReveal>
 
-        <div className="experience-grid mobile-snap-row">
-          {featuredExperiences.map((experience, index) => (
-            <ScrollReveal key={experience.slug} delayMs={index * 120} className="snap-card-wrap">
-              <ExperienceCard experience={experience} heading="h3" />
-            </ScrollReveal>
+        <div className="experience-grid">
+          {featuredExperiences.map((experience) => (
+            <ExperienceCard key={experience.slug} experience={experience} heading="h3" />
           ))}
         </div>
 
