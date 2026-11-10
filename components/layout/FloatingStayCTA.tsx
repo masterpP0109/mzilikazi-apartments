@@ -8,13 +8,14 @@ export default function FloatingStayCTA() {
   const path = usePathname();
   const [hidden, setHidden] = useState(false);
   useEffect(() => {
-    if (path === "/contact") {
+    if (path === "/contact" || path === "/reviews/new") {
       setHidden(true);
       return;
     }
     let roomsVisible = false;
+    let footerVisible = false;
     const visibleEnquiries = new Set<Element>();
-    const update = () => setHidden(roomsVisible || visibleEnquiries.size > 0 || Boolean(
+    const update = () => setHidden(roomsVisible || footerVisible || visibleEnquiries.size > 0 || Boolean(
       document.querySelector("dialog[open]") ||
       document.querySelector('[data-menu-open="true"]') ||
       document.activeElement?.matches('input, textarea, select, [contenteditable="true"]')
@@ -25,6 +26,14 @@ export default function FloatingStayCTA() {
       update();
     }) : null;
     if (rooms) roomObserver?.observe(rooms);
+
+    const footer = document.querySelector("footer, .site-footer");
+    const footerObserver = footer && "IntersectionObserver" in window ? new IntersectionObserver(entries => {
+      footerVisible = entries.some(entry => entry.isIntersecting);
+      update();
+    }) : null;
+    if (footer) footerObserver?.observe(footer);
+
     const enquiryObserver = "IntersectionObserver" in window ? new IntersectionObserver(entries => {
       for (const entry of entries) {
         if (entry.isIntersecting) visibleEnquiries.add(entry.target);
@@ -43,6 +52,7 @@ export default function FloatingStayCTA() {
       document.removeEventListener("focusout", update);
       observer.disconnect();
       roomObserver?.disconnect();
+      footerObserver?.disconnect();
       enquiryObserver?.disconnect();
     };
   }, [path]);

@@ -6,7 +6,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FloatingStayCTA from "@/components/layout/FloatingStayCTA";
-import { SITE_NAME, SITE_URL, SITE_TAGLINE, SITE_LOGO } from "@/lib/constants";
+import { SITE_NAME, SITE_URL, SITE_TAGLINE, SITE_OG_IMAGE } from "@/lib/constants";
 const newsreader = Newsreader({
   subsets: ["latin"],
   weight: ["400"],
@@ -31,9 +31,9 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_TAGLINE,
     images: [{
-      url: new URL(SITE_LOGO.src, SITE_URL).href,
-      width: SITE_LOGO.width,
-      height: SITE_LOGO.height,
+      url: new URL(SITE_OG_IMAGE.src, SITE_URL).href,
+      width: SITE_OG_IMAGE.width,
+      height: SITE_OG_IMAGE.height,
       alt: SITE_NAME,
     }],
   },
@@ -42,23 +42,28 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_TAGLINE,
     images: [{
-      url: new URL(SITE_LOGO.src, SITE_URL).href,
-      width: SITE_LOGO.width,
-      height: SITE_LOGO.height,
+      url: new URL(SITE_OG_IMAGE.src, SITE_URL).href,
+      width: SITE_OG_IMAGE.width,
+      height: SITE_OG_IMAGE.height,
       alt: SITE_NAME,
     }],
   },
   icons: {
-    icon: SITE_LOGO.src,
-    shortcut: SITE_LOGO.src,
-    apple: SITE_LOGO.src,
+    icon: [
+      { url: "/icon.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   robots: { index: true, follow: true },
 };
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
-  logo: new URL(SITE_LOGO.src, SITE_URL).href,
+  logo: new URL(SITE_OG_IMAGE.src, SITE_URL).href,
   name: SITE_NAME,
   url: SITE_URL,
   address: {

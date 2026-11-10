@@ -806,7 +806,7 @@ textarea[aria-invalid="true"] {
 .site-footer {
   background: var(--surface-secondary);
   border-top: 1px solid var(--line);
-  padding-block: 64px 32px;
+  padding-block: 64px max(36px, calc(48px + env(safe-area-inset-bottom)));
 }
 .footer-grid {
   display: grid;

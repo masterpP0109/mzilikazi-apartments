@@ -77,7 +77,7 @@ export default function Itineraries() {
           ))}
         </div>
 
-        <div className="actions" style={{ marginTop: 36, display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
+        <div className="actions" style={{ marginTop: 36 }}>
           <Link className="button button-primary" href="/plan">
             Explore Trip Ideas
           </Link>

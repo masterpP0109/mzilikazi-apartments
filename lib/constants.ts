@@ -5,6 +5,11 @@ export const SITE_LOGO = {
   width: 1000,
   height: 960,
 };
+export const SITE_OG_IMAGE = {
+  src: "/og-image.png",
+  width: 1200,
+  height: 630,
+};
 export const SITE_TAGLINE =
   "Come for the Falls. Stay somewhere worth coming home to.";
 export const BRAND_PROMISE = "Victoria Falls outside. Home when you return.";

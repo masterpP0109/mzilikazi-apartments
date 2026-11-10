@@ -18,7 +18,7 @@ export default function TransfersPage() {
         title="Reliable airport pickups, day trips and local transfers."
         media={transferMedia.fleetExterior}
         actions={
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+          <div className="actions">
             <Link className="button button-primary" href="/contact?preference=Airport%20Transfer">
               Book a Transfer
             </Link>
