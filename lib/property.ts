@@ -170,11 +170,54 @@ accommodations[1].gallery = [
   },
 ];
 
-// 3. Nkulumane Suite (Apartment 3) - Preserved with clean intentional placeholder
+// 3. Nkulumane Suite (Apartment 3) - Supplied genuine photographs (kitchen & dining photography pending)
 accommodations[2].confirmed = true;
 accommodations[2].name = "Nkulumane Suite";
-accommodations[2].description = "A welcoming two-bedroom apartment named after Prince Nkulumane. Accommodation details and photography coming soon.";
-accommodations[2].gallery = []; // Left clean for later - no fabricated imagery!
+accommodations[2].description = "A bright two-bedroom apartment named after Prince Nkulumane, featuring an open lounge, twin and double bedroom options, and marble-tiled en-suite shower bathrooms.";
+accommodations[2].gallery = [
+  {
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/Lounge/15.png",
+    alt: "Nkulumane Suite lounge with flat-screen television, floral arrangement and tiled floors",
+    kind: "property",
+    verified: true,
+  },
+  {
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/BedRoom1/19.png",
+    alt: "Nkulumane Suite bedroom with double bed, mauve throw runner, grey curtains and recessed cove lighting",
+    kind: "property",
+    verified: true,
+  },
+  {
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/BedRoom2/4.png",
+    alt: "Nkulumane Suite twin bedroom with patterned upholstered bases, crisp white bedding and corner windows",
+    kind: "property",
+    verified: true,
+  },
+  {
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/Bathroom/1.png",
+    alt: "Nkulumane Suite marble-tiled en-suite bathroom with pebble-floor walk-in shower, vanity sink and toilet",
+    kind: "property",
+    verified: true,
+  },
+  {
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/BedRoom1/3.png",
+    alt: "Nkulumane Suite main bedroom with white linens, mauve accent runner and recessed tray ceiling",
+    kind: "property",
+    verified: true,
+  },
+  {
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/BedRoom2/5.png",
+    alt: "Nkulumane Suite second bedroom with twin beds, sheer curtains and bright natural light",
+    kind: "property",
+    verified: true,
+  },
+  {
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/Bathroom/11.png",
+    alt: "Nkulumane Suite second en-suite bathroom with marble wall tiles, dark wood vanity and walk-in shower",
+    kind: "property",
+    verified: true,
+  },
+];
 
 // Apartment details supplied by the property owner.
 for (const apartment of accommodations) {
@@ -271,13 +314,38 @@ accommodations[1].walkthrough = [
   },
 ];
 
-accommodations[2].about = "Named in honor of Prince Nkulumane, heir and son of King Mzilikazi. Enjoy two bedrooms, air conditioning, self-catering kitchen facilities and secure courtyard parking. Full room photography and walkthrough details will be published once available.";
+accommodations[2].about = "Named in honor of Prince Nkulumane, heir and son of King Mzilikazi. Enjoy two air-conditioned bedrooms with flexible double and twin sleeping arrangements, marble-tiled en-suite shower bathrooms, a comfortable lounge and self-catering facilities. A cleaner is provided, and a chef is available on request.";
 accommodations[2].walkthrough = [
-  { title: "Living Area", description: "Lounge walkthrough and photography coming soon.", media: null },
-  { title: "Kitchen", description: "Kitchen walkthrough and photography coming soon.", media: null },
-  { title: "Bedrooms", description: "Bedroom walkthrough and photography coming soon.", media: null },
-  { title: "Bathrooms", description: "Bathroom walkthrough and photography coming soon.", media: null },
-  { title: "Outdoor Area", description: "Courtyard and outdoor details coming soon.", media: null },
+  {
+    title: "Living Area",
+    description: "Bright, tiled lounge with flat-screen television and comfortable seating.",
+    media: accommodations[2].gallery[0],
+  },
+  {
+    title: "Kitchen",
+    description: "Self-catering kitchen facilities. Kitchen photography coming soon.",
+    media: null,
+  },
+  {
+    title: "Bedrooms",
+    description: "Two peaceful bedrooms with crisp white linens, grey blackout curtains and recessed ceiling lighting.",
+    media: accommodations[2].gallery[1],
+  },
+  {
+    title: "Bathrooms",
+    description: "Modern marble-tiled en-suite bathrooms with pebble-floor walk-in showers and vanity basins.",
+    media: accommodations[2].gallery[3],
+  },
+  {
+    title: "Outdoor Area",
+    description: "Courtyard and secure parking on the Mzilikazi Apartments grounds.",
+    media: {
+      src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Exterior/NS008373.JPG.jpeg",
+      alt: "Mzilikazi Apartments exterior facade and garden",
+      kind: "property",
+      verified: true,
+    },
+  },
 ];
 
 export const publishedAccommodations = accommodations.filter(
@@ -304,6 +372,8 @@ export const propertyPhotos = {
   pool: { src: "/mzilikazi imgs/mzilikazi-img/WhatsApp Image 2026-10-02 at 2.41.41 PM (1).jpeg", alt: "Outdoor swimming pool framed by trees and a brick wall", kind: "property", verified: true },
   patio: { src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Exterior/NS008376.JPG.jpeg", alt: "Apartment veranda and paved grounds", kind: "property", verified: true },
   living: { src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment1/Lounge/NS008300.JPG.jpeg", alt: "Open-plan living room with sofa, coffee table and dining space", kind: "property", verified: true },
+  nkulumanePreview: { src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/BedRoom2/4.png", alt: "Nkulumane Suite twin bedroom with patterned upholstered bases and corner windows", kind: "property", verified: true },
+  nkulumaneBathroom: { src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/Bathroom/1.png", alt: "Nkulumane Suite marble-tiled en-suite bathroom with pebble-floor shower", kind: "property", verified: true },
   mangwanaPlaceholder: { src: "/mzilikazi imgs/mangwana-placeholder.webp", alt: "Nkulumane Suite — Photography coming soon", kind: "property", verified: true },
   falls: { src: "/mzilikazi imgs/Experiences/Guided Tour of the Falls_/Tour-of-the-falls-7-scaled.jpg", alt: "Spectacular misty vista of Victoria Falls with rainbows and cascading gorges", kind: "destination", verified: true },
   aerialFalls: { src: "/mzilikazi imgs/Experiences/Flight of Angels/Heli-8-scaled.jpg", alt: "Breathtaking aerial view of Victoria Falls and the Zambezi River", kind: "destination", verified: true },
@@ -312,7 +382,7 @@ export const propertyPhotos = {
 export const accommodationPreviews: PropertyMedia[] = [
   propertyPhotos.loungeCorner,
   propertyPhotos.lounge,
-  propertyPhotos.mangwanaPlaceholder,
+  propertyPhotos.nkulumanePreview,
 ];
 
 export const propertyGallery: PropertyMedia[] = [
@@ -323,9 +393,11 @@ export const propertyGallery: PropertyMedia[] = [
   propertyPhotos.kitchen,
   propertyPhotos.coupleBedroom,
   propertyPhotos.loungeCorner,
+  propertyPhotos.nkulumanePreview,
   propertyPhotos.exteriorFacade,
   propertyPhotos.groupDining,
   propertyPhotos.bathroom,
+  propertyPhotos.nkulumaneBathroom,
 ];
 
 export const propertyMedia = {
