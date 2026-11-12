@@ -176,14 +176,14 @@ accommodations[2].name = "Nkulumane Suite";
 accommodations[2].description = "A bright two-bedroom apartment named after Prince Nkulumane, featuring an open lounge, twin and double bedroom options, and marble-tiled en-suite shower bathrooms.";
 accommodations[2].gallery = [
   {
-    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/BedRoom1/19.png",
-    alt: "Nkulumane Suite bedroom with double bed, mauve throw runner, grey curtains and recessed cove lighting",
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/BedRoom2/4.png",
+    alt: "Nkulumane Suite twin bedroom with patterned upholstered bases, crisp white bedding and corner windows",
     kind: "property",
     verified: true,
   },
   {
-    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/BedRoom2/4.png",
-    alt: "Nkulumane Suite twin bedroom with patterned upholstered bases, crisp white bedding and corner windows",
+    src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/BedRoom1/19.png",
+    alt: "Nkulumane Suite bedroom with double bed, mauve throw runner, grey curtains and recessed cove lighting",
     kind: "property",
     verified: true,
   },
