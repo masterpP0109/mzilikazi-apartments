@@ -38,13 +38,13 @@ export default async function ContactPage({
   return (
     <>
       <PageIntro
-        eyebrow={isExperienceEnquiry ? "Experience enquiry" : "Check availability"}
+        eyebrow={isExperienceEnquiry ? "Experience enquiry" : "Request availability"}
         title={
           experience
             ? `Ask about ${experience.title}`
             : isExperienceEnquiry
               ? "Ask about another experience"
-              : "Check availability for your stay."
+              : "Request availability for your stay."
         }
         media={experience?.media ?? propertyPhotos.exteriorFacade}
       >

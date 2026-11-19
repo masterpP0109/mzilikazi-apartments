@@ -11,6 +11,7 @@ export interface Accommodation {
   aliases: string[];
   confirmed: boolean;
   name: string | null;
+  cardSummary?: string | null;
   description: string | null;
   about: string | null;
   guests: number | null;
@@ -81,6 +82,8 @@ export const accommodations: Accommodation[] = [
 // 1. Mzilikazi Suite (Apartment 2) - Supplied genuine photographs
 accommodations[0].confirmed = true;
 accommodations[0].name = "Mzilikazi Suite";
+accommodations[0].cardSummary =
+  "Open lounge, breakfast bar and bathroom with full bathtub.";
 accommodations[0].description =
   "A welcoming two-bedroom apartment with a breakfast-bar kitchen, open lounge, bathroom with full bathtub, and private garden entrance.";
 accommodations[0].gallery = [
@@ -125,6 +128,8 @@ accommodations[0].gallery = [
 // 2. Lobengula Suite (Apartment 1) - Supplied genuine photographs
 accommodations[1].confirmed = true;
 accommodations[1].name = "Lobengula Suite";
+accommodations[1].cardSummary =
+  "Spacious L-shaped lounge, dining area and glass shower.";
 accommodations[1].description =
   "A spacious two-bedroom apartment with an L-shaped lounge, dedicated dining table, fully equipped kitchen, and en-suite glass shower.";
 accommodations[1].gallery = [
@@ -175,6 +180,8 @@ accommodations[1].gallery = [
 // 3. Nkulumane Suite (Apartment 3) - Supplied genuine photographs
 accommodations[2].confirmed = true;
 accommodations[2].name = "Nkulumane Suite";
+accommodations[2].cardSummary =
+  "Double and twin bedrooms with marble walk-in showers.";
 accommodations[2].description =
   "A bright two-bedroom apartment offering double and twin sleeping options, recessed cove lighting, and marble-tiled en-suite walk-in showers.";
 accommodations[2].gallery = [
@@ -216,7 +223,7 @@ accommodations[2].gallery = [
   },
 ];
 
-// Apartment details supplied by the property owner.
+// Shared property defaults; suite-specific bathroom/layout facts override below.
 for (const apartment of accommodations) {
   apartment.guests = 4;
   apartment.bedrooms = 2;
@@ -225,15 +232,14 @@ for (const apartment of accommodations) {
   apartment.facilities.wifi = true;
   apartment.facilities.airConditioning = true;
   apartment.facilities.parking = true;
-  apartment.sleeping = ["Two bedrooms", "Sleeps up to four guests per apartment", "En-suite bathrooms"];
+  apartment.sleeping = ["Two bedrooms", "Sleeps up to four guests per apartment"];
   apartment.amenities = [
-    "Lounge",
-    "Dining area",
-    "Wi-Fi",
-    "Air conditioning",
-    "En-suite bathrooms",
+    "Lounge & dining area",
+    "Fully equipped kitchen & microwave",
+    "Wi-Fi & air conditioning",
     "Washing machine",
     "On-site parking (up to 4 vehicles across the property)",
+    "Cleaner provided",
     "Chef available on request",
   ];
   apartment.kitchen = ["Fully equipped kitchen", "Microwave"];
@@ -254,7 +260,15 @@ for (const apartment of accommodations) {
 
 accommodations[0].bathrooms = 1;
 accommodations[0].facilities.outdoor = "Private Dutch stable-door entrance & garden walkway";
-accommodations[0].sleeping = ["Two bedrooms (including double bed setup)", "Sleeps up to four guests", "Bathroom with full bathtub and shower fixtures"];
+accommodations[0].sleeping = [
+  "Two bedrooms (including double bed setup)",
+  "Sleeps up to four guests",
+  "1 bathroom with full bathtub and shower fixtures",
+];
+accommodations[0].amenities = [
+  "1 bathroom with full bathtub and shower fixtures",
+  ...accommodations[0].amenities,
+];
 accommodations[0].about = "Named in honor of King Mzilikazi, founder of the Matabele kingdom. Enjoy two bedrooms, comfortable lounge, a modern breakfast bar kitchen and a bathroom featuring a full bathtub. A cleaner is provided, and a chef is available on request.";
 accommodations[0].walkthrough = [
   {
@@ -290,7 +304,11 @@ accommodations[0].walkthrough = [
 ];
 
 accommodations[1].facilities.outdoor = "Paved courtyard & covered veranda";
-accommodations[1].sleeping = ["Two bedrooms (including twin beds)", "Sleeps up to four guests", "En-suite bathrooms with glass shower enclosure"];
+accommodations[1].sleeping = ["Two bedrooms (including twin beds)", "Sleeps up to four guests", "En-suite bathroom with glass shower enclosure"];
+accommodations[1].amenities = [
+  "En-suite bathroom with glass shower enclosure",
+  ...accommodations[1].amenities,
+];
 accommodations[1].about = "Named in honor of King Lobengula, son of Mzilikazi. Enjoy two air-conditioned bedrooms, en-suite bathrooms, an L-shaped lounge and a fully equipped kitchen. A cleaner is provided, and a chef is available on request.";
 accommodations[1].walkthrough = [
   {
@@ -327,6 +345,10 @@ accommodations[1].walkthrough = [
 
 accommodations[2].facilities.outdoor = "Shared courtyard & garden grounds";
 accommodations[2].sleeping = ["Two bedrooms (double and twin bed options)", "Sleeps up to four guests", "Marble-tiled en-suite walk-in shower bathrooms"];
+accommodations[2].amenities = [
+  "Marble-tiled en-suite walk-in shower bathrooms",
+  ...accommodations[2].amenities,
+];
 accommodations[2].about = "Named in honor of Prince Nkulumane, heir and son of King Mzilikazi. Enjoy two air-conditioned bedrooms with flexible double and twin sleeping arrangements, marble-tiled en-suite shower bathrooms, a comfortable lounge and self-catering facilities. A cleaner is provided, and a chef is available on request.";
 accommodations[2].walkthrough = [
   {

@@ -23,7 +23,7 @@ export default function DecisionGuide() {
         </div>
         <div className="actions education-actions">
           <Link href="/apartments" className="button button-primary">View Apartments</Link>
-          <Link href="/contact" className="button button-secondary">Check Availability</Link>
+          <Link href="/contact" className="button button-secondary">Request Availability</Link>
           <TextLink href="/plan">Plan Your Stay</TextLink>
         </div>
       </Container>

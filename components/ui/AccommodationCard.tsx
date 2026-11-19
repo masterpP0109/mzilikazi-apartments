@@ -9,6 +9,12 @@ export function AccommodationFacts({
   apartment: Accommodation;
 }) {
   if (!a.confirmed) return null;
+  const bathroomText =
+    a.bathrooms != null
+      ? `${a.bathrooms} ${a.bathrooms === 1 ? "bathroom" : "bathrooms"}`
+      : a.sleeping.find((s) => s.toLowerCase().includes("bathroom")) ??
+        a.sleeping.find((s) => s.toLowerCase().includes("shower"));
+
   return (
     <div className="facts">
       {a.guests != null && <span>Up to {a.guests} guests</span>}
@@ -17,15 +23,7 @@ export function AccommodationFacts({
           {a.bedrooms} {a.bedrooms === 1 ? "bedroom" : "bedrooms"}
         </span>
       )}
-      {a.bathrooms != null ? (
-        <span>
-          {a.bathrooms} {a.bathrooms === 1 ? "bathroom" : "bathrooms"}
-        </span>
-      ) : (
-        a.amenities.includes("En-suite bathrooms") && (
-          <span>En-suite bathrooms</span>
-        )
-      )}
+      {bathroomText && <span>{bathroomText}</span>}
       {(a.kitchen.length > 0 || a.facilities.kitchen === true) && (
         <span>Self-catering kitchen</span>
       )}
@@ -47,34 +45,38 @@ export function AccommodationCard({
   const primaryImage =
     a.gallery.find((m) => isPublicMedia(m) && m.kind === "property") ??
     propertyPreview;
+  const summary = a.cardSummary ?? a.description;
+  const metaParts = [
+    a.guests != null ? `${a.guests} guests` : null,
+    a.bedrooms != null ? `${a.bedrooms} bedrooms` : null,
+  ].filter(Boolean);
 
   return (
-    <article className="accommodation-card">
+    <article className="accommodation-card accommodation-card-compact">
       <ImageFrame
+        ratio="landscape"
         sizes="(max-width: 639px) 92vw, (max-width: 1023px) 44vw, 30vw"
         media={primaryImage}
       />
-      <h3>{a.name}</h3>
-      {a.description && <p>{a.description}</p>}
-      <AccommodationFacts apartment={a} />
-      {a.sleeping[0] && (
-        <p className="form-note">Sleeping setup: {a.sleeping[0]}</p>
-      )}
-      {a.rate && (
-        <p>
-          <strong>{a.rate}</strong>
-        </p>
-      )}
-      <div className="actions">
-        <Link className="button button-primary" href={`/apartments/${a.slug}`}>
-          View Apartment Details <ArrowRight size={17} aria-hidden="true" />
-        </Link>
-        <Link
-          className="button button-secondary"
-          href={`/contact?preference=${encodeURIComponent(a.name)}`}
-        >
-          Check Availability
-        </Link>
+      <div className="accommodation-card-body">
+        <h3>{a.name}</h3>
+        {summary && <p className="accommodation-card-summary">{summary}</p>}
+        <div className="accommodation-card-meta">
+          {metaParts.length > 0 && (
+            <p className="accommodation-card-capacity">{metaParts.join(" · ")}</p>
+          )}
+          {a.rate && (
+            <p className="accommodation-card-price">
+              <strong>US$130 / night</strong>{" "}
+              <span>per apartment</span>
+            </p>
+          )}
+        </div>
+        <div className="actions">
+          <Link className="button button-primary" href={`/apartments/${a.slug}`}>
+            View Suite <ArrowRight size={17} aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </article>
   );

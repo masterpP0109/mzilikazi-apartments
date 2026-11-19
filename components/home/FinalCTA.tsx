@@ -12,7 +12,7 @@ export default function FinalCTA() {
           price are confirmed personally by our team before payment.
         </p>
         <div className="actions">
-          <Button href="/contact">Check Availability →</Button>
+          <Button href="/contact">Request Availability →</Button>
           <TextLink href="/contact?message=I%20would%20like%20to%20speak%20with%20the%20team%20about%20a%20stay.">
             Talk to Our Team
           </TextLink>

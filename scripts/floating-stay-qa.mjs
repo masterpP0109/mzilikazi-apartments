@@ -160,33 +160,39 @@ try {
     assert.equal(await evaluate('getComputedStyle(document.querySelector(".floating-stay")).position'),'fixed');
     await evaluate('document.querySelector("#experiences-and-transfers").scrollIntoView({behavior:"instant"})');
     await waitFor(isVisible);
-    assert.ok(await evaluate('parseFloat(getComputedStyle(document.body).paddingBottom)>=88'));
-    await screenshot('floating-stay-reading-'+width);
-    await evaluate('document.querySelector(".floating-stay a").click()');
-    await waitFor(()=>evaluate('location.pathname === "/apartments" && location.hash === "" && !!document.getElementById("rooms")'));
+    if (width >= 768) {
+      assert.equal(await evaluate('getComputedStyle(document.querySelector(".floating-stay")).display'), 'none', 'Floating CTA hidden on tablet/desktop where header CTA is visible');
+    } else {
+      assert.ok(await evaluate('parseFloat(getComputedStyle(document.body).paddingBottom)>=88'));
+      await screenshot('floating-stay-reading-'+width);
+      await evaluate('document.querySelector(".floating-stay a").click()');
+      await waitFor(()=>evaluate('location.pathname === "/apartments" && location.hash === "" && !!document.getElementById("rooms")'));
+    }
+    if (width >= 768) await go('/apartments');
     await evaluate('document.querySelector("#rooms .accommodation-list").scrollIntoView({behavior:"instant"})');
     await waitFor(()=>evaluate('document.querySelector(".floating-stay").hidden'));
     assert.equal(await evaluate('document.querySelectorAll(".accommodation-card button").length'),0);
-    assert.ok(await evaluate('Array.from(document.querySelectorAll(".accommodation-card")).every(c=>c.querySelectorAll(".actions a").length===2 && c.querySelector(".actions a").textContent.includes("View Apartment Details"))'));
+    assert.ok(await evaluate('Array.from(document.querySelectorAll(".accommodation-card")).every(c=>c.querySelectorAll(".actions a").length===1 && c.querySelector(".actions a").textContent.includes("View Suite"))'));
     assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'));
     if(width>=1024) {
-      const tops=await evaluate('Array.from(document.querySelectorAll(".accommodation-card > .actions")).map(e=>e.getBoundingClientRect().top)');
+      const tops=await evaluate('Array.from(document.querySelectorAll(".accommodation-card .actions")).map(e=>e.getBoundingClientRect().top)');
       assert.ok(Math.max(...tops)-Math.min(...tops)<2,'Misaligned apartment actions');
     }
     await screenshot('aligned-room-cards-'+width);
   }
+  await send('Emulation.setDeviceMetricsOverride',{width:390,height:1000,deviceScaleFactor:1,mobile:true});
   await go('/experiences');
-  await evaluate('document.querySelector("#practical-amenities").scrollIntoView({behavior:"instant"})');
+  await evaluate('document.querySelector("#itineraries").scrollIntoView({behavior:"instant"})');
   await waitFor(isVisible);
-  assert.equal(await evaluate('document.querySelector(".floating-stay a").getAttribute("href")'),'/apartments');
-  await evaluate('document.querySelector(".floating-stay a").focus()');
+  assert.equal(await evaluate('document.querySelector(".floating-stay .floating-cta-btn").getAttribute("href")'),'/contact');
+  await evaluate('document.querySelector(".floating-stay .floating-cta-btn").focus()');
   await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
-  await waitFor(()=>evaluate('location.pathname === "/apartments" && location.hash === "" && !!document.getElementById("rooms")'));
+  await waitFor(()=>evaluate('location.pathname === "/contact"'));
   await go('/contact');
   await evaluate('document.querySelector("main input").focus()');
   await waitFor(()=>evaluate('document.querySelector(".floating-stay").hidden'));
   await go('/experiences');
-  await evaluate('document.querySelector("#practical-amenities").scrollIntoView({behavior:"instant"})');
+  await evaluate('document.querySelector("#itineraries").scrollIntoView({behavior:"instant"})');
   await waitFor(isVisible);
   await evaluate('document.querySelector(".my-trip-button").click()');
   await waitFor(()=>evaluate('!!document.querySelector("dialog[open]") && document.querySelector(".floating-stay").hidden'));

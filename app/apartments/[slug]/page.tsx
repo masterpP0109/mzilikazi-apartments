@@ -1,10 +1,8 @@
 import { notFound, permanentRedirect } from "next/navigation";
+import Link from "next/link";
 import { accommodations, isPublicMedia } from "@/lib/property";
 import { Container, ImageFrame, PageIntro, TextLink } from "@/components/ui/Editorial";
-import { AccommodationFacts } from "@/components/ui/AccommodationCard";
-import ApartmentComparison, {
-  apartmentAttributes,
-} from "@/components/ui/ApartmentComparison";
+import ApartmentComparison from "@/components/ui/ApartmentComparison";
 import ApartmentGallery from "@/components/ui/ApartmentGallery";
 import ApartmentViewTracker from "@/components/ui/ApartmentViewTracker";
 import AvailabilityPanel from "@/components/forms/AvailabilityPanel";
@@ -29,7 +27,7 @@ export async function generateMetadata({
     ? {
         ...pageMetadata(
           a.confirmed && a.name
-            ? `${a.name} — 2-Bedroom Apartment in Victoria Falls`
+            ? `${a.name} — 2-Bedroom Suite in Victoria Falls`
             : "Accommodation enquiry",
           a.confirmed && a.description
             ? `${a.description} US$130 per night for up to 4 guests.`
@@ -71,14 +69,16 @@ export default async function ApartmentPage({
   if (a.slug !== slug && a.aliases.includes(slug)) {
     permanentRedirect(`/apartments/${a.slug}`);
   }
-  const whatsapp = whatsappUrl(
-    `Hello ${SITE_NAME}, I would like to check availability for ${a.name ?? "an apartment"}.`,
-  );
+
   const publicName = a.confirmed ? a.name : null;
+  const whatsapp = whatsappUrl(
+    `Hello ${SITE_NAME}, I would like to request availability for ${publicName ?? "a suite"}.`,
+  );
   const walkthroughItems = a.walkthrough.filter(
     (w) => w.description || isPublicMedia(w.media),
   );
-  const policies = a.policies;
+  const enquiryHref =
+    "/contact?preference=" + encodeURIComponent(publicName ?? "");
 
   return (
     <>
@@ -117,106 +117,106 @@ export default async function ApartmentPage({
           }}
         />
       )}
+
       <PageIntro
-        eyebrow="Two-bedroom self-catering apartment · Victoria Falls"
-        title={publicName ?? "Let’s find your apartment."}
+        eyebrow="Two-bedroom self-catering suite · Victoria Falls"
+        title={publicName ?? "Let’s find your suite."}
         media={a.gallery.length > 0 ? a.gallery[0] : null}
+        actions={
+          publicName ? (
+            <>
+              <Link className="button button-primary" href={enquiryHref}>
+                Request Availability
+              </Link>
+              <Link className="button button-secondary" href="#suite-enquiry">
+                Enter Your Dates
+              </Link>
+            </>
+          ) : undefined
+        }
       >
         {a.confirmed && a.description ? (
-          <p>{a.description}</p>
+          <>
+            <p>{a.description}</p>
+            <p className="suite-hero-facts">
+              {a.guests != null ? `${a.guests} guests` : ""}
+              {a.bedrooms != null ? ` · ${a.bedrooms} bedrooms` : ""}
+              {a.rate ? ` · US$130 / night per apartment` : ""}
+            </p>
+          </>
         ) : (
           <p>
-            Share your dates and preferences to request the accommodation
-            options for your visit.
+            Share your dates and preferences to request accommodation options for
+            your visit.
           </p>
         )}
       </PageIntro>
+
       <section className="section">
         <Container>
           {a.confirmed && a.gallery.length > 0 && (
             <ApartmentGallery images={a.gallery} />
           )}
+
           <div className="detail-layout">
             <div className="detail-content">
-              <AccommodationFacts apartment={a} />
               {a.confirmed && (
                 <>
-                  <section>
-                    <h2>At a glance</h2>
-                    <dl>
-                      {apartmentAttributes(a).map(([label, value]) => (
-                        <div className="policy-row" key={label}>
-                          <dt>{label}</dt>
-                          <dd>{value}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                    <AddToTrip kind="accommodation" id={a.slug} />
-                  </section>
-                  {walkthroughItems.length > 0 && (
-                    <section>
-                      <h2>A look around your apartment.</h2>
-                      {walkthroughItems.map((w) => (
-                        <article className="walkthrough" key={w.title}>
-                          <ImageFrame media={w.media} />
-                          <h3>{w.title}</h3>
-                          {w.description && <p>{w.description}</p>}
-                        </article>
-                      ))}
-                    </section>
-                  )}
                   {a.about && (
                     <section>
-                      <h2>About the apartment</h2>
+                      <h2>Overview</h2>
                       <p>{a.about}</p>
+                      <div style={{ marginTop: 12 }}>
+                        <AddToTrip kind="accommodation" id={a.slug} />
+                      </div>
                     </section>
                   )}
+
                   <DetailList
                     title="Sleeping arrangements & bathrooms"
                     items={a.sleeping}
                   />
+
                   <DetailList title="Amenities" items={a.amenities} />
-                  <DetailList title="Kitchen facilities" items={a.kitchen} />
-                  <DetailList
-                    title="Who this apartment suits"
-                    items={a.idealFor}
-                  />
-                  <DetailList title="What’s included" items={a.included} />
+
+                  {walkthroughItems.length > 0 && (
+                    <section>
+                      <h2>Inside the suite</h2>
+                      <div className="suite-walkthrough-grid">
+                        {walkthroughItems.map((w) => (
+                          <article className="walkthrough-card" key={w.title}>
+                            <ImageFrame
+                              media={w.media}
+                              ratio="landscape"
+                              sizes="(max-width: 639px) 92vw, 360px"
+                            />
+                            <h3>{w.title}</h3>
+                            {w.description && <p>{w.description}</p>}
+                          </article>
+                        ))}
+                      </div>
+                    </section>
+                  )}
+
+                  {a.policies.length > 0 && (
+                    <section>
+                      <h2>Good to know</h2>
+                      <dl>
+                        {a.policies.map((p) => (
+                          <div className="policy-row" key={p.label}>
+                            <dt>{p.label}</dt>
+                            <dd>{p.value}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </section>
+                  )}
                 </>
               )}
-              <section>
-                <h2>Rates &amp; availability</h2>
-                <p>
-                  {a.confirmed && a.rate
-                    ? a.rate
-                    : "Request current rates for your dates and guest count."}
-                </p>
-                <p className="form-note">
-                  Submitting an enquiry checks availability with our team. Your
-                  booking is confirmed once dates, rates, and terms are agreed.
-                </p>
-              </section>
-              {a.confirmed && policies.length > 0 && (
-                <section>
-                  <h2>Good to know</h2>
-                  <dl>
-                    {policies.map((p) => (
-                      <div className="policy-row" key={p.label}>
-                        <dt>{p.label}</dt>
-                        <dd>{p.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                  <p className="form-note" style={{ marginTop: 12 }}>
-                    Need cancellation, deposit, or event terms confirmed before
-                    you travel?{" "}
-                    <TextLink href="/contact">Talk to Our Team</TextLink>
-                  </p>
-                </section>
-              )}
-              <TextLink href="/apartments">Explore Apartments</TextLink>
-              {whatsapp && (
-                <div>
+
+              <div className="actions">
+                <TextLink href="/apartments">View all suites</TextLink>
+                {whatsapp && (
                   <a
                     className="text-link"
                     href={whatsapp}
@@ -225,42 +225,40 @@ export default async function ApartmentPage({
                   >
                     Ask on WhatsApp →
                   </a>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-            <aside className="detail-sidebar" aria-label="Request this apartment">
+
+            <aside
+              id="suite-enquiry"
+              className="detail-sidebar"
+              aria-label="Request availability for this suite"
+            >
+              <div className="suite-sidebar-summary">
+                <p className="eyebrow">Nightly rate</p>
+                <p className="suite-sidebar-rate">
+                  <strong>US$130</strong> <span>/ night per apartment</span>
+                </p>
+                <p className="form-note">
+                  Up to 4 guests · Availability and final total are confirmed
+                  personally before payment.
+                </p>
+              </div>
               <AvailabilityPanel preference={publicName ?? undefined} />
               <div className="actions" style={{ marginTop: 16 }}>
-                <TextLink
-                  href={
-                    "/contact?preference=" + encodeURIComponent(publicName ?? "")
-                  }
-                >
-                  Request This Apartment
+                <TextLink href={enquiryHref}>
+                  Ask a question about {publicName ?? "this suite"}
                 </TextLink>
               </div>
             </aside>
           </div>
+
           <ApartmentComparison exclude={a.slug} />
         </Container>
       </section>
+
       <Proof apartmentSlug={a.slug} />
       <Location />
-      <section className="section">
-        <Container>
-          <h2>Ready to check your dates?</h2>
-          <div className="actions">
-            <TextLink
-              href={
-                "/contact?preference=" + encodeURIComponent(publicName ?? "")
-              }
-            >
-              Request This Apartment
-            </TextLink>
-            <TextLink href="/plan">Plan Your Stay</TextLink>
-          </div>
-        </Container>
-      </section>
     </>
   );
 }

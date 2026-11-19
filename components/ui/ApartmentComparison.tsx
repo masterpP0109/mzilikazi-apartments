@@ -11,8 +11,6 @@ export function apartmentAttributes(a: Accommodation): [string, string | number]
     rows.push(["Bathrooms", a.bathrooms === 1 ? "1 bathroom (full bathtub)" : `${a.bathrooms} bathrooms`]);
   } else if (a.sleeping[2]) {
     rows.push(["Bathrooms", a.sleeping[2]]);
-  } else if (a.amenities.includes("En-suite bathrooms")) {
-    rows.push(["Bathrooms", "En-suite bathrooms"]);
   }
   if (a.facilities.outdoor) {
     rows.push(["Entrance & outdoor", a.facilities.outdoor]);
@@ -52,7 +50,7 @@ export default function ApartmentComparison({ exclude }: { exclude?: string }) {
                 ))}
               </dl>
               <TextLink href={"/apartments/" + a.slug}>
-                View Apartment Details
+                View Suite
               </TextLink>
             </article>
           ))}

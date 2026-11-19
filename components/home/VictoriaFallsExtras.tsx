@@ -12,61 +12,66 @@ export default function VictoriaFallsExtras() {
       aria-labelledby="vf-extras-title"
     >
       <Container>
-        <ScrollReveal>
-          <div className="section-heading">
-            <div>
-              <Eyebrow>Make the most of Victoria Falls</Eyebrow>
-              <h2 id="vf-extras-title">Transfers and local experiences.</h2>
+        <div className="extras-shell">
+          <ScrollReveal>
+            <div className="section-heading">
+              <div>
+                <Eyebrow>Make the most of Victoria Falls</Eyebrow>
+                <h2 id="vf-extras-title">Transfers and local experiences.</h2>
+              </div>
+              <TextLink href="/plan">Plan Your Stay</TextLink>
             </div>
-            <TextLink href="/plan">Plan Your Stay</TextLink>
+            <p className="intro-copy">
+              Optional airport pickups and Victoria Falls activities you can add
+              alongside your accommodation enquiry.
+            </p>
+          </ScrollReveal>
+
+          <div className="two-card-grid">
+            <article className="accommodation-card accommodation-card-compact">
+              <ImageFrame
+                media={transferMedia.fleetExterior}
+                ratio="landscape"
+                sizes="(max-width: 639px) 92vw, 480px"
+              />
+              <div className="accommodation-card-body">
+                <h3>Airport &amp; local transfers</h3>
+                <p className="accommodation-card-summary">
+                  Victoria Falls Airport (VFA) pickups, Rainforest drops, town
+                  dining runs, and Chobe border transfers.
+                </p>
+                <div className="actions two-card-actions">
+                  <Link className="button button-secondary" href="/transfers">
+                    View Transfers
+                  </Link>
+                  <TextLink href="/contact?preference=Airport%20Transfer">
+                    Request a Transfer
+                  </TextLink>
+                </div>
+              </div>
+            </article>
+
+            <article className="accommodation-card accommodation-card-compact">
+              <ImageFrame
+                media={propertyPhotos.falls}
+                ratio="landscape"
+                sizes="(max-width: 639px) 92vw, 480px"
+              />
+              <div className="accommodation-card-body">
+                <h3>Things to do in Victoria Falls</h3>
+                <p className="accommodation-card-summary">
+                  Guided Falls tours, Zambezi sunset cruises, game drives, and
+                  local dining ideas to shape your stay.
+                </p>
+                <div className="actions two-card-actions">
+                  <Link className="button button-secondary" href="/experiences">
+                    Explore Things to Do
+                  </Link>
+                  <TextLink href="/victoria-falls">Victoria Falls Guide</TextLink>
+                </div>
+              </div>
+            </article>
           </div>
-          <p className="intro-copy">
-            Arrange airport pickups and discover local activities to enjoy during
-            your stay — shared alongside your accommodation enquiry whenever you
-            need them.
-          </p>
-        </ScrollReveal>
-
-        <div className="accommodation-list" style={{ marginTop: 32 }}>
-          <article className="accommodation-card">
-            <ImageFrame
-              media={transferMedia.fleetExterior}
-              ratio="landscape"
-              sizes="(max-width: 639px) 92vw, 45vw"
-            />
-            <h3>Airport &amp; local transfers</h3>
-            <p>
-              Coordinate Victoria Falls Airport (VFA) pickups, Rainforest gate
-              drops, town dining runs, and border transfers alongside your stay.
-            </p>
-            <div className="actions">
-              <Link className="button button-secondary" href="/transfers">
-                View Transfers
-              </Link>
-              <TextLink href="/contact?preference=Airport%20Transfer">
-                Request a Transfer
-              </TextLink>
-            </div>
-          </article>
-
-          <article className="accommodation-card">
-            <ImageFrame
-              media={propertyPhotos.falls}
-              ratio="landscape"
-              sizes="(max-width: 639px) 92vw, 45vw"
-            />
-            <h3>Things to do in Victoria Falls</h3>
-            <p>
-              Explore guided Falls tours, Zambezi sunset cruises, game drives,
-              and local dining ideas to help shape your days.
-            </p>
-            <div className="actions">
-              <Link className="button button-secondary" href="/experiences">
-                Explore Things to Do
-              </Link>
-              <TextLink href="/victoria-falls">Victoria Falls Guide</TextLink>
-            </div>
-          </article>
         </div>
       </Container>
     </section>
