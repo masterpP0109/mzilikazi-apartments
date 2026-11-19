@@ -2498,17 +2498,6 @@ details p {
     padding: 10px 14px;
     font-size: 13.5px;
   }
-  @media (min-width: 360px) {
-    .hero-home .hero-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .hero-home .hero-actions .button {
-      padding: 10px 12px;
-      white-space: nowrap;
-    }
-  }
   .hero-home .button-secondary {
     color: var(--ink);
     border-color: var(--line);
@@ -2524,6 +2513,17 @@ details p {
     margin-top: 12px;
     font-size: 13px;
     color: var(--muted);
+  }
+}
+@media (min-width: 360px) and (max-width: 639px) {
+  .hero-home .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .hero-home .hero-actions .button {
+    padding: 10px 12px;
+    white-space: nowrap;
   }
 }
 @media (min-width: 640px) {
@@ -2557,6 +2557,17 @@ details p {
     margin-top: 20px;
     font-size: 18px;
     max-width: 540px;
+  }
+  .hero-home .button-secondary {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.85);
+    background: rgba(18, 22, 19, 0.48);
+    backdrop-filter: blur(6px);
+  }
+  .hero-home .button-secondary:hover {
+    background: #fff;
+    color: var(--ink);
+    border-color: #fff;
   }
   .hero-home .hero-whatsapp-note {
     margin-top: 14px;
