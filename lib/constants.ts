@@ -1,5 +1,5 @@
 import type { NavLink } from "@/types";
-export const SITE_NAME = "Mzilikazi Guest Lodge";
+export const SITE_NAME = "Mzilikazi Apartments";
 export const SITE_LOGO = {
   src: "/mzilikazi%20imgs/mzilikazi-img/logo/mzilikazi-logo-transparent.webp",
   width: 1000,
@@ -14,7 +14,7 @@ export const SITE_TAGLINE =
   "Come for the Falls. Stay somewhere worth coming home to.";
 export const BRAND_PROMISE = "Victoria Falls outside. Home when you return.";
 export const BRAND_SUBTITLE =
-  "A comfortable base for your Victoria Falls stay.";
+  "A comfortable, spacious home base in Victoria Falls — with local hospitality and everything you need for a relaxed stay.";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://mzilikaziapartments.com";
 // Only supply these environment variables once client-confirmed.
@@ -35,36 +35,37 @@ export function whatsappUrl(message = "") {
     : null;
 }
 export const NAV_LINKS: NavLink[] = [
-  { label: "Stay", href: "/apartments" },
-  { label: "Experience", href: "/experiences" },
-  { label: "Victoria Falls", href: "/victoria-falls" },
-  { label: "Plan", href: "/plan" },
-  { label: "Our Story", href: "/our-story" },
+  { label: "Home", href: "/" },
+  { label: "Apartments", href: "/apartments" },
+  { label: "Experiences", href: "/experiences" },
+  { label: "Transfers", href: "/transfers" },
+  { label: "About Us", href: "/our-story" },
+  { label: "Contact", href: "/contact" },
 ];
 export const FAQ_ITEMS = [
   {
-    question: "How do I enquire about availability?",
+    question: "How do I check availability and book?",
     answer:
-      "Send your arrival and departure dates, guest count and any preferences using the enquiry form. Availability and rates need to be confirmed before you book.",
+      "Send your arrival and departure dates, guest count, and apartment preference using the enquiry form. Our team will confirm availability, current rates, and booking terms before you confirm your stay.",
   },
   {
-    question: "Can I ask about a family or group stay?",
+    question: "Can I book for a family or group?",
     answer:
-      "Yes. Children are welcome when accompanied by an adult. Each apartment sleeps up to four people. Include the number of adults and children, any sleeping-arrangement preferences and your dates so the enquiry can cover your whole group.",
+      "Yes. Children are welcome when accompanied by an adult, and each two-bedroom apartment accommodates up to four guests. Share the number of adults and children and any sleeping preferences in your enquiry.",
   },
   {
     question: "What are the check-in and check-out times?",
-    answer: "Check-in is at 2 PM and check-out is at 11 AM.",
+    answer: "Check-in is from 2 PM and check-out is by 11 AM.",
   },
   {
-    question: "Where can I find current rates and policies?",
+    question: "What is included in the rate and how can I pay?",
     answer:
-      "Each apartment is US$130 per night and sleeps up to four people in two bedrooms. We accept Mastercard, EcoCash and cash. Ask about payment terms, cancellation conditions and arrival arrangements when booking.",
+      "Each two-bedroom apartment is US$130 per night for up to four guests, including Wi-Fi, air conditioning, a fully equipped kitchen, washing machine, and a cleaner provided for your stay. We accept Mastercard, EcoCash, and cash.",
   },
   {
-    question: "Can I include questions about activities?",
+    question: "Can you help arrange airport transfers and activities?",
     answer:
-      "You can add your interests and planning questions to your enquiry. Ask for current options, prices and inclusions; activities are not included or reserved by submitting this form.",
+      "Yes. You can add airport transfer requests or local experience interests to your enquiry or trip plan, and our team will share current options and pricing separately.",
   },
 ];
 export const BRAND_PILLARS: {

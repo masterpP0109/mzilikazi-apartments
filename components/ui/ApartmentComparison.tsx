@@ -1,27 +1,34 @@
 import { publishedAccommodations, type Accommodation } from "@/lib/property";
 import { TextLink } from "./Editorial";
-const pending = "To be confirmed";
-export function apartmentAttributes(a: Accommodation) {
-  const flag = (v: boolean | null) => (v == null ? pending : v ? "Yes" : "No");
-  return [
-    ["Sleeps", a.guests ?? pending],
-    ["Bedrooms", a.bedrooms ?? pending],
-    ["Bathrooms", a.bathrooms ?? (a.amenities.includes("En-suite bathrooms") ? "En-suite bathrooms" : pending)],
-    [
-      "Kitchen",
-      a.kitchen.length
-        ? "Fully equipped kitchen with microwave"
-        : flag(a.facilities.kitchen),
-    ],
-    ["Lounge", flag(a.facilities.lounge)],
-    ["Wi-Fi", flag(a.facilities.wifi)],
-    ["Air conditioning", flag(a.facilities.airConditioning)],
-    ["Parking", a.policies.find((p) => p.label === "Parking")?.value ?? flag(a.facilities.parking)],
-    ["Outdoor space", a.facilities.outdoor ?? pending],
-    ["Best suited for", a.idealFor.join(", ") || pending],
-    ["Price", a.rate ?? pending],
-  ];
+
+export function apartmentAttributes(a: Accommodation): [string, string | number][] {
+  const rows: [string, string | number][] = [];
+
+  if (a.guests != null) rows.push(["Sleeps", `Up to ${a.guests} guests`]);
+  if (a.bedrooms != null) rows.push(["Bedrooms", a.bedrooms]);
+  if (a.sleeping[0]) rows.push(["Sleeping setup", a.sleeping[0]]);
+  if (a.bathrooms != null) {
+    rows.push(["Bathrooms", a.bathrooms === 1 ? "1 bathroom (full bathtub)" : `${a.bathrooms} bathrooms`]);
+  } else if (a.sleeping[2]) {
+    rows.push(["Bathrooms", a.sleeping[2]]);
+  } else if (a.amenities.includes("En-suite bathrooms")) {
+    rows.push(["Bathrooms", "En-suite bathrooms"]);
+  }
+  if (a.facilities.outdoor) {
+    rows.push(["Entrance & outdoor", a.facilities.outdoor]);
+  }
+  if (a.kitchen.length > 0 || a.facilities.kitchen === true) {
+    rows.push(["Kitchen", "Fully equipped kitchen with microwave"]);
+  }
+  if (a.facilities.wifi === true) rows.push(["Wi-Fi", "Included"]);
+  if (a.facilities.airConditioning === true) rows.push(["Air conditioning", "Included"]);
+  const parking = a.policies.find((p) => p.label === "Parking")?.value;
+  if (parking) rows.push(["Parking", parking]);
+  if (a.rate) rows.push(["Rate", a.rate]);
+
+  return rows;
 }
+
 export default function ApartmentComparison({ exclude }: { exclude?: string }) {
   const apartments = publishedAccommodations.filter((a) => a.slug !== exclude);
   return (
@@ -29,7 +36,7 @@ export default function ApartmentComparison({ exclude }: { exclude?: string }) {
       <h2>
         {exclude
           ? "Compare with another apartment."
-          : "See which apartment fits."}
+          : "Compare our three apartments."}
       </h2>
       {apartments.length ? (
         <div className="comparison-grid">
@@ -45,7 +52,7 @@ export default function ApartmentComparison({ exclude }: { exclude?: string }) {
                 ))}
               </dl>
               <TextLink href={"/apartments/" + a.slug}>
-                Explore This Apartment
+                View Apartment Details
               </TextLink>
             </article>
           ))}
@@ -58,7 +65,7 @@ export default function ApartmentComparison({ exclude }: { exclude?: string }) {
       )}
       <div className="actions">
         <TextLink href="/plan">
-          Not sure which one fits your group? Help Me Choose
+          Not sure which one fits your group? Help Me Choose an Apartment
         </TextLink>
       </div>
     </section>

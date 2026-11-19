@@ -22,9 +22,9 @@ export default function DecisionGuide() {
           <StoryQuote text="You don't have to decide yet." />
         </div>
         <div className="actions education-actions">
-          <Link href="/apartments" className="button button-primary">Explore the Accommodation</Link>
-          <Link href="/contact" className="button button-secondary">Enquire About Availability</Link>
-          <TextLink href="/plan">Help Me Plan My Stay</TextLink>
+          <Link href="/apartments" className="button button-primary">View Apartments</Link>
+          <Link href="/contact" className="button button-secondary">Request Availability</Link>
+          <TextLink href="/plan">Plan Your Stay</TextLink>
         </div>
       </Container>
     </section>

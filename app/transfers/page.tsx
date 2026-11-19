@@ -6,7 +6,7 @@ import FinalCTA from "@/components/home/FinalCTA";
 
 export const metadata = pageMetadata(
   "Victoria Falls Airport & Local Transfers",
-  "Reliable, air-conditioned airport transfers, Victoria Falls town shuttles, and Kazungula Chobe day-trip connections from Mzilikazi Guest Lodge.",
+  "Airport transfers, Victoria Falls town shuttles, and Kazungula Chobe day-trip connections arranged for Mzilikazi Apartments guests.",
   "/transfers",
 );
 
@@ -14,24 +14,23 @@ export default function TransfersPage() {
   return (
     <>
       <PageIntro
-        eyebrow="Victoria Falls · Private Transport"
-        title="Reliable airport pickups, day trips and local transfers."
+        eyebrow="Victoria Falls · Guest Transport"
+        title="Airport pickups, day trips and local transfers."
         media={transferMedia.fleetExterior}
         actions={
           <div className="actions">
             <Link className="button button-primary" href="/contact?preference=Airport%20Transfer">
-              Book a Transfer
+              Request a Transfer
             </Link>
             <span style={{ color: "rgba(255,255,255,0.85)", fontSize: 14 }}>
-              Air-conditioned Nissan Serena &amp; HiAce passenger fleet
+              Air-conditioned passenger minivan &amp; arranged local transport
             </span>
           </div>
         }
       >
         <p>
-          Start your Victoria Falls holiday comfortably from the moment you step off the plane.
-          Our private, air-conditioned passenger fleet and licensed local drivers provide dependable
-          door-to-door airport pickups, town shuttles, and excursion connections.
+          Arrive in Victoria Falls without guesswork. We can help arrange door-to-door
+          airport pickups, town shuttles, and excursion connections alongside your stay.
         </p>
       </PageIntro>
 
@@ -41,15 +40,15 @@ export default function TransfersPage() {
           <div className="value-strip" style={{ borderBottom: "none", paddingBlock: 0 }}>
             <div>
               <h2>Door-to-door pickup</h2>
-              <p>Meet-and-greet service inside VFA arrivals. No multiple stops or shared shuttle delays.</p>
+              <p>Private transfers from Victoria Falls Airport (VFA) straight to your apartment.</p>
             </div>
             <div>
-              <h2>Flight status monitoring</h2>
-              <p>We track your flight number in real time. If your flight is early or delayed, your driver is there.</p>
+              <h2>Flight arrival coordination</h2>
+              <p>Share your flight number and arrival time in advance so pickup timing is coordinated.</p>
             </div>
             <div>
-              <h2>Transparent, flexible payment</h2>
-              <p>Settle via cash (USD), EcoCash, or international card. Book standalone or alongside your suite.</p>
+              <h2>Confirmed upfront</h2>
+              <p>Receive availability, exact route pricing, and payment options before confirming.</p>
             </div>
           </div>
         </Container>
@@ -120,12 +119,12 @@ export default function TransfersPage() {
         <Container>
           <div className="editorial-split">
             <div>
-              <Eyebrow>Vehicle Fleet &amp; Capacity</Eyebrow>
-              <h2>Designed for stress-free travel.</h2>
+              <Eyebrow>Vehicle &amp; Comfort</Eyebrow>
+              <h2>Arranged for stress-free travel.</h2>
               <p style={{ marginTop: 20 }}>
-                Travelling with families, safari luggage, or camera gear requires thoughtful space.
-                Our Nissan Serena passenger minivans are maintained to high safety standards and
-                configured to keep passengers cool and luggage secure.
+                Travelling with family, luggage, or camera gear is much easier with dedicated
+                air-conditioned transport arranged in advance. Share your group size and luggage
+                notes so we can confirm the right vehicle and rate for your trip.
               </p>
               <div className="fleet-features-grid" style={{ marginTop: 32 }}>
                 {fleetFeatures.map((feat) => (
@@ -188,9 +187,9 @@ export default function TransfersPage() {
 
           <div className="actions" style={{ marginTop: 40 }}>
             <Link className="button button-primary" href="/contact?preference=Airport%20Transfer">
-              Arrange Your Transfer
+              Request a Transfer
             </Link>
-            <TextLink href="/apartments">Explore Accommodations</TextLink>
+            <TextLink href="/apartments">Explore Apartments</TextLink>
           </div>
         </Container>
       </section>

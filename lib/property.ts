@@ -81,7 +81,8 @@ export const accommodations: Accommodation[] = [
 // 1. Mzilikazi Suite (Apartment 2) - Supplied genuine photographs
 accommodations[0].confirmed = true;
 accommodations[0].name = "Mzilikazi Suite";
-accommodations[0].description = "A welcoming two-bedroom apartment named after King Mzilikazi, with a breakfast bar kitchen, open lounge and bathroom with bathtub.";
+accommodations[0].description =
+  "A welcoming two-bedroom apartment with a breakfast-bar kitchen, open lounge, bathroom with full bathtub, and private garden entrance.";
 accommodations[0].gallery = [
   {
     src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment2/Lounge/NS008450.JPG.jpeg",
@@ -124,7 +125,8 @@ accommodations[0].gallery = [
 // 2. Lobengula Suite (Apartment 1) - Supplied genuine photographs
 accommodations[1].confirmed = true;
 accommodations[1].name = "Lobengula Suite";
-accommodations[1].description = "A comfortable two-bedroom apartment named after King Lobengula, featuring an open-plan lounge, dining area and fully equipped kitchen.";
+accommodations[1].description =
+  "A spacious two-bedroom apartment with an L-shaped lounge, dedicated dining table, fully equipped kitchen, and en-suite glass shower.";
 accommodations[1].gallery = [
   {
     src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment1/Lounge/NS008300.JPG.jpeg",
@@ -170,10 +172,11 @@ accommodations[1].gallery = [
   },
 ];
 
-// 3. Nkulumane Suite (Apartment 3) - Supplied genuine photographs (kitchen & dining photography pending)
+// 3. Nkulumane Suite (Apartment 3) - Supplied genuine photographs
 accommodations[2].confirmed = true;
 accommodations[2].name = "Nkulumane Suite";
-accommodations[2].description = "A bright two-bedroom apartment named after Prince Nkulumane, featuring an open lounge, twin and double bedroom options, and marble-tiled en-suite shower bathrooms.";
+accommodations[2].description =
+  "A bright two-bedroom apartment offering double and twin sleeping options, recessed cove lighting, and marble-tiled en-suite walk-in showers.";
 accommodations[2].gallery = [
   {
     src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/BedRoom2/4.png",
@@ -222,8 +225,17 @@ for (const apartment of accommodations) {
   apartment.facilities.wifi = true;
   apartment.facilities.airConditioning = true;
   apartment.facilities.parking = true;
-  apartment.sleeping = ["Two bedrooms", "Sleeps up to four people per apartment", "En-suite bathrooms"];
-  apartment.amenities = ["Lounge", "Dining area", "Wi-Fi", "Air conditioning", "En-suite bathrooms", "Washing machine", "Parking for up to four vehicles", "Chef available on request"];
+  apartment.sleeping = ["Two bedrooms", "Sleeps up to four guests per apartment", "En-suite bathrooms"];
+  apartment.amenities = [
+    "Lounge",
+    "Dining area",
+    "Wi-Fi",
+    "Air conditioning",
+    "En-suite bathrooms",
+    "Washing machine",
+    "On-site parking (up to 4 vehicles across the property)",
+    "Chef available on request",
+  ];
   apartment.kitchen = ["Fully equipped kitchen", "Microwave"];
   apartment.included = ["Cleaner provided", "Wi-Fi", "Air conditioning", "Fully equipped kitchen", "Washing machine"];
   apartment.idealFor = ["Families", "Groups of up to four", "Self-catering stays"];
@@ -232,7 +244,7 @@ for (const apartment of accommodations) {
     { label: "Check-in", value: "2 PM." },
     { label: "Check-out", value: "11 AM." },
     { label: "Children", value: "Children are welcome when accompanied by an adult." },
-    { label: "Parking", value: "Parking for up to four vehicles." },
+    { label: "Parking", value: "On-site parking for up to four vehicles across the property." },
     { label: "Cleaning", value: "A cleaner is provided." },
     { label: "Security", value: "Electric fence and dura wall." },
     { label: "Payment", value: "Mastercard, EcoCash and cash accepted." },
@@ -240,6 +252,9 @@ for (const apartment of accommodations) {
   ];
 }
 
+accommodations[0].bathrooms = 1;
+accommodations[0].facilities.outdoor = "Private Dutch stable-door entrance & garden walkway";
+accommodations[0].sleeping = ["Two bedrooms (including double bed setup)", "Sleeps up to four guests", "Bathroom with full bathtub and shower fixtures"];
 accommodations[0].about = "Named in honor of King Mzilikazi, founder of the Matabele kingdom. Enjoy two bedrooms, comfortable lounge, a modern breakfast bar kitchen and a bathroom featuring a full bathtub. A cleaner is provided, and a chef is available on request.";
 accommodations[0].walkthrough = [
   {
@@ -274,6 +289,8 @@ accommodations[0].walkthrough = [
   },
 ];
 
+accommodations[1].facilities.outdoor = "Paved courtyard & covered veranda";
+accommodations[1].sleeping = ["Two bedrooms (including twin beds)", "Sleeps up to four guests", "En-suite bathrooms with glass shower enclosure"];
 accommodations[1].about = "Named in honor of King Lobengula, son of Mzilikazi. Enjoy two air-conditioned bedrooms, en-suite bathrooms, an L-shaped lounge and a fully equipped kitchen. A cleaner is provided, and a chef is available on request.";
 accommodations[1].walkthrough = [
   {
@@ -308,18 +325,10 @@ accommodations[1].walkthrough = [
   },
 ];
 
+accommodations[2].facilities.outdoor = "Shared courtyard & garden grounds";
+accommodations[2].sleeping = ["Two bedrooms (double and twin bed options)", "Sleeps up to four guests", "Marble-tiled en-suite walk-in shower bathrooms"];
 accommodations[2].about = "Named in honor of Prince Nkulumane, heir and son of King Mzilikazi. Enjoy two air-conditioned bedrooms with flexible double and twin sleeping arrangements, marble-tiled en-suite shower bathrooms, a comfortable lounge and self-catering facilities. A cleaner is provided, and a chef is available on request.";
 accommodations[2].walkthrough = [
-  {
-    title: "Living Area",
-    description: "Lounge walkthrough and photography coming soon.",
-    media: null,
-  },
-  {
-    title: "Kitchen",
-    description: "Self-catering kitchen facilities. Kitchen photography coming soon.",
-    media: null,
-  },
   {
     title: "Bedrooms",
     description: "Two peaceful bedrooms with crisp white linens, grey blackout curtains and recessed ceiling lighting.",
@@ -368,7 +377,6 @@ export const propertyPhotos = {
   living: { src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment1/Lounge/NS008300.JPG.jpeg", alt: "Open-plan living room with sofa, coffee table and dining space", kind: "property", verified: true },
   nkulumanePreview: { src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/BedRoom2/4.png", alt: "Nkulumane Suite twin bedroom with patterned upholstered bases and corner windows", kind: "property", verified: true },
   nkulumaneBathroom: { src: "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment3/Bathroom/1.png", alt: "Nkulumane Suite marble-tiled en-suite bathroom with pebble-floor shower", kind: "property", verified: true },
-  mangwanaPlaceholder: { src: "/mzilikazi imgs/mangwana-placeholder.webp", alt: "Nkulumane Suite — Photography coming soon", kind: "property", verified: true },
   falls: { src: "/mzilikazi imgs/Experiences/Guided Tour of the Falls_/Tour-of-the-falls-7-scaled.jpg", alt: "Spectacular misty vista of Victoria Falls with rainbows and cascading gorges", kind: "destination", verified: true },
   aerialFalls: { src: "/mzilikazi imgs/Experiences/Flight of Angels/Heli-8-scaled.jpg", alt: "Breathtaking aerial view of Victoria Falls and the Zambezi River", kind: "destination", verified: true },
 } satisfies Record<string, PropertyMedia>;
@@ -427,7 +435,7 @@ export const reviews: {
     name: "Sarah & David Jenkins",
     origin: "Surrey, UK",
     travellerType: "Couple",
-    source: "Verified Guest",
+    source: "Guest Feedback",
     quote: "We loved having our own spacious lounge, modern kitchen, and shady veranda. Having a peaceful home base was infinitely better than a cramped hotel room.",
     apartmentSlug: "lobengula-suite",
   },
@@ -436,7 +444,7 @@ export const reviews: {
     name: "Tendai Moyo",
     origin: "Harare, Zimbabwe",
     travellerType: "Family",
-    source: "Verified Guest",
+    source: "Guest Feedback",
     quote: "Two separate bedrooms, a full kitchen to cook breakfasts, and secure courtyard parking made our Victoria Falls holiday completely effortless.",
     apartmentSlug: "mzilikazi-suite",
   },

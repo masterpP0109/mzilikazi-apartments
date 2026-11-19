@@ -1,4 +1,4 @@
-﻿import type { PropertyMedia } from './property';
+import type { PropertyMedia } from './property';
 import { experienceGuides, type ExperienceGuide } from './experience-guides';
 export interface Experience {
   guide: ExperienceGuide | null;
@@ -372,7 +372,7 @@ const experiencePresentation = {
       "Learning about local life",
       "Host-led arrangements"
     ],
-    "location": "Host community and visit location to be confirmed",
+    "location": "Confirmed with the host community on enquiry",
     "bestTime": "Agree timing with the host and organiser",
     "recommendedFor": "Respectful learning about local culture",
     "relatedExperienceSlugs": [

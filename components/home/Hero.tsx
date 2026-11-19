@@ -2,72 +2,87 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Container, Eyebrow } from "@/components/ui/Editorial";
-import AvailabilityPanel from "@/components/forms/AvailabilityPanel";
 import { whatsappUrl } from "@/lib/constants";
+import { trackEvent } from "@/lib/analytics";
 
-const HERO_IMAGE = "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment1/Lounge/NS008300.JPG.jpeg";
+const HERO_IMAGE =
+  "/mzilikazi imgs/mzilikazi-img/mzilikazi images/Apartment1/Lounge/NS008300.JPG.jpeg";
+const HERO_ALT =
+  "Mzilikazi Apartments — open-plan lounge with L-shaped sofa, giraffe cushions, coffee table and sunlit curtains";
 
 export default function Hero() {
   const whatsapp = whatsappUrl(
-    "Hello, I'm interested in accommodation at Mzilikazi Apartments. Could you please assist me with availability and rates?",
+    "Hello Mzilikazi Apartments, I'd like to request availability and rates for a stay in Victoria Falls.",
   );
 
   return (
-    <section id="hero" className="hero">
+    <section id="hero" className="hero hero-home">
+      <div className="hero-mobile-media">
+        <Image
+          src={HERO_IMAGE}
+          alt={HERO_ALT}
+          fill
+          priority
+          sizes="100vw"
+          style={{ objectFit: "cover", objectPosition: "60% 58%" }}
+        />
+      </div>
+
       <div className="hero-background" aria-hidden="true">
-        <div className="hero-slide is-active hero-image-zoom">
+        <div className="hero-slide is-active">
           <Image
             src={HERO_IMAGE}
-            alt="Mzilikazi Apartments — comfortable open-plan lounge with contemporary sofa and warm natural lighting"
+            alt=""
             fill
             priority
-            sizes="100vw"
-            style={{ objectFit: "cover", objectPosition: "center" }}
+            sizes="(min-width: 640px) 100vw, 1px"
+            style={{ objectFit: "cover", objectPosition: "62% 58%" }}
           />
         </div>
       </div>
+
       <Container>
-        <div className="hero-top has-image hero-content-entrance">
-          <div>
-            <Eyebrow className="hero-eyebrow-entrance">Victoria Falls · Zimbabwe</Eyebrow>
-            <h1 className="hero-heading-entrance">
-              Come for the Falls.
-              <br />
-              <em>Stay somewhere worth coming home to.</em>
+        <div className="hero-top has-image">
+          <div className="hero-copy-block">
+            <Eyebrow>Victoria Falls · Zimbabwe</Eyebrow>
+            <h1 className="hero-heading">
+              <span className="hero-title-mobile">
+                Your Victoria Falls home base.
+              </span>
+              <span className="hero-title-desktop">
+                Come for the Falls.
+                <br />
+                <em>Stay somewhere worth coming home to.</em>
+              </span>
             </h1>
-            <p className="hero-copy hero-copy-entrance">
-              Two-bedroom apartments in Victoria Falls designed for couples,
-              families and friends who want space, privacy and a comfortable
-              base for exploring the Falls at their own pace.
+            <p className="hero-copy">
+              Two-bedroom self-catering apartments for up to four guests. From
+              US$130 per apartment per night.
             </p>
-            <ul className="hero-feature-list hero-features-entrance" aria-label="Property highlights">
-              <li>Two-bedroom apartments</li>
-              <li>Up to four guests per apartment</li>
-              <li>Self-catering facilities</li>
-              <li>High-speed Wi-Fi</li>
-              <li>From US$130 per apartment per night</li>
-            </ul>
-            <div className="actions hero-actions-entrance">
-              <Link className="button button-primary" href="/apartments">
+            <div className="actions hero-actions">
+              <Link className="button button-primary" href="/contact">
+                Request Availability
+              </Link>
+              <Link className="button button-secondary" href="/apartments">
                 View Apartments
               </Link>
-              <Link className="button button-secondary" href="/contact">
-                Enquire About Availability
-              </Link>
-              {whatsapp && (
-                <a className="button button-secondary" href={whatsapp} target="_blank" rel="noreferrer">
-                  WhatsApp us
-                </a>
-              )}
             </div>
+            {whatsapp && (
+              <p className="hero-whatsapp-note">
+                Prefer WhatsApp?{" "}
+                <a
+                  href={whatsapp}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() =>
+                    trackEvent("whatsapp_click", { location: "hero" })
+                  }
+                >
+                  Message our team
+                </a>
+              </p>
+            )}
           </div>
-        </div>
-        <AvailabilityPanel />
-        <div className="hero-footnote">
-          <span>Your stay starts here.</span>
-          <a href="#apartments" className="text-link">
-            Settle in <span aria-hidden="true">↓</span>
-          </a>
         </div>
       </Container>
     </section>

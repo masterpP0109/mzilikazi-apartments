@@ -17,7 +17,12 @@ export function buildGuestNotificationEmail({
   guestName,
   guestEmail,
   guestPhone,
+  preferredContact,
   guestCount,
+  adults,
+  children,
+  requestedServices,
+  sourcePage,
   message,
 }: {
   siteName: string;
@@ -26,9 +31,30 @@ export function buildGuestNotificationEmail({
   guestName: string;
   guestEmail: string;
   guestPhone: string | undefined;
+  preferredContact?: string;
   guestCount: number;
+  adults?: number;
+  children?: number;
+  requestedServices?: string[];
+  sourcePage?: string;
   message?: string;
 }) {
+  const guestBreakdown =
+    adults != null
+      ? `${guestCount} (${adults} ${adults === 1 ? "adult" : "adults"}${children ? `, ${children} ${children === 1 ? "child" : "children"}` : ""})`
+      : String(guestCount);
+  const servicesSummary =
+    requestedServices && requestedServices.length > 0
+      ? requestedServices.join(", ")
+      : "None selected";
+  const replyPreference = preferredContact
+    ? preferredContact === "whatsapp"
+      ? "WhatsApp"
+      : preferredContact === "phone"
+        ? "Phone"
+        : "Email"
+    : "Email";
+
   const subject = `New accommodation enquiry — ${siteName}`;
   const text = [
     `New Accommodation Enquiry — ${siteName}`,
@@ -36,9 +62,12 @@ export function buildGuestNotificationEmail({
     `Guest: ${guestName}`,
     `Email: ${guestEmail}`,
     `Phone: ${guestPhone ?? "Not provided"}`,
+    `Preferred Reply Method: ${replyPreference}`,
     `Dates: ${dateSummary}`,
-    `Guests: ${guestCount}`,
+    `Guests: ${guestBreakdown}`,
     `Apartment Preference: ${apartmentPreference}`,
+    `Requested Services: ${servicesSummary}`,
+    ...(sourcePage ? [`Source Page: ${sourcePage}`] : []),
     "",
     "Message / Notes:",
     message || "No additional message",
@@ -60,8 +89,13 @@ export function buildGuestNotificationEmail({
           </tr>
           <tr>
             <td style="padding: 6px 0; color: #666;"><strong>Guests:</strong></td>
-            <td style="padding: 6px 0;">${guestCount}</td>
+            <td style="padding: 6px 0;">${guestBreakdown}</td>
           </tr>
+          <tr>
+            <td style="padding: 6px 0; color: #666;"><strong>Extra services:</strong></td>
+            <td style="padding: 6px 0;">${servicesSummary}</td>
+          </tr>
+          ${sourcePage ? `<tr><td style="padding: 6px 0; color: #666;"><strong>Source:</strong></td><td style="padding: 6px 0;">${sourcePage}</td></tr>` : ""}
         </table>
       </div>
       <h3 style="color: #333; margin-top: 24px; border-bottom: 1px solid #eee; padding-bottom: 8px;">Guest Information</h3>
@@ -77,6 +111,10 @@ export function buildGuestNotificationEmail({
         <tr>
           <td style="padding: 6px 0; color: #666;"><strong>Phone / WhatsApp:</strong></td>
           <td style="padding: 6px 0;">${guestPhone ? `<a href="https://wa.me/${guestPhone.replace(/[^0-9]/g, '')}">${guestPhone}</a>` : "Not provided"}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px 0; color: #666;"><strong>Preferred reply:</strong></td>
+          <td style="padding: 6px 0;">${replyPreference}</td>
         </tr>
       </table>
       ${message ? `<div style="background: #fff; border: 1px solid #e0ded9; border-radius: 6px; padding: 14px; margin-top: 14px;"><p style="margin: 0 0 6px 0; color: #666; font-size: 13px;"><strong>Special Requests / Message:</strong></p><p style="margin: 0; white-space: pre-wrap;">${message}</p></div>` : ""}
@@ -106,9 +144,9 @@ export function buildGuestConfirmationEmail({
   const text = [
     `Hello ${guestName},`,
     "",
-    `Thank you for reaching out to ${siteName}. We have received your enquiry for ${preference} (${dateSummary}, ${guestCount} guests).`,
+    `Thank you for contacting ${siteName}. We have received your enquiry for ${preference} (${dateSummary}, ${guestCount} guests).`,
     "",
-    "Our team in Victoria Falls will review availability and get back to you shortly with rates and arrangements.",
+    "Please note that this is an enquiry only and not a confirmed booking. Our team in Victoria Falls will review availability and reply with current rates and booking terms.",
     "",
     "Warm regards,",
     siteName,
@@ -122,7 +160,7 @@ export function buildGuestConfirmationEmail({
         <p style="margin: 4px 0;"><strong>Stay dates:</strong> ${dateSummary}</p>
         <p style="margin: 4px 0;"><strong>Guests:</strong> ${guestCount}</p>
       </div>
-      <p>Our reservations team will confirm availability and reply to you with rates and details shortly.</p>
+      <p>Please note that this is an enquiry only and does not confirm a reservation. Our team will check availability for your dates and reply with rates and booking terms.</p>
       <p style="margin-top: 28px; color: #555;">
         Warm regards,<br />
         <strong>${siteName} Team</strong><br />

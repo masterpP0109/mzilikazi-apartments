@@ -1,20 +1,22 @@
-import { ImageFrame } from "@/components/ui/Editorial";
+import { notFound, permanentRedirect } from "next/navigation";
+import { accommodations, isPublicMedia } from "@/lib/property";
+import { Container, ImageFrame, PageIntro, TextLink } from "@/components/ui/Editorial";
+import { AccommodationFacts } from "@/components/ui/AccommodationCard";
 import ApartmentComparison, {
   apartmentAttributes,
 } from "@/components/ui/ApartmentComparison";
+import ApartmentGallery from "@/components/ui/ApartmentGallery";
+import ApartmentViewTracker from "@/components/ui/ApartmentViewTracker";
+import AvailabilityPanel from "@/components/forms/AvailabilityPanel";
 import { AddToTrip } from "@/components/trip/TripProvider";
 import Location from "@/components/home/Location";
 import Proof from "@/components/home/Proof";
-import { notFound, permanentRedirect } from "next/navigation";
-import { accommodations, isPublicMedia } from "@/lib/property";
-import { Container, PageIntro, TextLink } from "@/components/ui/Editorial";
-import { AccommodationFacts } from "@/components/ui/AccommodationCard";
-import ApartmentGallery from "@/components/ui/ApartmentGallery";
-import AvailabilityPanel from "@/components/forms/AvailabilityPanel";
 import { pageMetadata } from "@/lib/seo";
 import { whatsappUrl, SITE_NAME, SITE_URL } from "@/lib/constants";
+
 const find = (slug: string) =>
   accommodations.find((a) => a.slug === slug || a.aliases.includes(slug));
+
 export async function generateMetadata({
   params,
 }: {
@@ -26,35 +28,38 @@ export async function generateMetadata({
   return a
     ? {
         ...pageMetadata(
-          a.confirmed && a.name ? a.name : "Accommodation enquiry",
+          a.confirmed && a.name
+            ? `${a.name} — 2-Bedroom Apartment in Victoria Falls`
+            : "Accommodation enquiry",
           a.confirmed && a.description
-            ? a.description
+            ? `${a.description} US$130 per night for up to 4 guests.`
             : "Ask about accommodation options and current availability for your Victoria Falls stay.",
           `/apartments/${a.slug}`,
         ),
-        ...(!a.confirmed || !isCanonical ? { robots: { index: false, follow: true } } : {}),
+        ...(!a.confirmed || !isCanonical
+          ? { robots: { index: false, follow: true } }
+          : {}),
       }
     : { title: "Accommodation not found" };
 }
+
 function DetailList({ title, items }: { title: string; items: string[] }) {
+  if (!items.length) return null;
   return (
     <section>
       <h2>{title}</h2>
-      {items.length ? (
-        <ul className="amenity-grid">
-          {items.map((s) => (
-            <li key={s}>
-              <span aria-hidden="true">—</span>
-              {s}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>To be confirmed. Ask us about this when choosing your space.</p>
-      )}
+      <ul className="amenity-grid">
+        {items.map((s) => (
+          <li key={s}>
+            <span aria-hidden="true">—</span>
+            {s}
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
+
 export default async function ApartmentPage({
   params,
 }: {
@@ -66,35 +71,18 @@ export default async function ApartmentPage({
   if (a.slug !== slug && a.aliases.includes(slug)) {
     permanentRedirect(`/apartments/${a.slug}`);
   }
-  const whatsapp = whatsappUrl();
+  const whatsapp = whatsappUrl(
+    `Hello ${SITE_NAME}, I would like to check availability for ${a.name ?? "an apartment"}.`,
+  );
   const publicName = a.confirmed ? a.name : null;
-  const policyLabels = [
-    "Check-in",
-    "Check-out",
-    "Children",
-    "Parking",
-    "Parties",
-    "Cleaning",
-    "Security",
-    "Payment",
-    "Cancellation",
-  ];
-  const policies = [
-    ...policyLabels.map(
-      (label) =>
-        a.policies.find(
-          (p) => p.label.toLowerCase() === label.toLowerCase(),
-        ) ?? { label, value: "To be confirmed" },
-    ),
-    ...a.policies.filter(
-      (p) =>
-        !policyLabels.some(
-          (label) => label.toLowerCase() === p.label.toLowerCase(),
-        ),
-    ),
-  ];
+  const walkthroughItems = a.walkthrough.filter(
+    (w) => w.description || isPublicMedia(w.media),
+  );
+  const policies = a.policies;
+
   return (
     <>
+      <ApartmentViewTracker slug={a.slug} />
       {a.confirmed && a.name && (
         <script
           type="application/ld+json"
@@ -130,8 +118,8 @@ export default async function ApartmentPage({
         />
       )}
       <PageIntro
-        eyebrow="Your space in Victoria Falls"
-        title={publicName ?? "Let’s find your space."}
+        eyebrow="Two-bedroom self-catering apartment · Victoria Falls"
+        title={publicName ?? "Let’s find your apartment."}
         media={a.gallery.length > 0 ? a.gallery[0] : null}
       >
         {a.confirmed && a.description ? (
@@ -145,21 +133,8 @@ export default async function ApartmentPage({
       </PageIntro>
       <section className="section">
         <Container>
-          {a.confirmed && a.gallery.length > 0 && <ApartmentGallery images={a.gallery} />}
-          {a.confirmed && a.gallery.length === 0 && (
-            <div className="apartment-placeholder-hero">
-              <ImageFrame
-                media={{
-                  src: "/mzilikazi imgs/mangwana-placeholder.webp",
-                  alt: `${a.name} — Photography coming soon`,
-                  kind: "property",
-                  verified: true,
-                }}
-                ratio="landscape"
-                sizes="(max-width: 767px) 100vw, 800px"
-              />
-              <p className="property-photo-caption">Photographs for {a.name} will be published once available.</p>
-            </div>
+          {a.confirmed && a.gallery.length > 0 && (
+            <ApartmentGallery images={a.gallery} />
           )}
           <div className="detail-layout">
             <div className="detail-content">
@@ -169,29 +144,25 @@ export default async function ApartmentPage({
                   <section>
                     <h2>At a glance</h2>
                     <dl>
-                      {apartmentAttributes(a)
-                        .slice(0, 9)
-                        .map(([label, value]) => (
-                          <div className="policy-row" key={label}>
-                            <dt>{label}</dt>
-                            <dd>{value}</dd>
-                          </div>
-                        ))}
+                      {apartmentAttributes(a).map(([label, value]) => (
+                        <div className="policy-row" key={label}>
+                          <dt>{label}</dt>
+                          <dd>{value}</dd>
+                        </div>
+                      ))}
                     </dl>
                     <AddToTrip kind="accommodation" id={a.slug} />
                   </section>
-                  {a.walkthrough.some((w) => w.description || w.media) && (
+                  {walkthroughItems.length > 0 && (
                     <section>
-                      <h2>A look around your space.</h2>
-                      {a.walkthrough
-                        .filter((w) => w.description || w.media)
-                        .map((w) => (
-                          <article className="walkthrough" key={w.title}>
-                            <ImageFrame media={w.media} />
-                            <h3>{w.title}</h3>
-                            {w.description && <p>{w.description}</p>}
-                          </article>
-                        ))}
+                      <h2>A look around your apartment.</h2>
+                      {walkthroughItems.map((w) => (
+                        <article className="walkthrough" key={w.title}>
+                          <ImageFrame media={w.media} />
+                          <h3>{w.title}</h3>
+                          {w.description && <p>{w.description}</p>}
+                        </article>
+                      ))}
                     </section>
                   )}
                   {a.about && (
@@ -201,7 +172,7 @@ export default async function ApartmentPage({
                     </section>
                   )}
                   <DetailList
-                    title="Sleeping arrangements"
+                    title="Sleeping arrangements & bathrooms"
                     items={a.sleeping}
                   />
                   <DetailList title="Amenities" items={a.amenities} />
@@ -214,18 +185,18 @@ export default async function ApartmentPage({
                 </>
               )}
               <section>
-                <h2>Make it your stay.</h2>
+                <h2>Rates &amp; availability</h2>
                 <p>
                   {a.confirmed && a.rate
                     ? a.rate
                     : "Request current rates for your dates and guest count."}
                 </p>
                 <p className="form-note">
-                  An enquiry is the beginning of a conversation. Your stay is
-                  confirmed separately.
+                  Submitting an enquiry checks availability with our team. Your
+                  booking is confirmed once dates, rates, and terms are agreed.
                 </p>
               </section>
-              {a.confirmed && (
+              {a.confirmed && policies.length > 0 && (
                 <section>
                   <h2>Good to know</h2>
                   <dl>
@@ -236,19 +207,38 @@ export default async function ApartmentPage({
                       </div>
                     ))}
                   </dl>
+                  <p className="form-note" style={{ marginTop: 12 }}>
+                    Need cancellation, deposit, or event terms confirmed before
+                    you travel?{" "}
+                    <TextLink href="/contact">Talk to Our Team</TextLink>
+                  </p>
                 </section>
               )}
-              <TextLink href="/apartments">Explore accommodation</TextLink>
+              <TextLink href="/apartments">Explore Apartments</TextLink>
               {whatsapp && (
                 <div>
-                  <a className="text-link" href={whatsapp}>
+                  <a
+                    className="text-link"
+                    href={whatsapp}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     Ask on WhatsApp →
                   </a>
                 </div>
               )}
             </div>
-            <aside className="detail-sidebar" aria-label="Enquire about availability">
+            <aside className="detail-sidebar" aria-label="Request this apartment">
               <AvailabilityPanel preference={publicName ?? undefined} />
+              <div className="actions" style={{ marginTop: 16 }}>
+                <TextLink
+                  href={
+                    "/contact?preference=" + encodeURIComponent(publicName ?? "")
+                  }
+                >
+                  Request This Apartment
+                </TextLink>
+              </div>
             </aside>
           </div>
           <ApartmentComparison exclude={a.slug} />
@@ -258,16 +248,16 @@ export default async function ApartmentPage({
       <Location />
       <section className="section">
         <Container>
-          <h2>Ready to talk about your stay?</h2>
+          <h2>Ready to check your dates?</h2>
           <div className="actions">
             <TextLink
               href={
                 "/contact?preference=" + encodeURIComponent(publicName ?? "")
               }
             >
-              Enquire About Availability
+              Request This Apartment
             </TextLink>
-            <TextLink href="/plan">Plan the days around it</TextLink>
+            <TextLink href="/plan">Plan Your Stay</TextLink>
           </div>
         </Container>
       </section>

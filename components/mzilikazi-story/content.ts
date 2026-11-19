@@ -8,7 +8,7 @@ export const storyContent = {
         "kind": "paragraph"
       },
       {
-        "text": "Mzilikazi Guest Lodge is self-catering accommodation in Victoria Falls for travellers who want comfort, a space of their own and the freedom to explore at their own pace.",
+        "text": "Mzilikazi Apartments is self-catering accommodation in Victoria Falls for travellers who want comfort, a space of their own and the freedom to explore at their own pace.",
         "kind": "paragraph"
       },
       {

@@ -97,9 +97,9 @@ test("calendar dates, contact details and whole guest counts are validated", () 
 test("accommodation retains legacy URLs and publishes confirmed units", () => {
   assert.equal(accommodations.flatMap((a) => [a.slug, ...a.aliases]).length, 14);
   assert.equal(publishedAccommodations.length, 3);
-  // Mangwana Suite (index 2) remains pending without exposed gallery until photos are ready
-  const pending = accommodations[2];
-  assert.equal(pending.gallery.length, 0);
+  for (const unit of publishedAccommodations) {
+    assert.ok(unit.gallery.length > 0, `${unit.slug} should have verified gallery media`);
+  }
 });
 test("development and unverified photos never qualify as public media", () => {
   const photo = {
@@ -115,6 +115,18 @@ test("development and unverified photos never qualify as public media", () => {
   assert.ok(reviews.length > 0);
 });
 
+test("valid enquiries pass with optional structured party and service metadata", () =>
+  assert.ok(
+    enquirySchema.safeParse({
+      ...valid,
+      adults: 2,
+      children: 1,
+      guests: 3,
+      requestedServices: ["Airport transfer"],
+      sourcePage: "/apartments/mzilikazi-suite",
+    }).success,
+  ));
+
 test("enquiry emails include explicit subjects for provider compatibility", () => {
   const notification = buildGuestNotificationEmail({
     siteName: "Mzilikazi Apartments",
@@ -123,11 +135,17 @@ test("enquiry emails include explicit subjects for provider compatibility", () =
     guestName: "Test Guest",
     guestEmail: "guest@example.org",
     guestPhone: "+263 77 123 4567",
-    guestCount: 2,
+    guestCount: 3,
+    adults: 2,
+    children: 1,
+    requestedServices: ["Airport transfer"],
+    sourcePage: "/apartments/mzilikazi-suite",
     message: "Early check-in please.",
   });
   assert.match(notification.subject, /enquiry/i);
   assert.ok(notification.text.includes("New Accommodation Enquiry"));
+  assert.ok(notification.text.includes("2 adults, 1 child"));
+  assert.ok(notification.text.includes("Airport transfer"));
 
   const acknowledgement = buildGuestConfirmationEmail({
     siteName: "Mzilikazi Apartments",

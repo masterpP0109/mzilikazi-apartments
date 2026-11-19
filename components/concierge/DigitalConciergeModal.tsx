@@ -38,7 +38,7 @@ export default function DigitalConciergeModal({
     >
       <div className="dialog-header">
         <div>
-          <p className="eyebrow">Make a little plan</p>
+          <p className="eyebrow">Plan Your Stay</p>
           <h2 id={titleId}>Your Victoria Falls stay.</h2>
         </div>
         <button
@@ -79,7 +79,7 @@ export default function DigitalConciergeModal({
             Before you arrive →
           </Link>
           <Link className="text-link" href="/contact" onClick={onClose}>
-            Ask us a question →
+            Talk to Our Team →
           </Link>
         </>
       )}

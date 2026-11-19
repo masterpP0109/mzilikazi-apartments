@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata(
   "Leave a Guest Review",
-  "Share your feedback and experience staying at Mzilikazi Guest Lodge in Victoria Falls, Zimbabwe.",
+  "Share your feedback and experience staying at Mzilikazi Apartments in Victoria Falls, Zimbabwe.",
   "/reviews/new",
 );
 
@@ -49,8 +49,8 @@ export default function LeaveReviewPage() {
                 </li>
               </ul>
               <div className="actions" style={{ marginTop: 32 }}>
-                <TextLink href="/apartments">Explore our suites</TextLink>
-                <TextLink href="/contact">Contact host directly</TextLink>
+                <TextLink href="/apartments">Explore Apartments</TextLink>
+                <TextLink href="/contact">Talk to Our Team</TextLink>
               </div>
             </div>
 

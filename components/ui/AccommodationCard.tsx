@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ImageFrame, TextLink } from "./Editorial";
 import { isPublicMedia, type Accommodation, type PropertyMedia } from "@/lib/property";
+
 export function AccommodationFacts({
   apartment: a,
 }: {
@@ -16,17 +17,25 @@ export function AccommodationFacts({
           {a.bedrooms} {a.bedrooms === 1 ? "bedroom" : "bedrooms"}
         </span>
       )}
-      {a.bathrooms != null && <span>{a.bathrooms} bathrooms</span>}
-      {(a.kitchen.length > 0 || a.facilities.kitchen === true) && (
-        <span>Kitchen</span>
+      {a.bathrooms != null ? (
+        <span>
+          {a.bathrooms} {a.bathrooms === 1 ? "bathroom" : "bathrooms"}
+        </span>
+      ) : (
+        a.amenities.includes("En-suite bathrooms") && (
+          <span>En-suite bathrooms</span>
+        )
       )}
-      {a.facilities.lounge === true && <span>Lounge</span>}
+      {(a.kitchen.length > 0 || a.facilities.kitchen === true) && (
+        <span>Self-catering kitchen</span>
+      )}
       {a.facilities.wifi === true && <span>Wi-Fi</span>}
       {a.facilities.airConditioning === true && <span>Air conditioning</span>}
       {a.facilities.outdoor && <span>{a.facilities.outdoor}</span>}
     </div>
   );
 }
+
 export function AccommodationCard({
   apartment: a,
   propertyPreview = null,
@@ -35,36 +44,42 @@ export function AccommodationCard({
   propertyPreview?: PropertyMedia | null;
 }) {
   if (!a.confirmed || !a.name) return null;
+  const primaryImage =
+    a.gallery.find((m) => isPublicMedia(m) && m.kind === "property") ??
+    propertyPreview;
+
   return (
     <article className="accommodation-card">
       <ImageFrame
         sizes="(max-width: 639px) 92vw, (max-width: 1023px) 44vw, 30vw"
-        media={
-          a.gallery.find((m) => isPublicMedia(m) && m.kind === "property") ??
-          propertyPreview
-        }
+        media={primaryImage}
       />
-      {a.gallery.length === 0 && !propertyPreview?.src.includes("placeholder") && isPublicMedia(propertyPreview) && (
-        <p className="property-photo-caption">A glimpse of Mzilikazi</p>
-      )}
-      {propertyPreview?.src.includes("placeholder") && (
-        <p className="property-photo-caption">Photography coming soon</p>
-      )}
       <h3>{a.name}</h3>
       {a.description && <p>{a.description}</p>}
       <AccommodationFacts apartment={a} />
-      {a.idealFor.length > 0 && (
-        <p className="form-note">Best for: {a.idealFor.join(", ")}</p>
+      {a.sleeping[0] && (
+        <p className="form-note">Sleeping setup: {a.sleeping[0]}</p>
       )}
-      {a.rate && <p>{a.rate}</p>}
+      {a.rate && (
+        <p>
+          <strong>{a.rate}</strong>
+        </p>
+      )}
       <div className="actions">
         <Link className="button button-primary" href={`/apartments/${a.slug}`}>
-          Explore This Apartment <ArrowRight size={17} aria-hidden="true" />
+          View Apartment Details <ArrowRight size={17} aria-hidden="true" />
+        </Link>
+        <Link
+          className="button button-secondary"
+          href={`/contact?preference=${encodeURIComponent(a.name)}`}
+        >
+          Request Availability
         </Link>
       </div>
     </article>
   );
 }
+
 export function AccommodationFallback() {
   return (
     <div className="empty-accommodation">
@@ -80,7 +95,7 @@ export function AccommodationFallback() {
           options and current rates for your stay.
         </p>
         <div className="actions">
-          <TextLink href="/plan">Help Me Choose</TextLink>
+          <TextLink href="/plan">Help Me Choose an Apartment</TextLink>
         </div>
       </div>
     </div>

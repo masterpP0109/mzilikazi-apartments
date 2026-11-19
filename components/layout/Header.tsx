@@ -91,7 +91,7 @@ export default function Header() {
               </a>
             ) : null}
             <Link className="button button-primary" href="/contact">
-              Enquire About Availability
+              Request Availability
             </Link>
           </nav>
           <MyTripButton />
@@ -137,7 +137,7 @@ export default function Header() {
                 className="button button-primary"
                 onClick={() => setOpen(false)}
               >
-                Enquire About Availability
+                Request Availability
               </Link>
               <button
                 className="text-link"
@@ -146,7 +146,7 @@ export default function Header() {
                   setPlanner(true);
                 }}
               >
-                Plan your stay →
+                Plan Your Stay →
               </button>
             </div>
           </div>

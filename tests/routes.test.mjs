@@ -100,7 +100,7 @@ test("all existing public routes render without unsupported public content", asy
     const html = await res.text();
     assert.doesNotMatch(
       html,
-      /\[PLACEHOLDER|TBC|TBD|Lorem ipsum|personally vetted|Best direct rate guaranteed|images\.unsplash\.com|wa\.me\/263770000000/i,
+      /\[PLACEHOLDER|TBC|TBD|Lorem ipsum|personally vetted|Best direct rate guaranteed|images\.unsplash\.com|wa\.me\/263770000000|Mzilikazi Guest Lodge|Photography coming soon|To be confirmed/i,
       path,
     );
     assert.match(html, /<h1[ >]/, path);

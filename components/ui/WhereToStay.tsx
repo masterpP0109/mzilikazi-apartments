@@ -7,46 +7,69 @@ interface WhereToStayProps {
   showOptions?: boolean;
 }
 
-export default function WhereToStay({ showOptions = true }: WhereToStayProps = {}) {
+export default function WhereToStay({
+  showOptions = true,
+}: WhereToStayProps = {}) {
   return (
-    <section className="section where-to-stay" id="practical-amenities" aria-labelledby="where-to-stay-title">
+    <section
+      className="section where-to-stay"
+      id="practical-amenities"
+      aria-labelledby="where-to-stay-title"
+    >
       <Container>
         <ScrollReveal>
           <div className="where-to-stay-layout">
-            <ImageFrame media={propertyPhotos.living} ratio="landscape" sizes="(max-width: 767px) 100vw, 45vw" />
+            <ImageFrame
+              media={propertyPhotos.living}
+              ratio="landscape"
+              sizes="(max-width: 767px) 100vw, 45vw"
+            />
             <div className="where-to-stay-copy">
-              <Eyebrow>Practical Living · What's Included</Eyebrow>
-              <h2 id="where-to-stay-title">Everything you need to feel settled.</h2>
+              <Eyebrow>Included in every apartment</Eyebrow>
+              <h2 id="where-to-stay-title">
+                Everything you need for a comfortable stay.
+              </h2>
               <p>
-                Each apartment is self-contained with two bedrooms, sleeping up to four guests. Whether staying for a weekend or several weeks, you enjoy private living with hotel-grade support.
+                Settle into your own space with practical comforts for couples,
+                families, and groups of up to four guests.
               </p>
-              
-              <ul className="amenity-grid" style={{ marginTop: 24, marginBottom: 24 }}>
-                <li><span aria-hidden="true">—</span> Fully equipped kitchen &amp; gas stovetop</li>
-                <li><span aria-hidden="true">—</span> Cleaner provided for your stay</li>
-                <li><span aria-hidden="true">—</span> Air conditioning &amp; high-speed Wi-Fi</li>
-                <li><span aria-hidden="true">—</span> En-suite bathrooms with fresh linens</li>
-                <li><span aria-hidden="true">—</span> Secure parking for up to 4 vehicles</li>
-                <li><span aria-hidden="true">—</span> Private chef available on request</li>
+
+              <ul
+                className="amenity-grid"
+                style={{ marginTop: 24, marginBottom: 24 }}
+              >
+                <li>
+                  <span aria-hidden="true">—</span> Self-catering kitchens
+                </li>
+                <li>
+                  <span aria-hidden="true">—</span> Wi-Fi &amp; air conditioning
+                </li>
+                <li>
+                  <span aria-hidden="true">—</span> On-site parking (up to 4
+                  vehicles across property)
+                </li>
+                <li>
+                  <span aria-hidden="true">—</span> Washing machine &amp; cleaner
+                  provided
+                </li>
+                <li>
+                  <span aria-hidden="true">—</span> Electric fence &amp; dura
+                  wall security
+                </li>
+                <li>
+                  <span aria-hidden="true">—</span> Private chef available on
+                  request
+                </li>
               </ul>
 
               <div className="actions">
-                <Button href="/apartments#compare">Compare Apartments</Button>
-                <TextLink href="/contact">Ask a question</TextLink>
+                {showOptions ? (
+                  <Button href="/apartments#compare">Compare Apartments</Button>
+                ) : (
+                  <Button href="/contact">Request Availability →</Button>
+                )}
+                <TextLink href="/contact">Talk to Our Team</TextLink>
               </div>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        <ScrollReveal delayMs={100}>
-          <div className="stay-experience-connection">
-            <Eyebrow>Finding the Right Fit</Eyebrow>
-            <h3>Choosing between our apartments</h3>
-            <p>
-              All three apartments offer two bedrooms, self-catering kitchens and air conditioning. Choose <strong>Mzilikazi Suite</strong> for its open breakfast bar and bathtub; <strong>Lobengula Suite</strong> for its dining area and walk-in shower; or <strong>Nkulumane Suite</strong> for a peaceful garden-facing retreat.
-            </p>
-            <div className="actions" style={{ marginTop: 20 }}>
-              <TextLink href="/apartments">Explore all accommodations →</TextLink>
             </div>
           </div>
         </ScrollReveal>

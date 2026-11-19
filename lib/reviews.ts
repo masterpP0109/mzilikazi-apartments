@@ -81,7 +81,7 @@ export const APARTMENT_OPTIONS = [
   "Mzilikazi Suite",
   "Lobengula Suite",
   "Nkulumane Suite",
-  "Mzilikazi Guest Lodge (General)",
+  "Mzilikazi Apartments (General)",
 ] as const;
 
 export const TRAVELLER_TYPES = [

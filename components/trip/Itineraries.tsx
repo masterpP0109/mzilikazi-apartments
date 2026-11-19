@@ -85,7 +85,7 @@ export default function Itineraries() {
             Read the Victoria Falls Guide
           </TextLink>
           <TextLink href="/plan">
-            Not sure which fits your group? Help Me Choose
+            Not sure which fits your group? Help Me Choose an Apartment
           </TextLink>
         </div>
       </Container>

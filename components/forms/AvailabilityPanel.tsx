@@ -1,13 +1,17 @@
 "use client";
 import { useId, useState } from "react";
+import { usePathname } from "next/navigation";
+
 export default function AvailabilityPanel({
   preference,
 }: {
   preference?: string;
 }) {
   const id = useId();
+  const pathname = usePathname();
   const [arrival, setArrival] = useState("");
   const today = new Date().toLocaleDateString("en-CA");
+
   return (
     <form action="/contact" className="availability">
       <div className="field">
@@ -53,11 +57,13 @@ export default function AvailabilityPanel({
       {preference && (
         <input type="hidden" name="preference" value={preference} />
       )}
+      {pathname && <input type="hidden" name="source" value={pathname} />}
       <button className="button button-primary" type="submit">
-        Enquire About Availability <span aria-hidden="true">→</span>
+        Request Availability <span aria-hidden="true">→</span>
       </button>
       <p className="form-note">
-        Send an enquiry for current rates and availability.
+        Continues to the enquiry form with your dates and guest count pre-filled
+        — no payment is taken and our team confirms availability.
       </p>
     </form>
   );

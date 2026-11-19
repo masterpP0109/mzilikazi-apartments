@@ -17,6 +17,7 @@ export const enquirySchema = z
       .email("Please enter a valid email address")
       .max(254),
     phone: z.string().max(60).optional(),
+    preferredContact: z.enum(["email", "whatsapp", "phone"]).optional(),
     dateMode: z.enum(["known", "flexible", "deciding"]).optional(),
     arrivalDate: z.union([date, z.literal("")]).optional(),
     departureDate: z.union([date, z.literal("")]).optional(),
@@ -25,7 +26,21 @@ export const enquirySchema = z
       .int("Please enter a whole number of guests")
       .min(1, "Please enter at least one guest")
       .max(20, "For larger groups, add details in your message."),
+    adults: z
+      .number()
+      .int("Please enter a whole number of adults")
+      .min(1, "Please enter at least one adult")
+      .max(20)
+      .optional(),
+    children: z
+      .number()
+      .int("Please enter a whole number of children")
+      .min(0)
+      .max(20)
+      .optional(),
     apartmentPreference: z.string().max(200).optional(),
+    requestedServices: z.array(z.string().max(100)).max(10).optional(),
+    sourcePage: z.string().max(120).optional(),
     message: z
       .string()
       .max(5000, "Please keep your message under 5,000 characters.")

@@ -22,6 +22,7 @@ import { experiences } from "@/lib/experience-content";
 import { itineraries, dayIdeas } from "@/lib/planning";
 import { whatsappUrl, SITE_NAME } from "@/lib/constants";
 import EnquiryForm from "@/components/forms/EnquiryForm";
+import { trackEvent } from "@/lib/analytics";
 import Link from "next/link";
 const catalog = {
   accommodation: publishedAccommodations.map((a) => ({
@@ -173,6 +174,7 @@ export default function TripProvider({
         toggle,
         update,
         open: () => {
+          trackEvent("trip_planner_open", { saved_items: trip.items.length });
           setSending(false);
           setOpened(true);
         },
@@ -216,6 +218,9 @@ export default function TripProvider({
                   20,
                   trip.profile.adults + trip.profile.children,
                 ),
+                adults: trip.profile.adults,
+                children: trip.profile.children,
+                sourcePage: "trip-planner",
                 apartmentPreference: trip.profile.traveller,
                 dateMode: trip.profile.dateMode,
                 arrivalDate: trip.profile.arrival,
@@ -306,7 +311,7 @@ export default function TripProvider({
                 className="button button-primary"
                 onClick={() => setSending(true)}
               >
-                Send My Trip to Mzilikazi
+                Send My Enquiry
               </button>
               {whatsapp && (
                 <a className="text-link" href={whatsapp}>

@@ -27,7 +27,7 @@ export default function LocalTeam() {
             </p>
             <div className="actions">
               <TextLink href="/contact?message=I%20have%20a%20question%20about%20my%20Victoria%20Falls%20visit.">
-                Ask Us a Question
+                Talk to Our Team
               </TextLink>
             </div>
           </div>

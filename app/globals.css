@@ -347,12 +347,13 @@ summary {
 .desktop-nav {
   display: none;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
   font-size: 13px;
 }
 .desktop-nav a {
   padding-block: 12px;
   text-decoration: none;
+  white-space: nowrap;
 }
 .desktop-nav a[aria-current] {
   text-decoration: underline;
@@ -2438,4 +2439,155 @@ details p {
   color: var(--muted);
 }
 
+/* ==========================================================================
+   Phase 2A: Mobile-First Hero & Below-Hero Availability Band
+   ========================================================================== */
+.hero-home .hero-mobile-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  min-height: 220px;
+  max-height: 264px;
+  overflow: hidden;
+  background: var(--surface-secondary);
+}
+.hero-home .hero-background {
+  display: none;
+}
+.hero-home .hero-title-mobile {
+  display: inline;
+}
+.hero-home .hero-title-desktop {
+  display: none;
+}
+@media (max-width: 639px) {
+  .hero-home {
+    padding-block: 0 28px;
+    background: var(--surface);
+  }
+  .hero-home .hero-copy-block {
+    padding-top: 20px;
+  }
+  .hero-home .eyebrow {
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .hero-home h1 {
+    color: var(--ink);
+    font-size: clamp(30px, 8.2vw, 38px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+  .hero-home .hero-copy {
+    color: var(--muted);
+    margin-top: 12px;
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 100%;
+  }
+  .hero-home .hero-actions {
+    margin-top: 20px;
+    gap: 10px;
+  }
+  .hero-home .button-secondary {
+    color: var(--ink);
+    border-color: var(--line);
+    background: transparent;
+    backdrop-filter: none;
+  }
+  .hero-home .button-secondary:hover {
+    background: var(--surface-secondary);
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .hero-home .hero-whatsapp-note {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+}
+@media (min-width: 640px) {
+  .hero-home {
+    padding-block: 72px 72px;
+  }
+  .hero-home .hero-mobile-media {
+    display: none;
+  }
+  .hero-home .hero-background {
+    display: block;
+  }
+  .hero-home .hero-background::after {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(10, 14, 11, 0.84) 0%,
+        rgba(10, 14, 11, 0.62) 45%,
+        rgba(10, 14, 11, 0.14) 100%
+      ),
+      linear-gradient(0deg, rgba(10, 14, 11, 0.35), transparent 45%);
+  }
+  .hero-home .hero-title-mobile {
+    display: none;
+  }
+  .hero-home .hero-title-desktop {
+    display: inline;
+  }
+  .hero-home .hero-copy {
+    color: rgba(255, 255, 255, 0.92);
+    margin-top: 20px;
+    font-size: 18px;
+    max-width: 540px;
+  }
+  .hero-home .hero-whatsapp-note {
+    margin-top: 14px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.86);
+  }
+  .hero-home .hero-whatsapp-note a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+@media (min-width: 1024px) {
+  .hero-home {
+    min-height: min(72svh, 720px);
+    padding-block: 88px 88px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.availability-band {
+  padding-block: 24px 32px;
+  background: var(--surface-secondary);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.availability-band-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: 14px;
+}
+.availability-band-header .eyebrow {
+  margin-bottom: 0;
+}
+@media (min-width: 1024px) {
+  .availability-band .availability {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    align-items: end;
+  }
+  .availability-band .availability .button {
+    grid-column: auto;
+  }
+}
+
+.accommodation-card > .actions {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
 

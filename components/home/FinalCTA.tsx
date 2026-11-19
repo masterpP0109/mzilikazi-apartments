@@ -1,15 +1,19 @@
 import { Container, Eyebrow, TextLink } from "@/components/ui/Editorial";
 import Button from "@/components/ui/Button";
+
 export default function FinalCTA() {
   return (
     <section className="section stone final-cta">
       <Container>
-        <Eyebrow>Your next chapter</Eyebrow>
-        <h2>Victoria Falls is waiting.</h2>
-        <p>Let’s start with your dates. The rest can follow.</p>
+        <Eyebrow>Enquire about your dates</Eyebrow>
+        <h2>Tell us your dates and we’ll confirm what’s available.</h2>
+        <p>
+          Send your travel dates and guest numbers. Our team will confirm the
+          available apartments and current rates.
+        </p>
         <div className="actions">
-          <Button href="/contact">Enquire About Availability →</Button>
-          <TextLink href="/contact#enquiry">Ask a question</TextLink>
+          <Button href="/contact">Request Availability →</Button>
+          <TextLink href="/plan">Plan Your Stay</TextLink>
         </div>
       </Container>
     </section>

@@ -24,7 +24,7 @@ export default async function PlanPage({
   return (
     <>
       <PageIntro
-        eyebrow="Make a little plan · Victoria Falls"
+        eyebrow="Plan Your Stay · Victoria Falls"
         title="Your people. Your pace. Your Victoria Falls trip."
         media={planHero}
         mediaRatio="wide"

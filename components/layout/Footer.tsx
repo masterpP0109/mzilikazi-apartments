@@ -26,31 +26,29 @@ export default function Footer() {
             <DigitalConciergeWidget />
           </div>
           <nav aria-label="Explore">
-            <h2>Make yourself at home</h2>
+            <h2>Mzilikazi Apartments</h2>
             {NAV_LINKS.map((l) => (
               <Link key={l.href} href={l.href}>
                 {l.label}
               </Link>
             ))}
-            <Link href="/transfers">Airport &amp; Local Transfers</Link>
           </nav>
           <nav aria-label="Plan your stay">
-            <h2>Your visit</h2>
+            <h2>Plan your stay</h2>
+            <Link href="/plan">Plan Your Stay</Link>
+            <Link href="/victoria-falls">Victoria Falls Guide</Link>
             <Link href="/family-group-accommodation-victoria-falls">
               Families &amp; groups
             </Link>
             <Link href="/corporate-stays-victoria-falls">
               Work &amp; longer stays
             </Link>
-            <Link href="/transfers">Transfers &amp; Shuttles</Link>
-            <Link href="/plan#itineraries">Itineraries</Link>
-            <Link href="/victoria-falls/getting-here">Getting here</Link>
             <Link href="/faq">Before you arrive</Link>
             <Link href="/reviews/new">Guest Reviews</Link>
             {CONTACT_EMAIL && <a href={`mailto:${CONTACT_EMAIL}`}>Email us</a>}
             {CONTACT_PHONE && <a href={`tel:${CONTACT_PHONE}`}>Call us</a>}
-            {whatsapp && <a href={whatsapp}>WhatsApp</a>}
-            <Link href="/contact">Ask a question</Link>
+            {whatsapp && <a href={whatsapp} target="_blank" rel="noreferrer">WhatsApp</a>}
+            <Link href="/contact">Talk to Our Team</Link>
           </nav>
         </div>
         <div className="footer-bottom">

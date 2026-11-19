@@ -63,6 +63,29 @@ export async function POST(request: Request) {
   let delivered = false;
   let stored = false;
 
+  const structuredDetails = [
+    data.dateMode && data.dateMode !== "known"
+      ? "Dates: " + data.dateMode
+      : "",
+    data.preferredContact
+      ? `Preferred reply: ${data.preferredContact}`
+      : "",
+    data.adults != null
+      ? `Party: ${data.adults} ${data.adults === 1 ? "adult" : "adults"}${data.children ? `, ${data.children} ${data.children === 1 ? "child" : "children"}` : ""}`
+      : "",
+    data.requestedServices && data.requestedServices.length > 0
+      ? `Requested services: ${data.requestedServices.join(", ")}`
+      : "",
+    data.sourcePage ? `Source page: ${data.sourcePage}` : "",
+    data.message,
+  ]
+    .filter(Boolean)
+    .join("\n") || null;
+
+  const enquirySource = data.sourcePage
+    ? `website:${data.sourcePage}`.slice(0, 120)
+    : "website";
+
   if (process.env.DATABASE_URL) {
     try {
       await ensureTablesExist();
@@ -88,8 +111,10 @@ export async function POST(request: Request) {
           data.guests,
           data.apartmentPreference || null,
           messageText,
+          structuredDetails,
           "new",
           "website",
+          enquirySource,
         ],
       );
       stored = true;
@@ -115,17 +140,9 @@ export async function POST(request: Request) {
         departure_date: data.departureDate || null,
         guests: data.guests,
         apartment_preference: data.apartmentPreference || null,
-        message:
-          [
-            data.dateMode && data.dateMode !== "known"
-              ? "Dates: " + data.dateMode
-              : "",
-            data.message,
-          ]
-            .filter(Boolean)
-            .join("\n") || null,
+        message: structuredDetails,
         status: "new",
-        source: "website",
+        source: enquirySource,
       });
       stored = !error;
       if (error) console.error("Enquiry storage failed");
@@ -175,7 +192,12 @@ export async function POST(request: Request) {
           guestName: data.name,
           guestEmail: data.email,
           guestPhone: data.phone,
+          preferredContact: data.preferredContact,
           guestCount: data.guests,
+          adults: data.adults,
+          children: data.children,
+          requestedServices: data.requestedServices,
+          sourcePage: data.sourcePage,
           message: data.message,
         });
 
@@ -251,7 +273,12 @@ export async function POST(request: Request) {
         guestName: data.name,
         guestEmail: data.email,
         guestPhone: data.phone,
+        preferredContact: data.preferredContact,
         guestCount: data.guests,
+        adults: data.adults,
+        children: data.children,
+        requestedServices: data.requestedServices,
+        sourcePage: data.sourcePage,
         message: data.message,
       });
       const notification = await resend.emails.send({
