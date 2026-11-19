@@ -140,7 +140,7 @@ export default function FloatingStayCTA() {
             Apartments
           </Link>
           <Link href="/contact" className="button button-primary floating-cta-btn">
-            Request Availability <ArrowRight size={16} aria-hidden="true" />
+            Check Availability <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
       </div>

@@ -43,8 +43,8 @@ export default function HomePage() {
       </section>
       <ApartmentsPreview />
       <TheStay />
-      <VictoriaFallsExtras />
       <Location />
+      <VictoriaFallsExtras />
       <Proof />
       <FAQ compact />
       <FinalCTA />

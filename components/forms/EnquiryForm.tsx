@@ -222,8 +222,8 @@ export default function EnquiryForm({
       aria-busy={status === "loading"}
     >
       <p className="form-note">
-        Fields marked * are required. Submitting checks availability with our
-        team — no reservation is confirmed until rates and terms are agreed.
+        Fields marked * are required. Availability and the final price will be
+        confirmed personally by our team before any payment is requested.
       </p>
       <input type="hidden" {...register("sourcePage")} />
       <input type="hidden" {...register("guests", { valueAsNumber: true })} />

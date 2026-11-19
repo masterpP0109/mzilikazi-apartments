@@ -2445,9 +2445,9 @@ details p {
 .hero-home .hero-mobile-media {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 2;
-  min-height: 220px;
-  max-height: 264px;
+  aspect-ratio: 16 / 9;
+  min-height: 172px;
+  max-height: 204px;
   overflow: hidden;
   background: var(--surface-secondary);
 }
@@ -2461,33 +2461,53 @@ details p {
   display: none;
 }
 @media (max-width: 639px) {
+  :root {
+    --header-height: 60px;
+  }
   .hero-home {
-    padding-block: 0 28px;
+    padding-block: 0 22px;
     background: var(--surface);
   }
   .hero-home .hero-copy-block {
-    padding-top: 20px;
+    padding-top: 14px;
   }
   .hero-home .eyebrow {
     color: var(--muted);
-    margin-bottom: 10px;
+    font-size: 11px;
+    margin-bottom: 6px;
   }
   .hero-home h1 {
     color: var(--ink);
-    font-size: clamp(30px, 8.2vw, 38px);
+    font-size: clamp(26px, 7.2vw, 32px);
     line-height: 1.08;
     letter-spacing: -0.025em;
   }
   .hero-home .hero-copy {
     color: var(--muted);
-    margin-top: 12px;
-    font-size: 16px;
-    line-height: 1.5;
+    margin-top: 8px;
+    font-size: 14.5px;
+    line-height: 1.45;
     max-width: 100%;
   }
   .hero-home .hero-actions {
-    margin-top: 20px;
-    gap: 10px;
+    margin-top: 14px;
+    gap: 8px;
+  }
+  .hero-home .hero-actions .button {
+    min-height: 46px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+  }
+  @media (min-width: 360px) {
+    .hero-home .hero-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .hero-home .hero-actions .button {
+      padding: 10px 12px;
+      white-space: nowrap;
+    }
   }
   .hero-home .button-secondary {
     color: var(--ink);

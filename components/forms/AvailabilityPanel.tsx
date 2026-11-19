@@ -59,11 +59,11 @@ export default function AvailabilityPanel({
       )}
       {pathname && <input type="hidden" name="source" value={pathname} />}
       <button className="button button-primary" type="submit">
-        Request Availability <span aria-hidden="true">→</span>
+        Check Availability <span aria-hidden="true">→</span>
       </button>
       <p className="form-note">
-        Continues to the enquiry form with your dates and guest count pre-filled
-        — no payment is taken and our team confirms availability.
+        Continues to our enquiry form with your dates and guest count pre-filled
+        — availability and the final price are confirmed personally before any payment.
       </p>
     </form>
   );

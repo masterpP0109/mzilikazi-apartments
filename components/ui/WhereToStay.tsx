@@ -66,7 +66,7 @@ export default function WhereToStay({
                 {showOptions ? (
                   <Button href="/apartments#compare">Compare Apartments</Button>
                 ) : (
-                  <Button href="/contact">Request Availability →</Button>
+                  <Button href="/contact">Check Availability →</Button>
                 )}
                 <TextLink href="/contact">Talk to Our Team</TextLink>
               </div>

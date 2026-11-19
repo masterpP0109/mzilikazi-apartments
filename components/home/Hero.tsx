@@ -61,7 +61,7 @@ export default function Hero() {
             </p>
             <div className="actions hero-actions">
               <Link className="button button-primary" href="/contact">
-                Request Availability
+                Check Availability
               </Link>
               <Link className="button button-secondary" href="/apartments">
                 View Apartments

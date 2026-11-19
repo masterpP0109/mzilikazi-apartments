@@ -73,7 +73,7 @@ export function AccommodationCard({
           className="button button-secondary"
           href={`/contact?preference=${encodeURIComponent(a.name)}`}
         >
-          Request Availability
+          Check Availability
         </Link>
       </div>
     </article>
